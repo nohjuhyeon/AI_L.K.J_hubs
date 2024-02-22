@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 # MongoDB 서버에 연결 : Both connect in case local and remote
-client = MongoClient('mongodb://172.30.144.1:27017/')   
+client = MongoClient('mongodb://192.168.10.240:27017/')   
 
 # 'mydatabase' 데이터베이스 선택 (없으면 자동 생성)
 db = client['mydatabase']
