@@ -17,12 +17,18 @@ ARG DIR_NAME=AI_L.K.J_hubs # 변경대상
 
 # Clone the Git repository. Here we dynamically specify the repository name using the variable defined earlier.
 # RUN git clone -b ${BRANCH_NAME} https://github.com/gocolab/co_templates ${DIR_NAME}
-RUN git clone https://github.com/nohjuhyeon/AI_L.K.J_hubs ${DIR_NAME}
+RUN git clone https://github.com/nohjuhyeon/AI_L.K.J_hubs ${DIR_NAME}           # 변경대상
 # Changes the working directory to /app/${REPO_NAME}. This uses the variable to dynamically set the directory path.
 WORKDIR /app/${DIR_NAME}
 
 # RUN pip install --no-cache-dir -r ./requirements.txt
 RUN pip install -r ./requirements.txt
 
-# RUN rm -rf .git
+# RUN rm -rf .git               # 도커 만들어지고나면 주석처리하기
 
+## 진행전 해야할 선작업
+# - .git 삭제
+# - 프로젝트 폴더 이름 변경
+# - commit yo github
+# - Dockerfile 변경(2군데)
+# - RUN rm -rf .git 주석처리하기
