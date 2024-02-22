@@ -10,7 +10,7 @@ from utils.paginations import Paginations
 
 class Settings(BaseSettings):                                                                                  
     DATABASE_URL: Optional[str] = None                                              
- 
+    CONTAINER_PREFIX: Optional[str] = None 
     async def initialize_database(self):                                         
         client = AsyncIOMotorClient(self.DATABASE_URL)                             
         await init_beanie(database=client.get_default_database(),                  
