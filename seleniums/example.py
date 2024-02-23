@@ -1,10 +1,10 @@
 ## dbmongo의 collection 연결
 from pymongo import MongoClient
-mongoClient = MongoClient("mongodb://localhost:27017")
+mongoClient = MongoClient("mongodb://192.168.10.240:27017")
 # database 연결
-database = mongoClient["gatheringdatas"]
+database = mongoClient["AI_LKJ"]
 # collection 작업
-collection = database['watcha_comments']
+collection = database['database_name']
 collection.delete_many({})
 
 
