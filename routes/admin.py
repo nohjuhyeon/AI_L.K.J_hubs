@@ -21,6 +21,19 @@ async def list_post(request:Request):
     print(dict(await request.form()))
     return templates.TemplateResponse(name="admin/admin_main.html", context={'request':request})
 
+## 관리자 로그인 
+@router.post("/admin_login")
+async def list_post(request:Request) :
+    await request.form()
+    print(dict(await request.form()))
+    return templates.TemplateResponse(name="admin/admin_login.html", context={'request':request})
+
+@router.get("/admin_login")
+async def list_post(request:Request) :
+    await request.form()
+    print(dict(await request.form()))
+    return templates.TemplateResponse(name="admin/admin_login.html", context={'request':request})
+
 ## 공지 관리
 @router.post("/notice") # 펑션 호출 방식
 async def list_post(request:Request):

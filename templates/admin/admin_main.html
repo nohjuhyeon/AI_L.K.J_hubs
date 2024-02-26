@@ -1,7 +1,70 @@
-{% extends "template.html"%}
+<!DOCTYPE html>
+<html lang="korean">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Document</title>
+</head>
 
+<body>
+    <main>
+        <h1 class="visually-hidden">관리자 페이지</h1>
+        <div class="container px-4 py-5" id="featured-3">
+            <h2 class="pb-2 border-bottom">관리자 페이지</h2>
+            <div class="row g-4 py-5 row-cols-1 row-cols-lg-3"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-sm-4">
+                        <div class="card h-50">
+                            <img src="https://i.pinimg.com/564x/bb/4a/ad/bb4aad265340923a5421377a08546708.jpg"
+                                class="card-img-top" alt="..." style="width: 100%; height: 100%;">
+                            <div class="card-body">
+                                <form action="">
+                                <h4 class="card-title"><strong>회원정보 관리</strong></h4>
+                                <p class="card-text">사용자들의 개인정보를 안전하게 보호하고 효율적으로 관리.</p>
+                                <button type="submit" class="btn btn-primary btn-lg"
+                                    formaction="/admin/users">Click</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card h-50">
+                            <img src="https://i.pinimg.com/564x/bd/c6/c2/bdc6c288b89c935639f9e090757d9a69.jpg"
+                                class="card-img-top" alt="..." style="width: 100%; height: 100%;">
+                            <div class="card-body">
+                                <form action="">
+                                <h4 class="card-title"><strong>커뮤니티 관리</strong></h4>
+                                <p class="card-text">사용자 간의 상호 작용과 소통을 원활하게 지원하는 핵심 기능.</p>
+                                <button type="submit" class="btn btn-primary btn-lg"
+                                    formaction="/admin/contents" method="">Click</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card h-50">
+                            <img src="https://i.pinimg.com/736x/62/e0/59/62e0596bf67f3de825b09915952782a9.jpg"
+                                class="card-img-top" alt="..." style="width: 100%; height: 100%;">
+                            <div class="card-body">
+                                <form action="">
+                                    <h4 class="card-title"><strong>공지사항 관리</strong></h4>
+                                    <p class="card-text">사용자들에게 중요한 정보와 업데이트를 효과적으로 전달하는 핵심 기능.</p>
+                                    <button type="submit" class="btn btn-primary btn-lg" formaction="/admin/notice" method="">Click</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-{% block main_container %}
-관리자 메인
-{% endblock %}
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
