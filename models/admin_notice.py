@@ -9,6 +9,7 @@ from beanie import Document, Link                   # 데이터베이스의 데�
 class Admin_notice_list(Document) :  # 상속을 위한 것                 # 데이터 베이스에서 이용할 값들을 설정
     title : Optional[str] = None 
     content : Optional[str] = None 
+    writer : Optional[str] = None
     date : Optional[str] = None
     class Settings :   # 데이터 베이스에서 이용할 collection을 지정
         name = "admin_notices"  # collection의 이름

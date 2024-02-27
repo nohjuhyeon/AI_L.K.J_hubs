@@ -8,7 +8,7 @@
     <table class="table">
         <thead class="table-light">
             <tr>
-                <th colspan="3">
+                <th colspan="4">
                     <div class="text-end">
                         <a href="/admin/admin_notice_write" class="btn btn-primary">글 작성</a>
                     </div>
@@ -19,6 +19,7 @@
             <tr>
             <th>번호</th>
             <th>제목</th>
+            <th>작성자</th>
             <th>작성시간</th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                 <td>
                     <a href="/admin/admin_notice_content/{{ notice.id }}">{{ notice.title }}</a>
                 </td>
+                <td>{{ notice.writer }}</td>
                 <td>{{ notice.date }}</td>
             </tr>
         {% endfor %}
