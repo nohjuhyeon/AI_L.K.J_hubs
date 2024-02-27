@@ -64,6 +64,7 @@ async def main_post(request:Request):
 async def login_get(request:Request):
     print(dict(request._query_params))
     user_list = await collection_user_list.get_all()
+    
     print(user_list)
     list_user_id = []
     list_user_email = []

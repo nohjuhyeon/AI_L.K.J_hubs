@@ -25,3 +25,4 @@ class User_reserve_list(Document):
     tour_id : Optional[str] = None
     class Settings:
         name = "user_reserve_list"
+
