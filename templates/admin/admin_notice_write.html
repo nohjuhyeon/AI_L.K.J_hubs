@@ -6,7 +6,7 @@
 
 <div class="col-md-12">
     <div class="col-md-12">
-        <form>
+        <form action="/notice" method="post">
             <div class="form-group">
                 <label for="title">제목</label>
                 <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요">
@@ -19,9 +19,9 @@
                 <label for="content"> 내용 </label>
                 <textarea rows="10" class="form-control" id="content" placeholder="내용을 입력하세요"></textarea>
             </div>
+            <a href="/admin/notice" role="button" class="btn btn-danger">취소</a>
+            <button type="submit" class="btn btn-success">등록</button>
         </form>
-        <a href="/admin/admin_notice" role="button" class="btn btn-danger">취소</a>
-        <button type="button" class="btn btn-success" id="btn-save">등록</button>
     </div>
 </div>
 {% endblock %}

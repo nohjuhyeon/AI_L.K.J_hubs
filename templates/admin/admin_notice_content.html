@@ -25,8 +25,20 @@
                 <textarea rows="10" class="form-control" id="content" placeholder="내용을 입력하세요">{{ notices.content }}</textarea>
             </div>
         </form>
-        <a href="/admin/admin_notice" role="button" class="btn btn-danger">취소</a>
-        <button type="button" class="btn btn-success" id="btn-save">수정</button>
+        <table class="table">
+            <tr>
+                <th>
+                    <div class="d-flex justify-content-start">
+                        <a href="/admin/notice" role="button" class="btn btn-primary me-2">취소</a>
+                        <button type="button" class="btn btn-success me-2" id="btn-save">수정</button>
+                    </div>       
+                </th>
+                <th class="text-end">
+                    <a href="/admin/notice" role="button" class="btn btn-danger">삭제</button>
+                </th>
+                
+            </tr>
+        </table>
     </div>
 </div>
 {% endblock %}
