@@ -98,17 +98,16 @@ async def list_post(request:Request):
     print(dict(await request.form()))
     return templates.TemplateResponse(name="admin/admin_contents.html", context={'request':request})
 
-# ## 새로운 게시물 추가
-# @router.post("/admin_notice_write")
-# async def add_notice(request : Request, notice_request : Admin_notice_list):
-#     new_notice = Admin_notice_list(
-#         title=notice_request.title,
-#         content=notice_request.content,
-#         writer=notice_request.writer,
-#         date=datetime.now().strftime("%Y-%m-%d")
-#     )
-#     await collection_admin_notice_list.save(new_notice)
-#     return templates.TemplateResponse(name="admin/admin_.html", context={'request':request})
+
+## 새로운 게시물 추가
+@router.post("/notice_add")
+async def add_notice(request : Request):
+    notice_dict = dict(await request.form())
+    print(dict(await request.form()))
+    add_notice = Admin_notice_list(**notice_dict)
+    await collection_admin_notice_list.save(add_notice)
+    notices = await collection_admin_notice_list.get_all()
+    return templates.TemplateResponse("admin/admin_notice.html", context={'request':request, 'notices': notices})
 
 
 ## 회원 관리
