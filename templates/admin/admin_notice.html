@@ -27,12 +27,12 @@
             <tr >
                 <td>{{ loop.index }}</td>
                 <td>
-                    <a href="/admin/admin_notice_content/{{ notice.id }}">{{ notice.title }}</a>
+                    <a href="/admin/admin_notice_content/{{notice.id}}">{{ notice.title }}</a>
                 </td>
                 <td>{{ notice.writer }}</td>
                 <td>{{ notice.date }}</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
 </div>

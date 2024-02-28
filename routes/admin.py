@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
-
+from beanie import PydanticObjectId
 
 router = APIRouter()
 
@@ -59,18 +59,18 @@ async def list_post(request:Request):
 
 ## 공지사항 내용 보기
 @router.get("/admin_notice_content/{object_id}")
-async def get_notice_content(request : Request,object_id) :
+async def get_notice_content(request : Request, object_id: PydanticObjectId) :
     # notice_id를 기반으로 데이터베이스에서 공지사항 내용을 가져옴
-    notices = await collection_admin_notice_list.get({"_id" : object_id})
+    notices = await collection_admin_notice_list.get( object_id)
     print(notices)
-    return templates.TemplateResponse(name="admin/admin_notice_content.html", context={'request' : request, 'content' : notices})
+    return templates.TemplateResponse(name="admin/admin_notice_content.html", context={'request' : request, 'notices' : notices})
 
 @router.post("/admin_notice_content/{object_id}")
-async def post_notice_content(request : Request,object_id) :
+async def post_notice_content(request : Request, object_id: PydanticObjectId) :
     # notice_id를 기반으로 데이터베이스에서 공지사항 내용을 가져옴
-    notices = await collection_admin_notice_list.get({"_id" : object_id})
+    notices = await collection_admin_notice_list.get(object_id)
     print(notices)
-    return templates.TemplateResponse(name="admin/admin_notice_content.html", context={'request' : request, 'content' : notices})
+    return templates.TemplateResponse(name="admin/admin_notice_content.html", context={'request' : request, 'notices' : notices})
 
 ## 공지사항 글쓰기
 @router.get("/admin_notice_write")

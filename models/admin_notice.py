@@ -11,5 +11,5 @@ class Admin_notice_list(Document) :  # 상속을 위한 것                 # �
     content : Optional[str] = None 
     writer : Optional[str] = None
     date : Optional[str] = None
-    class Settings :   # 데이터 베이스에서 이용할 collection을 지정
+    class Settings :   # 데이터 베이스에서 이용할 collection을 지정(Settings야 Setting아니고 ^^)
         name = "admin_notices"  # collection의 이름
