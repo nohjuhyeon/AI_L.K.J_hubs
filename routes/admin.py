@@ -3,7 +3,7 @@ from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from beanie import PydanticObjectId
-
+from datetime import datetime
 router = APIRouter()
 
 templates = Jinja2Templates(directory="templates/")
@@ -98,7 +98,17 @@ async def list_post(request:Request):
     print(dict(await request.form()))
     return templates.TemplateResponse(name="admin/admin_contents.html", context={'request':request})
 
-# 
+# ## 새로운 게시물 추가
+# @router.post("/admin_notice_write")
+# async def add_notice(request : Request, notice_request : Admin_notice_list):
+#     new_notice = Admin_notice_list(
+#         title=notice_request.title,
+#         content=notice_request.content,
+#         writer=notice_request.writer,
+#         date=datetime.now().strftime("%Y-%m-%d")
+#     )
+#     await collection_admin_notice_list.save(new_notice)
+#     return templates.TemplateResponse(name="admin/admin_.html", context={'request':request})
 
 
 ## 회원 관리
@@ -113,3 +123,4 @@ async def list_post(request:Request):
     await request.form()
     print(dict(await request.form()))
     return templates.TemplateResponse(name="admin/admin_users.html", context={'request':request})
+
