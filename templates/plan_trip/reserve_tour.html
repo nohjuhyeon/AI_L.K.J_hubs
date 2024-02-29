@@ -1,15 +1,17 @@
-{% extends "template.html"%}
+{% extends "template_plan_trip.html"%}
 {%block main_container%}
-<div class="col-md-3" style="border-style: ridge;">
-    투어/티켓
-</div>
 <form>
+    <div class="row justify-content-center mt-5">
+        <div class="col-6">
+            <div class="list-group">
+                <li class="list-group-item"> 투어 / 티켓 예약하기</li>
+            </div>
+        </div>
+    </div>
     <div class="row justify-content-center">
-        <button class="col-2 m-2 mt-5 mb-2" formaction="/plan_trip/reserve_dorm/"
-            class="">뒤로가기</button>
+        <button class="col-2 m-2 mt-5 mb-2" formaction="/plan_trip/reserve_dorm/" class="">뒤로가기</button>
         <button class="col-2 m-2 mt-5 mb-2" formaction="/plan_trip/reco_trip_plan/" class="">건너뛰기</button>
-        <button class="col-2 m-2 mt-5 mb-2" formaction="/plan_trip/reco_trip_plan/" type="submit"
-            class="">다음</button>
+        <button class="col-2 m-2 mt-5 mb-2" formaction="/plan_trip/reco_trip_plan/" type="submit" class="">다음</button>
     </div>
     <div class="selector_box">
         <div class="border d-flex justify-content-end"><select id="">
@@ -40,7 +42,7 @@
             </div>
             <div class="row justify-content-end">
                 <div class="col-md-4 justify-content-end row">
-                    <button class="btn btn-primary col"> 예약 내역에 추가</button>
+                    <button id="addButton">클릭하여 항목 추가</button>
                 </div>
             </div>
         </div>
@@ -49,40 +51,44 @@
     {%endfor%}
     <div>
         <h2>normal paginations 총 수: {{pagination.total_records}}</h2>
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item {% if not pagination.has_previous_block %}disabled{% endif %}">
-                        <button type="submit" class="page-link" formaction="/plan_trip/reserve_tour/{{pagination.first_page}}">
-                            맨 처음
-                        </button>
-                    </li>
-                    <li class="page-item {% if not pagination.has_previous_page %}disabled{% endif %}">
-                        <button type="submit" class="page-link" formaction="/plan_trip/reserve_tour/{{pagination.previous_page}}">
-                            이전
-                        </button>
-                    </li>
-                    
-                    {% for page_num in pagination.current_page_range %}
-                    <li class="page-item {% if page_num == pagination.current_page %}active{% endif %}">
-                        <button type="submit" class="page-link" formaction="/plan_trip/reserve_tour/{{page_num}}">
-                            {{page_num}}
-                        </button>
-                    </li>
-                    {% endfor %}
-                    
-                    <li class="page-item {% if not pagination.has_next_page %}disabled{% endif %}">
-                        <button type="submit" class="page-link" formaction="/plan_trip/reserve_tour/{{pagination.next_page}}">
-                            다음
-                        </button>
-                    </li>
-                    <li class="page-item {% if not pagination.has_next_block %}disabled{% endif %}">
-                        <button type="submit" class="page-link" formaction="/plan_trip/reserve_tour/{{pagination.last_page}}">
-                            맨 끝
-                        </button>
-                    </li>
-                    
-                </ul>
-            </nav>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item {% if not pagination.has_previous_block %}disabled{% endif %}">
+                    <button type="submit" class="page-link"
+                        formaction="/plan_trip/reserve_tour/{{pagination.first_page}}">
+                        맨 처음
+                    </button>
+                </li>
+                <li class="page-item {% if not pagination.has_previous_page %}disabled{% endif %}">
+                    <button type="submit" class="page-link"
+                        formaction="/plan_trip/reserve_tour/{{pagination.previous_page}}">
+                        이전
+                    </button>
+                </li>
+
+                {% for page_num in pagination.current_page_range %}
+                <li class="page-item {% if page_num == pagination.current_page %}active{% endif %}">
+                    <button type="submit" class="page-link" formaction="/plan_trip/reserve_tour/{{page_num}}">
+                        {{page_num}}
+                    </button>
+                </li>
+                {% endfor %}
+
+                <li class="page-item {% if not pagination.has_next_page %}disabled{% endif %}">
+                    <button type="submit" class="page-link"
+                        formaction="/plan_trip/reserve_tour/{{pagination.next_page}}">
+                        다음
+                    </button>
+                </li>
+                <li class="page-item {% if not pagination.has_next_block %}disabled{% endif %}">
+                    <button type="submit" class="page-link"
+                        formaction="/plan_trip/reserve_tour/{{pagination.last_page}}">
+                        맨 끝
+                    </button>
+                </li>
+
+            </ul>
+        </nav>
     </div>
 </form>
 </div>

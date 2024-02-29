@@ -1,0 +1,46 @@
+{% extends "template.html"%}
+
+
+
+{% block main_container %}
+
+<form class="row">
+    <h2>어느 여행 컨셉을 원하세요?</h2>
+    <button class="col-4 btn btn-primary">서울</button>
+    <button class="col-4 btn btn-primary">인천</button>
+    <button class="col-4 btn btn-primary">강원</button>
+    <button class="col-4 btn btn-primary">부산</button>
+    <button class="col-4 btn btn-primary">제주</button>
+
+    <div>
+        <label for="carcompanyname">어느 곳에 가고 싶으세요?</label>
+        <div>
+            <label for="seoul">서울</label>
+            <input type="checkbox" name="dog_lang" id="seoul">
+        </div>
+        <div>
+            <label for="incheon">인천</label>
+            <input type="checkbox" name="cat_lang" id="incheon">
+        </div>
+        <div>
+            <label for="gangwon">강원</label>
+            <input type="checkbox" name="cat_lang" id="gangwon">
+        </div>
+        <div>
+            <label for="busan">부산</label>
+            <input type="checkbox" name="cat_lang" id="busan">
+        </div>
+        <div>
+            <label for="jeju">제주</label>
+            <input type="checkbox" name="cat_lang" id="jeju">
+        </div>
+        <div>
+            <button class="justify-content-end" type="submit" formaction="" formmethod="post">다음</button>
+            <button type="reset">같은 form 내 정보 재설정</button>
+        </div>
+    </div>
+
+</form>
+
+
+{% endblock %}
