@@ -1,4 +1,4 @@
-{% extends "template.html"%}
+{% extends "template_plan_trip.html"%}
 {%block main_container%}
 
 <form>
@@ -34,165 +34,174 @@
                     <option value="4">가장 가까운 거리순</option>
                 </select></div>
         </div>
-        {%for dict_total in total_list%}
-        {% if dict_total.transfer_cate == "plane" %}
-        <div class="row mb-2">
-            <div class="col-md-3" style="border-style: ridge;">
-                <img src={{dict_total.airport_image}} alt="Tour Image" style="width: 70%;">
-            </div>
-            <div class="col-md-9" style="border-style: ridge;">
-                <div class="row justify-content-between">
-                    <div class="airport_date_info col-md-6">
-                        <h2>{{dict_total.airport_time}}</h1>
-                    </div>
-                    <div class="airport_price_info col-md-3">
-                        <em style="font-size:x-large;">{{dict_total.airport_price}}</em>
-                    </div>
-                </div>
-                <div class="row justify-content-between">
-                    <h6 class="col-md-6" style="border-style: none;">{{dict_total.airport_name}}</h3>
-                        <div class="col-md-4 justify-content-end row">
-                            <button class="btn btn-primary col"formaction="/plan_trip/reserve_transfer/" name="transfer_id" value={{dict_total.id}} formmethod="post"> 예약 내역에 추가</button>
-                        </div>
-                </div>
-            </div>
-        </div>
-        {% elif dict_total.transfer_cate == "car" %}
-        <div class="row mb-2">
-            <div class="col-md-3" style="border-style: ridge;">
-                <img src={{dict_total.car_image}} alt="Tour Image" style="width: 100%;">
-
-            </div>
-            <div class="col-md-9" style="border-style: ridge;">
-                <div class="row justify-content-between">
-                    <div class="rentcar_date_info col-md-6">
-                        <h1>{{dict_total.store_name}}</h1>
-                    </div>
-                    <div class="rentcar_price_info col-md-3">
-                        <em style="font-size:x-large;">{{dict_total.car_price}}</em>
-                    </div>
-                </div>
-                <div class="row justify-content-between">
-                    <h3 class="col-md-4" style="border-style: ridge;">{{dict_total.car_name}}</h3>
-                    <div class="col-md-4 justify-content-end row">
-                        <button class="btn btn-primary col"formaction="/plan_trip/reserve_transfer/" name="transfer_id" value={{dict_total.id}}  formmethod="post"> 예약 내역에 추가</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% elif dict_total.transfer_cate == "train" %}
-        <div class="row">
-            <div class="col-md-3" style="border-style: ridge;">
-                <img src="\images\korail.png" alt="Tour Image" style="width: 100%;">
-
-            </div>
-            <div class="col-md-9" style="border-style: ridge;">
-                <div class="row justify-content-between">
-                    <div class="korail_info col-md-6">
-                        <h1>코레일</h1>
-                    </div>
-                    <div class="train_data_info col-md mb-4 mt-6">
-                        <div style="border-style: ridge;">출발지 : {{dict_total.train_departure}}</div>
-                        <div style="border-style: ridge;">출발시간 : {{dict_total.train_departure_time}}</div>
-                    </div>
-                    <div class="train_data_info col-md mb-4 mt-6">
-                        <div style="border-style: ridge;">도착지 : {{dict_total.train_arrival}}</div>
-                        <div style="border-style: ridge;">도착시간 : {{dict_total.train_arrival_time}}</div>
-                    </div>
-                    <div class="train_data_info col-md mb-4 mt-6">
-                        <div style="border-style: ridge;">구분 : {{dict_total.train_category}}</div>
-                        <div style="border-style: ridge;">열차번호 : {{dict_total.train_number}}</div>
-                    </div>
-                </div>
-                <div class="row justify-content-between">
-                    <!-- 금액 확인 버튼 -->
-                    <button type="button" class="btn btn-primary col-md-2 ms-3" onclick="openKorailPopup();">
-                        금액 확인
-                    </button>
-                    <script>
-                        function openKorailPopup() {
-                            var url = "https://www.letskorail.com/ebizprd/EbizPrdTicketPr11121_i1.do?&txtRtnDvCd=N&txtChtrDvCd1=1&txtTrnClsfCd1=00&txtTrnGpCd1=100&txtDptRsStnCd1=0001&txtArvRsStnCd1=0020&txtRunDt1=20240120&txtTrnNo1=00001&txtStndSeatCnt1=000112&txtFreeSeatCnt1=-00001";
-                            var windowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
-                            window.open(url, "_blank", windowFeatures);
-                        }
-                    </script>
-                    <!-- 예약 내역에 추가 버튼 -->
-                    <div class="col-md-4 justify-content-end d-flex">
-                        <button class="btn btn-primary col" formaction="/plan_trip/reserve_transfer/" name="transfer_id" value={{dict_total.id}}  formmethod="post">예약 내역에 추가</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% elif dict_total.transfer_cate == "bus" %}
-        <div class="row">
-            <div class="col-md-3" style="border-style: ridge;">
-                <img src="\images\bus.jpg" alt="Tour Image" style="width: 100%; height: 100%">
-
-            </div>
-            <div class="col-md-9" style="border-style: ridge;">
-                <div class="row justify-content-between">
-                    <div class="korail_info col-md-6">
-                        <h1>고속버스</h1>
-                    </div>
-                    <div class="train_data_info col-md mb-4 mt-6">
-                        <div style="border-style: ridge;">출발지 : {{dict_total.bus_departure}}</div>
-                        <div style="border-style: ridge;">도착지 : {{dict_total.bus_arrival}}</div>
-                        <div style="border-style: ridge;">출발시간 : {{dict_total.bus_departure_time}}</div>
-                    </div>
-                </div>
-                <div class="row justify-content-between">
-                    <!-- 금액 확인 버튼 -->
-                    <div class="col-md-4 ms-3">
-                        <div>성인 요금 : {{dict_total.charge_adult}}</div>
-                        <div>초등생 요금 : {{dict_total.charge_child}}</div>
-                        <div>중고등 요금 : {{dict_total.charge_youth}}</div>
-                    </div>
-                    <!-- 예약 내역에 추가 버튼 -->
-                    <div class="col-md-4 justify-content-end d-flex">
-                        <button class="btn btn-primary col" formaction="/plan_trip/reserve_transfer/" name="transfer_id" value={{dict_total.id}}  formmethod="post">예약 내역에 추가</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {%endif%}
-        {%endfor%}
-        <div>
-            <h2>normal paginations 총 수: {{pagination.total_records}}</h2>
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item {% if not pagination.has_previous_block %}disabled{% endif %}">
-                        <button type="submit" class="page-link" formaction="/plan_trip/reserve_dorm/{{pagination.first_page}}">
-                            맨 처음
-                        </button>
-                    </li>
-                    <li class="page-item {% if not pagination.has_previous_page %}disabled{% endif %}">
-                        <button type="submit" class="page-link" formaction="/plan_trip/reserve_dorm/{{pagination.previous_page}}">
-                            이전
-                        </button>
-                    </li>
-                    
-                    {% for page_num in pagination.current_page_range %}
-                    <li class="page-item {% if page_num == pagination.current_page %}active{% endif %}">
-                        <button type="submit" class="page-link" formaction="/plan_trip/reserve_dorm/{{page_num}}">
-                            {{page_num}}
-                        </button>
-                    </li>
-                    {% endfor %}
-                    
-                    <li class="page-item {% if not pagination.has_next_page %}disabled{% endif %}">
-                        <button type="submit" class="page-link" formaction="/plan_trip/reserve_dorm/{{pagination.next_page}}">
-                            다음
-                        </button>
-                    </li>
-                    <li class="page-item {% if not pagination.has_next_block %}disabled{% endif %}">
-                        <button type="submit" class="page-link" formaction="/plan_trip/reserve_dorm/{{pagination.last_page}}">
-                            맨 끝
-                        </button>
-                    </li>
-                    
-                </ul>
-            </nav>
-        </div>
 </form>
+{%for dict_total in total_list%}
+{% if dict_total.transfer_cate == "plane" %}
+<div class="row mb-2">
+    <div class="col-md-3" style="border-style: ridge;">
+        <img src={{dict_total.airport_image}} alt="Tour Image" style="width: 70%;">
+    </div>
+    <div class="col-md-9" style="border-style: ridge;">
+        <div class="row justify-content-between">
+            <div class="airport_date_info col-md-6">
+                <h2>{{dict_total.airport_time}}</h1>
+            </div>
+            <div class="airport_price_info col-md-3">
+                <em style="font-size:x-large;">{{dict_total.airport_price}}</em>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <h6 class="col-md-6" style="border-style: none;">{{dict_total.airport_name}}</h3>
+                <div class="col-md-4 justify-content-end row">
+                    <button class="btn btn-primary col" formaction="/plan_trip/reserve_transfer/" name="transfer_id"
+                        value={{dict_total.id}} formmethod="post"> 예약 내역에 추가</button>
+                </div>
+        </div>
+    </div>
 </div>
+{% elif dict_total.transfer_cate == "car" %}
+<div class="row mb-2">
+    <div class="col-md-3" style="border-style: ridge;">
+        <img src={{dict_total.car_image}} alt="Tour Image" style="width: 100%;">
+
+    </div>
+    <div class="col-md-9" style="border-style: ridge;">
+        <div class="row justify-content-between">
+            <div class="rentcar_date_info col-md-6">
+                <h1>{{dict_total.store_name}}</h1>
+            </div>
+            <div class="rentcar_price_info col-md-3">
+                <em style="font-size:x-large;">{{dict_total.car_price}}</em>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <h3 class="col-md-4" style="border-style: ridge;">{{dict_total.car_name}}</h3>
+            <div class="col-md-4 justify-content-end row">
+                <button class="btn btn-primary col" name="transfer_id" value={{dict_total.id}}> 예약 내역에 추가</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% elif dict_total.transfer_cate == "train" %}
+<div class="row">
+    <div class="col-md-3" style="border-style: ridge;">
+        <img src="\images\korail.png" alt="Tour Image" style="width: 100%;">
+
+    </div>
+    <div class="col-md-9" style="border-style: ridge;">
+        <div class="row justify-content-between">
+            <div class="korail_info col-md-6">
+                <h1>코레일</h1>
+            </div>
+            <div class="train_data_info col-md mb-4 mt-6">
+                <div style="border-style: ridge;">출발지 : {{dict_total.train_departure}}</div>
+                <div style="border-style: ridge;">출발시간 : {{dict_total.train_departure_time}}</div>
+            </div>
+            <div class="train_data_info col-md mb-4 mt-6">
+                <div style="border-style: ridge;">도착지 : {{dict_total.train_arrival}}</div>
+                <div style="border-style: ridge;">도착시간 : {{dict_total.train_arrival_time}}</div>
+            </div>
+            <div class="train_data_info col-md mb-4 mt-6">
+                <div style="border-style: ridge;">구분 : {{dict_total.train_category}}</div>
+                <div style="border-style: ridge;">열차번호 : {{dict_total.train_number}}</div>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <!-- 금액 확인 버튼 -->
+            <button type="button" class="btn btn-primary col-md-2 ms-3" onclick="openKorailPopup();">
+                금액 확인
+            </button>
+            <script>
+                function openKorailPopup() {
+                    var url = "https://www.letskorail.com/ebizprd/EbizPrdTicketPr11121_i1.do?&txtRtnDvCd=N&txtChtrDvCd1=1&txtTrnClsfCd1=00&txtTrnGpCd1=100&txtDptRsStnCd1=0001&txtArvRsStnCd1=0020&txtRunDt1=20240120&txtTrnNo1=00001&txtStndSeatCnt1=000112&txtFreeSeatCnt1=-00001";
+                    var windowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+                    window.open(url, "_blank", windowFeatures);
+                }
+            </script>
+            <!-- 예약 내역에 추가 버튼 -->
+            <div class="col-md-4 justify-content-end d-flex">
+                <button class="btn btn-primary col" name="transfer_id" value={{dict_total.id}}>예약 내역에 추가</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% elif dict_total.transfer_cate == "bus" %}
+<div class="row">
+    <div class="col-md-3" style="border-style: ridge;">
+        <img src="\images\bus.jpg" alt="Tour Image" style="width: 100%; height: 100%">
+
+    </div>
+    <div class="col-md-9" style="border-style: ridge;">
+        <div class="row justify-content-between">
+            <div class="korail_info col-md-6">
+                <h1>고속버스</h1>
+            </div>
+            <div class="train_data_info col-md mb-4 mt-6">
+                <div style="border-style: ridge;">출발지 : {{dict_total.bus_departure}}</div>
+                <div style="border-style: ridge;">도착지 : {{dict_total.bus_arrival}}</div>
+                <div style="border-style: ridge;">출발시간 : {{dict_total.bus_departure_time}}</div>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <!-- 금액 확인 버튼 -->
+            <div class="col-md-4 ms-3">
+                <div>성인 요금 : {{dict_total.charge_adult}}</div>
+                <div>초등생 요금 : {{dict_total.charge_child}}</div>
+                <div>중고등 요금 : {{dict_total.charge_youth}}</div>
+            </div>
+            <!-- 예약 내역에 추가 버튼 -->
+            <div class="col-md-4 justify-content-end d-flex">
+                <button id="addButton">클릭하여 항목 추가</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%endif%}
+{%endfor%}
+<form>
+    <div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item {% if not pagination.has_previous_block %}disabled{% endif %}">
+                    <button type="submit" class="page-link"
+                        formaction="/plan_trip/reserve_transfer/{{pagination.first_page}}">
+                        맨 처음
+                    </button>
+                </li>
+                <li class="page-item {% if not pagination.has_previous_page %}disabled{% endif %}">
+                    <button type="submit" class="page-link"
+                        formaction="/plan_trip/reserve_transfer/{{pagination.previous_page}}">
+                        이전
+                    </button>
+                </li>
+
+                {% for page_num in pagination.current_page_range %}
+                <li class="page-item {% if page_num == pagination.current_page %}active{% endif %}">
+                    <button type="submit" class="page-link" formaction="/plan_trip/reserve_transfer/{{page_num}}">
+                        {{page_num}}
+                    </button>
+                </li>
+                {% endfor %}
+
+                <li class="page-item {% if not pagination.has_next_page %}disabled{% endif %}">
+                    <button type="submit" class="page-link"
+                        formaction="/plan_trip/reserve_transfer/{{pagination.next_page}}">
+                        다음
+                    </button>
+                </li>
+                <li class="page-item {% if not pagination.has_next_block %}disabled{% endif %}">
+                    <button type="submit" class="page-link"
+                        formaction="/plan_trip/reserve_transfer/{{pagination.last_page}}">
+                        맨 끝
+                    </button>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+</form>
+
+
 {%endblock%}
