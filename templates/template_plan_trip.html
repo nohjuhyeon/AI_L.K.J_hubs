@@ -155,32 +155,7 @@
 
         </footer>
     </div>
-    <div class="row justify-content-end">
-        <div class="col-2 position-fixed top-40 end-0 mb-3 ms-3 bd-mode-toggle">
-            <h1 class="offcanvas-title">비교하기</h1>
-            <ul id="itemList">
-                <li>첫 번째 항목</li>
-                <li>두 번째 항목</li>
-                <li>세 번째 항목</li>
-            </ul>
-        </div>
-    </div>
-    <script>
-        // addButton 요소를 가져옵니다.
-        var addButton = document.getElementById("addButton");
 
-        // itemList 요소를 가져옵니다.
-        var itemList = document.getElementById("itemList");
-
-        // addButton에 클릭 이벤트 리스너를 추가합니다.
-        addButton.addEventListener("click", function (event) {
-            event.preventDefault(); // 이벤트의 기본 동작을 중단시킵니다.
-
-            var newItem = document.createElement("li");
-            newItem.textContent = "새로운 항목";
-            itemList.appendChild(newItem);
-        });
-    </script>
 </body>
 <!-- Latest compiled JavaScript -->
 

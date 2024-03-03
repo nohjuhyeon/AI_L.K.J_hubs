@@ -53,8 +53,8 @@
         <div class="row justify-content-between">
             <h6 class="col-md-6" style="border-style: none;">{{dict_total.airport_name}}</h3>
                 <div class="col-md-4 justify-content-end row">
-                    <button class="btn btn-primary col" formaction="/plan_trip/reserve_transfer/" name="transfer_id"
-                        value={{dict_total.id}} formmethod="post"> 예약 내역에 추가</button>
+                    <button id="addButton" class="btn btn-primary col" formaction="/plan_trip/reserve_transfer/" name="transfer_id"
+                        value={{dict_total.id}} formmethod="get"> 예약 내역에 추가</button>
                 </div>
         </div>
     </div>
@@ -77,8 +77,9 @@
         <div class="row justify-content-between">
             <h3 class="col-md-4" style="border-style: ridge;">{{dict_total.car_name}}</h3>
             <div class="col-md-4 justify-content-end row">
-                <button class="btn btn-primary col" name="transfer_id" value={{dict_total.id}}> 예약 내역에 추가</button>
-            </div>
+                <button id="addButton" class="btn btn-primary col" formaction="/plan_trip/reserve_transfer/" name="transfer_id"
+                value={{dict_total.id}} formmethod="get"> 예약 내역에 추가</button>
+    </div>
         </div>
     </div>
 </div>
@@ -120,8 +121,9 @@
             </script>
             <!-- 예약 내역에 추가 버튼 -->
             <div class="col-md-4 justify-content-end d-flex">
-                <button class="btn btn-primary col" name="transfer_id" value={{dict_total.id}}>예약 내역에 추가</button>
-            </div>
+                <button id="addButton" class="btn btn-primary col" formaction="/plan_trip/reserve_transfer/" name="transfer_id"
+                value={{dict_total.id}} formmethod="get"> 예약 내역에 추가</button>
+    </div>
         </div>
     </div>
 </div>
@@ -139,7 +141,7 @@
             <div class="train_data_info col-md mb-4 mt-6">
                 <div style="border-style: ridge;">출발지 : {{dict_total.bus_departure}}</div>
                 <div style="border-style: ridge;">도착지 : {{dict_total.bus_arrival}}</div>
-                <div style="border-style: ridge;">출발시간 : {{dict_total.bus_departure_time}}</div>
+                <div style="border-style: ridge;">출발시간 : {{dict_total.index}}</div>
             </div>
         </div>
         <div class="row justify-content-between">
@@ -151,8 +153,9 @@
             </div>
             <!-- 예약 내역에 추가 버튼 -->
             <div class="col-md-4 justify-content-end d-flex">
-                <button id="addButton">클릭하여 항목 추가</button>
-            </div>
+                <button id="addButton{{loop.index}}" class="btn btn-primary col" formaction="/plan_trip/reserve_transfer/" name="transfer_id"
+                value={{dict_total.id}} formmethod="get"> 예약 내역에 추가</button>
+    </div>
         </div>
     </div>
 </div>
@@ -203,5 +206,35 @@
     </div>
 </form>
 
+<div class="row justify-content-end">
+    <div class="col-2 position-fixed top-40 end-0 mb-3 ms-3 bd-mode-toggl" style="top: 30%;">
+        <ul id="itemList" class="list-group">
+            <li class="list-group-item list-group-item-primary">가격 비교하기</li>
+          </ul>
+    </div>
+</div>
+<script>
+    var totalList = '{{ total_list}}';
+    // addButton 요소를 가져옵니다.
+    var addButton = document.getElementById("addButton");
 
+    // itemList 요소를 가져옵니다.
+    var itemList = document.getElementById("itemList");
+
+    for (var i = 1; i <= totalList.length; i++) {
+  var buttonId = "addButton" + i;
+  var button = document.getElementById(buttonId);
+
+  button.addEventListener("click", function (event) {
+    event.preventDefault();
+    var clickedButton = event.target;
+    var value = clickedButton.value;
+    var newItem = document.createElement("li");
+        newItem.textContent = value;
+        itemList.appendChild(newItem);  });
+        console.log(button);
+}
+
+    // addButton에 클릭 이벤트 리스너를 추가합니다.
+</script>
 {%endblock%}
