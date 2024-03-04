@@ -98,9 +98,10 @@
     <div class="row justify-content-end">
         <div class="col-3 position-fixed top-40 end-0 mb-3 ms-3 ml-3 bd-mode-toggl" style="top: 30% ;width: 20%">
             <li class="list-group-item list-group-item-primary">가격 비교하기</li>
-
-            <ul id="itemList" class="list-group">
-            </ul>
+            <div class="scrollable-box-list" style="height: 50%;">
+                <ul id="itemList" class="list-group scrollarea">
+                </ul>
+            </div>
             <button type="submit" class=" list-group-item" style="top: 30% ;width: 100%">예약 리스트에 추가하기</button>
         </div>
     </div>
@@ -125,10 +126,10 @@
             var values = value.split("/");
             // 중복 체크를 위해 리스트에 이미 해당 값이 있는지 확인합니다.
             // 중복 체크
-            if (addedItems.includes(values[2])) {
+            if (addedItems.includes(values[4])) {
                 return; // 이미 추가된 항목이라면 추가 중단
             }
-            addedItems.push(values[2]); // 배열에 항목 추가
+            addedItems.push(values[4]); // 배열에 항목 추가
 
             var newItem = document.createElement("li");
             newItem.classList.add("list-group-item");
