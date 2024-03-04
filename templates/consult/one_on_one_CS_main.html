@@ -1,0 +1,47 @@
+{% extends "template.html" %}
+
+{% block main_container %}
+<h1 class="mt-5 mb-4 text-center">1대1 문의</h1>
+<div ckass="container my-3">
+    <table class="table">
+        <thead class="table-light rounded-corners">
+            <tr>
+                <th colspan="4">
+                    <div class="text-end">
+                        <a href="/consult/one_on_one_CS" class="btn btn-primary">글 작성</a>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <thead class="table-primary rounded-corners">
+            <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성날짜</th>
+            </tr>
+        </thead>
+            {% for qna in qnas %}
+            <tr >
+                <td>{{ loop.index }}</td>
+                <td>
+                    <a href="/consult/user_notice{{qna._id}}">{{ qna.inquiryContent }}</a>
+                </td>
+                <td>{{ qna.userName }}</td>
+                <td>{{ qna.date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+  <div>
+    <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+    </div>
+
+{% endblock %}
