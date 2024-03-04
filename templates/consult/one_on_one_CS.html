@@ -21,16 +21,35 @@
 </div>
 
 <script>
-document.getElementById("inquiryForm").addEventListener("submit", function(event){
-  event.preventDefault();
-
-  const userName = document.getElementById("userName").value;
-  const userEmail = document.getElementById("userEmail").value;
-  const userInquiry = document.getElementById("userInquiry").value;
-
-  console.log("이름: " + userName);
-  console.log("이메일: " + userEmail);
-  console.log("문의 내용: " + userInquiry);
-});
-</script>
-{% endblock %}
+    document.getElementById("inquiryForm").addEventListener("submit", function(event){
+      event.preventDefault();
+    
+      const userName = document.getElementById("userName").value;
+      const userEmail = document.getElementById("userEmail").value;
+      const userInquiry = document.getElementById("userInquiry").value;
+    
+      fetch('/consult/one_on_one_CS_main.html', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName: userName,
+          userEmail: userEmail,
+          userInquiry: userInquiry
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if(data.success) {
+          window.location.href = '/consult/one_on_one_CS_main.html';
+        } else {
+          alert('문의 하지마 귀찮아.....');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    });
+    </script>
+    {% endblock %}
