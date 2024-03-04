@@ -1,84 +1,295 @@
-
 {% extends "template.html"%}
 
-
-
 {% block main_container %}
-<nav class="navbar bg-body-tertiary">
-    <div class="container-fluid">
-        <form class="d-flex" role="search">
-            <select class="form-select me-2" aria-label="월별 선택">
-                <option selected>월별 선택</option>
-                <option value="1">1월</option>
-                <option value="2">2월</option>
-                <option value="3">3월</option>
-                <option value="4">4월</option>
-                <option value="5">5월</option>
-                <option value="6">6월</option>
-                <option value="7">7월</option>
-                <option value="8">8월</option>
-                <option value="9">9월</option>
-                <option value="10">10월</option>
-                <option value="11">11월</option>
-                <option value="12">12월</option>
-            </select>
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-    </div>
-</nav>
 
-<style>
-    .carousel-item img {
-        width: 100px;  /* 원하는 너비로 설정 */
-        height: 600px;  /* 원하는 높이로 설정 */
-        /* object-fit: contain;  이미지의 비율을 유지하면서, 지정한 높이와 너비에 맞게 이미지를 축소 */
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #F1F4FD;
+        }
+
+        .container {
+            min-width: 1200px;
+            width: 95%;
+        }
+
+        .slider-wrapper {
+            position: relative;
+        }
+
+        .slider-wrapper .slide-button {
+            position: absolute;
+            top: 50%;
+            height: 50px;
+            width: 50px;
+            color: #fff;
+            border: none;
+            outline: none;
+            background: #000;
+            font: 2.2rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .slider-wrapper .slide-button:hover {
+            background: #444;
+        }
+
+        .slider-wrapper .slide-button#prev-slide {
+            left: -20px;
+            display: none;
+        }
+
+        .slider-wrapper .slide-button#next-slide {
+            right: -20px;
+        }
+
+        .slider-wrapper .image-list {
+            display: grid;
+            gap: 18px;
+            font-size: 0;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            grid-template-columns: repeat(10, 1fr);
+            cursor: pointer;
+        }
+
+        .slider-wrapper .image-list::-webkit-scrollbar {
+            display: none;
+
+        }
+
+        .slider-wrapper .image-list .image-item {
+            width: 325px;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .container .slider-scrollbar {
+            height: 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        .slider-scrollbar .scrollbar-track {
+            height: 2px;
+            width: 100%;
+            background: #ccc;
+            position: relative;
+            border-radius: 4px;
+        }
+
+        .slider-scrollbar:hover .scrollbar-track {
+            height: 4px;
+        }
+
+        .slider-scrollbar .scrollbar-thumb {
+            position: absolute;
+            height: 100%;
+            width: 50%;
+            background: #000;
+            border-radius: inherit;
+            cursor: grab;
+        }
+
+        .slider-scrollbar .scrollbar-thumb:active {
+            cursor: grabbing;
+            height: 8px;
+            top: -2px;
+        }
+
+        .slider-scrollbar .scrollbar-thumb::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -10px;
+            bottom: -10px;
+        }
+
+        /* Style for mobile and tablets */
+        @media (max-width: 1023px) {
+            .slider-wrapper .slide-button {
+                display: none !important;
+            }
+
+            .slider-wrapper .image-list {
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+
+            .slider-wrapper .image-list .image-item {
+                width: 280px;
+                height: 380px;
+            }
+
+            .slider-scrollbar .scrollbar-thumb {
+                width: 20%;
+
+            } 
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <form class="d-flex" role="search">
+                <select class="form-select me-2" aria-label="월별 선택">
+                    <option selected>월별 선택</option>
+                    <option value="1">1월</option>
+                    <option value="2">2월</option>
+                    <option value="3">3월</option>
+                    <option value="4">4월</option>
+                    <option value="5">5월</option>
+                    <option value="6">6월</option>
+                    <option value="7">7월</option>
+                    <option value="8">8월</option>
+                    <option value="9">9월</option>
+                    <option value="10">10월</option>
+                    <option value="11">11월</option>
+                    <option value="12">12월</option>
+                </select>
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="slider-wrapper">
+            <button id="prev-slide" class="slide-button material-symbols-rounded">&lt;</button>
+            <div class="image-list">
+                <a href="/detailed_region/info_Seoul">
+                <img src='/images/pictures1.jpg' alt="img-1" class="image-item">
+                </a>
+                <a href="/detailed_region/info_Busan">
+                <img src="/images/pictures2.jpg" alt="img-2" class="image-item">
+                </a>
+                <a href="/detailed_region/info_Gangwondo">
+                <img src="/images/pictures3.jpg" alt="img-3" class="image-item">
+                </a>
+                <a href="/detailed_region/info_Jeju">
+                <img src="/images/pictures4.jpg" alt="img-4" class="image-item">
+                </a>
+                <a href="/detailed_region/info_Incheon">
+                <img src="/images/pictures5.jpg" alt="img-5" class="image-item">
+                </a>
+                <a href="">
+                <img src="/images/pictures6.jpg" alt="img-6" class="image-item">
+                </a>
+                <a href="">
+                <img src="/images/pictures7.jpg" alt="img-7" class="image-item">
+                </a>
+                <a href="">
+                <img src="/images/pictures8.jpg" alt="img-8" class="image-item">
+                </a>
+                <a href="">
+                <img src="/images/pictures9.jpg" alt="img-9" class="image-item">
+                </a>
+            </div>
+            <button id="next-slide" class="slide-button material-symbols-rounded">&gt;</button>
+        </div>
+        <div class="slider-scrollbar">
+            <div class="scrollbar-track">
+                <div class="scrollbar-thumb"></div>
+            </div>
+        </div>
+    </div>
+    
+
+</body>
+<script>
+    const initSlider = () => {
+        const imageList = document.querySelector(".slider-wrapper .image-list");
+        const slideButtons = document.querySelectorAll(".slider-wrapper .slide-button");
+        const slideScrollbar = document.querySelector(".container ,slider-scrollbar");
+        const scrollbarThumb = slideScrollbar.querySelector(".scrollbar-thumb");
+        const maxScrollLeft = imageList.scrollWidth - imageList.clientWidth;
+
+        //Handle scrollbar thumb drag
+        scrollbarThumb.addEventListener("mousedown", (e) => {
+            const startX = e.clientX;
+            const thumbPostion = scrollbarThumb.offsetLeft;
+
+            // Update thumb position on mouse move
+            const handleMouseMove = (e) => {
+                const deltaX = e.clientX - startX;
+                const newThumbPosition = thumbPostion + deltaX;
+                const maxThumbPositon = slideScrollbar.getBoundingClientRect().width - scrollbarThumb.offsetWidth;
+
+                const boundedPosition = Math.max(0, Math.min(maxThumbPositon, newThumbPosition));
+                const scrollPosition = (boundedPosition / maxThumbPositon) * maxScrollLeft;
+
+                scrollbarThumb.style.left = `${boundedPosition}px`;
+                imageList.scrollLeft = scrollPosition;
+            }
+
+            // Remove event listeners on mouse up
+            const handleMouseUp = () => {
+                document.removeEventListener("mousemove", handleMouseMove);
+                document.removeEventListener("mouseup", handleMouseUp);
+            }
+
+            // Add event listerner for drag interaction
+            document.addEventListener("mousemove", handleMouseMove);
+            document.addEventListener("mouseup", handleMouseUp);
+        });
+
+        // Slide images according to the slide button clicks
+        slideButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                const direction = button.id == "prev-slide" ? -1 : 1;
+                const scrollAmount = imageList.clientWidth * direction;
+                imageList.scrollBy({ left: scrollAmount, behavior: "smooth" });
+            });
+        });
+
+        const handleSlideButtons = () => {
+            slideButtons[0].style.display = imageList.scrollLeft <= 0 ? "none" : "block";
+            slideButtons[1].style.display = imageList.scrollLeft >= maxScrollLeft ? "none" : "block";
+
+        }
+
+        // Update scrollbar thumb position based on image scroll
+        const updateScrollThumbPosition = () => {
+            const scrollPostion = imageList.scrollLeft;
+            const thumbPostion = (scrollPostion / maxScrollLeft) * (slideScrollbar.clientWidth - scrollbarThumb.offsetWidth);
+            scrollbarThumb.style.left = `${thumbPostion}px`;
+        }
+
+        imageList.addEventListener("scroll", () => {
+            handleSlideButtons();
+            updateScrollThumbPosition();
+        });
     }
-</style>
 
-<div class="row">
-    <div class="col-md-1"></div>
-    <div id="demo" class="col-md-10 carousel slide" data-bs-ride="carousel">
+    window.addEventListener("load", initSlider);
 
-        <!-- Indicators/dots -->
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-            <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-            <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-            <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
-            <button type="button" data-bs-target="#demo" data-bs-slide-to="4"></button>
-        </div>
+</script>
 
-        <!-- The slideshow/carousel -->
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="https://i.pinimg.com/564x/0d/51/05/0d51051eb48179e7062f387d8177e43b.jpg"
-                    alt="Seoul" class="d-block" style="width:100%">
-            </div>
-            <div class="carousel-item">
-                <img src="https://i.pinimg.com/564x/bd/73/46/bd73466425a1a3244745b4996077f40d.jpg" alt="Chicago"
-                    class="Gangwondo" style="width:100%">
-            </div>
-            <div class="carousel-item">
-                <img src="https://i.pinimg.com/564x/6d/fe/1d/6dfe1d414e241c937f71160c2da2d755.jpg" class="dot" alt="Incheon"
-                    class="d-block" style="width:100%">
-            </div>
-            <div class="carousel-item">
-                <img src="https://i.pinimg.com/564x/26/e2/33/26e2332c9f83129c4f568fec57ba49d2.jpg" class="dot" alt="Busan"
-                    class="d-block" style="width:100%">
-            </div>
-            <div class="carousel-item">
-                <img src="https://i.pinimg.com/564x/a4/ad/fb/a4adfb0bccf7f9cab413f5d0cbb75469.jpg" class="dot" alt="Jeju"
-                    class="d-block" style="width:100%">
-            </div>
-        </div>
-        <!-- Left and right controls/icons -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </button>
-    </div>
-</div>
+</html>
+
 {% endblock %}

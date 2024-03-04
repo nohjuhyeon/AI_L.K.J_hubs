@@ -46,7 +46,7 @@ async def list_post(request:Request):
     notices = await collection_admin_notice_list.get_all() # 메서드를 사용하여 모든 공지사항을 가져옴
     # print(notices)
     # 템플릿에 데이터 전달하여 HTML 페이지 렌더링
-    return templates.TemplateResponse("amin/admin_notice.html" , context={"request": request, "notices": notices} )
+    return templates.TemplateResponse("admin/admin_notice.html" , context={"request": request, "notices": notices} )
 
 
 @router.get("/notice") # 펑션 호출 방식

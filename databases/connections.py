@@ -5,6 +5,8 @@ from models.reserve_transfer import transfer_car_list, transfer_train_list,trans
 from models.tour_plan import reco_trip_plan, reco_trip_add
 from models.reserve_dorm import Reserve_dorm
 from models.admin_notice import Admin_notice_list
+from models.one_on_one_CS import One_on_one_CS_list
+
 from motor.motor_asyncio import AsyncIOMotorClient 
 from pydantic_settings import BaseSettings 
 from utils.paginations import Paginations
@@ -15,7 +17,7 @@ class Settings(BaseSettings):
     async def initialize_database(self):                                         
         client = AsyncIOMotorClient(self.DATABASE_URL)                             
         await init_beanie(database=client.get_default_database(),                  
-                          document_models=[User_list,User_reserve_list,transfer_car_list, transfer_train_list,transfer_airport_list,transfer_bus_list, reco_trip_plan,reco_trip_add,tour_list, transfer_total_list,Reserve_dorm,Admin_notice_list])
+                          document_models=[User_list,User_reserve_list,transfer_car_list, transfer_train_list,transfer_airport_list,transfer_bus_list, reco_trip_plan,reco_trip_add,tour_list, transfer_total_list,Reserve_dorm,Admin_notice_list,One_on_one_CS_list])
 
         
     class Config:
