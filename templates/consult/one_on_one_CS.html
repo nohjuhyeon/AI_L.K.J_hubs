@@ -1,0 +1,55 @@
+{% extends "template.html" %}
+
+{% block main_container %}
+<div class="container">
+    <h1 class="mt-5">1대1 문의</h1>
+    <form id="inquiryForm">
+        <div class="mb-3">
+            <label for="userName" class="form-label">이름</label>
+            <input type="text" class="form-control" id="userName" required>
+        </div>
+        <div class="mb-3">
+            <label for="userEmail" class="form-label">이메일</label>
+            <input type="email" class="form-control" id="userEmail" required>
+        </div>
+        <div class="mb-3">
+            <label for="userInquiry" class="form-label">문의 내용</label>
+            <textarea class="form-control" id="userInquiry" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">제출</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById("inquiryForm").addEventListener("submit", function(event){
+      event.preventDefault();
+    
+      const userName = document.getElementById("userName").value;
+      const userEmail = document.getElementById("userEmail").value;
+      const userInquiry = document.getElementById("userInquiry").value;
+    
+      fetch('/consult/one_on_one_CS_main.html', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName: userName,
+          userEmail: userEmail,
+          userInquiry: userInquiry
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if(data.success) {
+          window.location.href = '/consult/one_on_one_CS_main.html';
+        } else {
+          alert('문의 하지마 귀찮아.....');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    });
+    </script>
+    {% endblock %}

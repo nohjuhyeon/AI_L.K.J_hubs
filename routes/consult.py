@@ -2,24 +2,57 @@ from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
+from databases.connections import Database
+from models.admin_notice import Admin_notice_list
+collection_admin_notice_list = Database(Admin_notice_list)
+from models.one_on_one_CS import One_on_one_CS_list
+One_on_one_CS_list = Database(One_on_one_CS_list)
 
 
 router = APIRouter()
 
 templates = Jinja2Templates(directory="templates/")
 
-## 공지 사항
-@router.post("/notice") # 펑션 호출 방식
-async def list_post(request:Request):
-    await request.form()
-    print(dict(await request.form()))
-    return templates.TemplateResponse(name="consult/notice.html", context={'request':request})
 
-@router.get("/notice") # 펑션 호출 방식
+
+## 공지 사항
+@router.post("/user_notice") # 펑션 호출 방식
+async def list_post(request:Request):
+    notices = await collection_admin_notice_list.get_all()
+    print(dict(await request.form()))
+    return templates.TemplateResponse(name="consult/user_notice.html", context={'request':request, "notices": notices})
+
+@router.get("/user_notice") # 펑션 호출 방식
+async def list_post(request:Request):
+    notices = await collection_admin_notice_list.get_all()
+    print(dict(await request.form()))
+    return templates.TemplateResponse("consult/user_notice.html" , context={"request": request, "notices": notices} )
+
+## 1대1 문의 메인페이지
+@router.post("/one_on_one_CS_main") # 펑션 호출 방식
+async def list_post(request:Request):
+    qna = await One_on_one_CS_list.get_all()
+    print(dict(await request.form()))
+    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request, "qnas": qna})
+
+@router.get("/one_on_one_CS_main") # 펑션 호출 방식
+async def list_post(request:Request):
+    qna = await One_on_one_CS_list.get_all()
+    print(dict(await request.form()))
+    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request, "qnas": qna})
+
+## 1대1 문의 페이지
+@router.post("/one_on_one_CS") # 펑션 호출 방식
 async def list_post(request:Request):
     await request.form()
     print(dict(await request.form()))
-    return templates.TemplateResponse(name="consult/notice.html", context={'request':request})
+    return templates.TemplateResponse(name="consult/one_on_one_CS.html", context={'request':request})
+
+@router.get("/one_on_one_CS") # 펑션 호출 방식
+async def list_post(request:Request):
+    await request.form()
+    print(dict(await request.form()))
+    return templates.TemplateResponse(name="consult/one_on_one_CS.html", context={'request':request})
 
 ## 데이터 현황 차트
 @router.post("/data_chart") # 펑션 호출 방식

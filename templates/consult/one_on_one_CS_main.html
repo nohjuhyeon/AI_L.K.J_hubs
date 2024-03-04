@@ -1,20 +1,19 @@
 {% extends "template.html" %}
 
-
 {% block main_container %}
-<h1 class="mt-5 mb-4">공지 관리(관리자 페이지)</h1>
+<h1 class="mt-5 mb-4 text-center">1대1 문의</h1>
 <div ckass="container my-3">
     <table class="table">
-        <thead class="table-light">
+        <thead class="table-light rounded-corners">
             <tr>
                 <th colspan="4">
                     <div class="text-end">
-                        <a href="/admin/admin_notice_write" class="btn btn-primary">글 작성</a>
+                        <a href="/consult/one_on_one_CS" class="btn btn-primary">글 작성</a>
                     </div>
                 </th>
             </tr>
         </thead>
-        <thead class="table-dark">
+        <thead class="table-primary rounded-corners">
             <tr>
             <th>번호</th>
             <th>제목</th>
@@ -22,14 +21,14 @@
             <th>작성날짜</th>
             </tr>
         </thead>
-            {% for notice in notices %}
+            {% for qna in qnas %}
             <tr >
                 <td>{{ loop.index }}</td>
                 <td>
-                    <a href="/admin/admin_notice_content/{{notice.id}}">{{ notice.title }}</a>
+                    <a href="/consult/user_notice{{qna._id}}">{{ qna.inquiryContent }}</a>
                 </td>
-                <td>{{ notice.writer }}</td>
-                <td>{{ notice.date }}</td>
+                <td>{{ qna.userName }}</td>
+                <td>{{ qna.date }}</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "userName": "김예진",
+        "userEmail": "yejin@example.com",
+        "inquiryContent": "사이트에서 교통편을 어떻게 검색하나요?",
+        "date": "2024-03-04T10:00:00Z"
+    },
+    {
+        "id": 2,
+        "userName": "이준호",
+        "userEmail": "junho@example.com",
+        "inquiryContent": "특정 지역의 숙박 시설을 어떻게 찾을 수 있나요?",
+        "date": "2024-03-04T11:30:00Z"
+    },
+    {
+        "id": 3,
+        "userName": "박지아",
+        "userEmail": "jia@example.com",
+        "inquiryContent": "사이트에서 이벤트 정보를 어디에서 확인할 수 있나요?",
+        "date": "2024-03-04T13:45:00Z"
+    },
+    {
+        "id": 4,
+        "userName": "최유나",
+        "userEmail": "yuna@example.com",
+        "inquiryContent": "사이트 이용 방법에 대한 도움말이나 가이드가 있나요?",
+        "date": "2024-03-04T15:00:00Z"
+    }
+]

@@ -15,12 +15,14 @@ from routes.mypage import router as second_router
 from routes.plan_trip import router as users_router
 from routes.consult import router as consult_router
 from routes.event import router as event_router
+from routes.detailed_region import router as detailed_router
 
 app.include_router(admin_router, prefix="/admin")
 app.include_router(second_router, prefix="/mypage")
 app.include_router(users_router, prefix="/plan_trip")
 app.include_router(consult_router, prefix="/consult")
 app.include_router(event_router, prefix="/event")
+app.include_router(detailed_router, prefix="/detailed_region")
 
 from fastapi import Request                                
 from fastapi.templating import Jinja2Templates              
@@ -105,7 +107,7 @@ async def login_post(request:Request):
     if dict(await request.form())["login_email"] in email_list: 
         user_index = email_list.index(dict(await request.form())["login_email"])
         if password_list[user_index] == dict(await request.form())["login_password"]:
-            link = "login_complete.html"
+            link = "login_complete.html"  
             user_dict = user_list[user_index]
             return templates.TemplateResponse(name=link, context={'request':request,
                                                                   'user_dict' : user_dict})
@@ -116,7 +118,6 @@ async def login_post(request:Request):
     else:
         link = "login_fail.html"
         return templates.TemplateResponse(name=link, context={'request':request})
-
 
 # 회원가입 완료시 
 @app.post("/login_insert")                      
@@ -140,7 +141,7 @@ async def login_insert_post(request:Request):
     else:
         user = User_list(**user_dict)
         await collection_user_list.save(user)
-        return templates.TemplateResponse("login.html",{'request':request})
+        return templates.TemplateResponse("insert_interesting_region.html",{'request':request})
 
 # 커뮤니티 페이지로 이동
 @app.get("/community")                     
