@@ -79,8 +79,8 @@ async def list_post(request:Request):
                                                                                 'reco_add_list': reco_add_list})
 
 
-@router.get("/reserve_transfer/{page_number}") # 펑션 호출 방식
 @router.get("/reserve_transfer") # 펑션 호출 방식
+@router.get("/reserve_transfer/{page_number}") # 펑션 호출 방식
 async def list_get(request:Request, page_number: Optional[int]=1, ):
     transfer_type = dict(request._query_params)
     await request.form()
@@ -98,8 +98,8 @@ async def list_get(request:Request, page_number: Optional[int]=1, ):
                                                                                            'pagination':pagination})
 
 
-@router.get("/reserve_dorm/{page_number}") # 펑션 호출 방식
 @router.get("/reserve_dorm") # 펑션 호출 방식
+@router.get("/reserve_dorm/{page_number}") # 펑션 호출 방식
 async def list_get(request:Request, page_number: Optional[int]=1, ):
     dorm_type = dict(request._query_params)
     await request.form()
@@ -117,8 +117,8 @@ async def list_get(request:Request, page_number: Optional[int]=1, ):
                                                                                            'pagination':pagination})
 
 
-@router.get("/reserve_tour/{page_number}") # 펑션 호출 방식
 @router.get("/reserve_tour") # 펑션 호출 방식
+@router.get("/reserve_tour/{page_number}") # 펑션 호출 방식
 async def tour_post(request:Request, page_number: Optional[int]=1):
     await request.form()
     conditions = {}
