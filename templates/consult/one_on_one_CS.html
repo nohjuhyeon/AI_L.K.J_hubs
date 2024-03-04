@@ -22,13 +22,12 @@
 
 <script>
 document.getElementById("inquiryForm").addEventListener("submit", function(event){
-  event.preventDefault(); // form의 기본 제출 동작을 막음
+  event.preventDefault();
 
   const userName = document.getElementById("userName").value;
   const userEmail = document.getElementById("userEmail").value;
   const userInquiry = document.getElementById("userInquiry").value;
 
-  // 여기서 서버로 데이터를 전송하면 됩니다.
   console.log("이름: " + userName);
   console.log("이메일: " + userEmail);
   console.log("문의 내용: " + userInquiry);
