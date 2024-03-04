@@ -45,13 +45,15 @@
 
             <div class=" justify-content-between row">
                 <div class="col-md-4" style="margin-top: 10px;">{{dict_dorm.dorm_address}}</div> <!-- 아래로 이동 -->
-                <button id="addButton" class="btn btn-primary col-md-3"> 예약 내역에 추가</button>
+                <button id="addButton{{loop.index}}" formaction="/plan_trip/reserve_dorm/"
+                    class="btn btn-primary col-md-3"
+                    value="{{dict_dorm.dorm_name}}/{{dict_dorm.dorm_cate}}/{{dict_dorm.dorm_address}}/{{dict_dorm.dorm_price}}"
+                    formmethod="get"> 가격 비교하기</button>
             </div>
         </div>
     </div>
     {%endfor%}
     <div>
-        <h2>normal paginations 총 수: {{pagination.total_records}}</h2>
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
                 <li class="page-item {% if not pagination.has_previous_block %}disabled{% endif %}">
@@ -69,8 +71,7 @@
 
                 {% for page_num in pagination.current_page_range %}
                 <li class="page-item {% if page_num == pagination.current_page %}active{% endif %}">
-                    <button type="submit" class="page-link"
-                        formaction="/plan_trip/reserve_dorm/{{page_num}}">
+                    <button type="submit" class="page-link" formaction="/plan_trip/reserve_dorm/{{page_num}}">
                         {{page_num}}
                     </button>
                 </li>
@@ -93,27 +94,86 @@
         </nav>
     </div>
 </form>
-<div class="row justify-content-end">
-    <div class="col-2 position-fixed top-40 end-0 mb-3 ms-3 bd-mode-toggl" style="top: 30%;">
-        <ul id="itemList" class="list-group">
+<form action="" method="get">
+    <div class="row justify-content-end">
+        <div class="col-3 position-fixed top-40 end-0 mb-3 ms-3 ml-3 bd-mode-toggl" style="top: 30% ;width: 20%">
             <li class="list-group-item list-group-item-primary">가격 비교하기</li>
-          </ul>
+
+            <ul id="itemList" class="list-group">
+            </ul>
+            <button type="submit" class=" list-group-item"  style="top: 30% ;width: 100%">예약 리스트에 추가하기</button>
+        </div>
     </div>
-</div>
+</form>
 <script>
+    var totalList = '{{ list_dorm}}';
     // addButton 요소를 가져옵니다.
     var addButton = document.getElementById("addButton");
 
     // itemList 요소를 가져옵니다.
     var itemList = document.getElementById("itemList");
 
-    // addButton에 클릭 이벤트 리스너를 추가합니다.
-    addButton.addEventListener("click", function (event) {
-        event.preventDefault(); // 이벤트의 기본 동작을 중단시킵니다.
+    for (var i = 1; i <= totalList.length; i++) {
+        var buttonId = "addButton" + i;
+        var button = document.getElementById(buttonId);
 
-        var newItem = document.createElement("li");
-        newItem.textContent = "새로운 항목";
-        itemList.appendChild(newItem);
-    });
+        button.addEventListener("click", function (event) {
+            event.preventDefault();
+            var clickedButton = event.target;
+            var value = clickedButton.value;
+            var values = value.split("/");
+            var newItem = document.createElement("li");
+            newItem.classList.add("list-group-item");
+
+
+            var firstrow = document.createElement("div");
+            firstrow.classList.add("row");
+
+            var firstrow_col1 = document.createElement("div");
+            firstrow_col1.classList.add("col");
+            firstrow_col1.textContent = `이름 : ${values[0]}`;
+            firstrow.appendChild(firstrow_col1);
+
+            var secondrow = document.createElement("div");
+            secondrow.classList.add("row");
+            var secondrow_col1 = document.createElement("div");
+            secondrow_col1.classList.add("col-6");
+            secondrow_col1.textContent = `유형 : ${values[1]}`;
+            var secondrow_col2 = document.createElement("div");
+            secondrow_col2.classList.add("col-6");
+            secondrow_col2.textContent = `위치 : ${values[2]}`;
+
+            var thirdrow = document.createElement("div");
+            thirdrow.classList.add("row");
+            var thirdrow_col1 = document.createElement("div");
+            thirdrow_col1.classList.add("col-8");
+            var thirdrow_price = document.createElement("h4");
+            thirdrow_price.textContent = `가격 : ${values[3]}`;
+            thirdrow_col1.appendChild(thirdrow_price);
+            var deleteButton = document.createElement("button");
+            deleteButton.classList.add("btn");
+            deleteButton.classList.add("btn-primary");
+            deleteButton.textContent = "빼기";
+            deleteButton.addEventListener("click", function () {
+                newItem.remove();  // 항목을 삭제합니다.
+            });
+            var thirdrow_col2 = document.createElement("div");
+            thirdrow_col2.classList.add("col-4");
+
+            thirdrow_col2.appendChild(deleteButton);
+            newItem.appendChild(firstrow);
+            firstrow.appendChild(firstrow_col1);
+            newItem.appendChild(secondrow);
+            secondrow.appendChild(secondrow_col1);
+            secondrow.appendChild(secondrow_col2);
+            newItem.appendChild(thirdrow);
+            thirdrow.appendChild(thirdrow_col1);
+            thirdrow.appendChild(thirdrow_col2);
+            itemList.appendChild(newItem);
+        });
+        console.log(button);
+    }
+    // addButton에 클릭 이벤트 리스너를 추가합니다.
 </script>
+
 {%endblock%}
