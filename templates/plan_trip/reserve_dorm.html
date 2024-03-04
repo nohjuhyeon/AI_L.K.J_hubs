@@ -112,6 +112,7 @@
 
     // itemList 요소를 가져옵니다.
     var itemList = document.getElementById("itemList");
+    var addedItems = []; // 이미 추가된 항목을 저장하는 배열
 
     for (var i = 1; i <= totalList.length; i++) {
         var buttonId = "addButton" + i;
@@ -123,72 +124,65 @@
             var value = clickedButton.value;
             var values = value.split("/");
             // 중복 체크를 위해 리스트에 이미 해당 값이 있는지 확인합니다.
-            var duplicate = false;
-            var listItems = itemList.getElementsByTagName("li");
-            for (var j = 0; j < listItems.length; j++) {
-                var listItem = listItems[j];
-                var itemName = listItem.querySelector(".col").textContent.split(" : ")[1];
-                if (itemName === values[0]) {
-                    duplicate = true;
-                    break;
-                }
+            // 중복 체크
+            if (addedItems.includes(values[2])) {
+                return; // 이미 추가된 항목이라면 추가 중단
             }
+            addedItems.push(values[2]); // 배열에 항목 추가
 
-            // 중복된 값이 없을 경우에만 항목을 추가합니다.
-            if (!duplicate) {
-                var newItem = document.createElement("li");
-                newItem.classList.add("list-group-item");
+            var newItem = document.createElement("li");
+            newItem.classList.add("list-group-item");
 
 
-                var firstrow = document.createElement("div");
-                firstrow.classList.add("row");
+            var firstrow = document.createElement("div");
+            firstrow.classList.add("row");
 
-                var firstrow_col1 = document.createElement("div");
-                firstrow_col1.classList.add("col");
-                firstrow_col1.textContent = `이름 : ${values[0]}`;
-                firstrow.appendChild(firstrow_col1);
+            var firstrow_col1 = document.createElement("div");
+            firstrow_col1.classList.add("col");
+            firstrow_col1.textContent = `이름 : ${values[0]}`;
+            firstrow.appendChild(firstrow_col1);
 
-                var secondrow = document.createElement("div");
-                secondrow.classList.add("row");
-                var secondrow_col1 = document.createElement("div");
-                secondrow_col1.classList.add("col-6");
-                secondrow_col1.textContent = `유형 : ${values[1]}`;
-                var secondrow_col2 = document.createElement("div");
-                secondrow_col2.classList.add("col-6");
-                secondrow_col2.textContent = `위치 : ${values[2]}`;
+            var secondrow = document.createElement("div");
+            secondrow.classList.add("row");
+            var secondrow_col1 = document.createElement("div");
+            secondrow_col1.classList.add("col-6");
+            secondrow_col1.textContent = `유형 : ${values[1]}`;
+            var secondrow_col2 = document.createElement("div");
+            secondrow_col2.classList.add("col-6");
+            secondrow_col2.textContent = `위치 : ${values[2]}`;
 
-                var thirdrow = document.createElement("div");
-                thirdrow.classList.add("row");
-                var thirdrow_col1 = document.createElement("div");
-                thirdrow_col1.classList.add("col-8");
-                var thirdrow_price = document.createElement("h4");
-                thirdrow_price.textContent = `가격 : ${values[3]}`;
-                thirdrow_col1.appendChild(thirdrow_price);
-                var deleteButton = document.createElement("button");
-                deleteButton.classList.add("btn");
-                deleteButton.classList.add("btn-primary");
-                deleteButton.textContent = "빼기";
-                deleteButton.addEventListener("click", function () {
-                    newItem.remove();  // 항목을 삭제합니다.
-                });
-                var thirdrow_col2 = document.createElement("div");
-                thirdrow_col2.classList.add("col-4");
-                var hidden_input = document.createElement("input");
-                hidden_input.type = "hidden";
-                hidden_input.value = values[4];
-                newItem.appendChild(hidden_input);
-                thirdrow_col2.appendChild(deleteButton);
-                newItem.appendChild(firstrow);
-                firstrow.appendChild(firstrow_col1);
-                newItem.appendChild(secondrow);
-                secondrow.appendChild(secondrow_col1);
-                secondrow.appendChild(secondrow_col2);
-                newItem.appendChild(thirdrow);
-                thirdrow.appendChild(thirdrow_col1);
-                thirdrow.appendChild(thirdrow_col2);
-                itemList.appendChild(newItem);
-            }
-        });
+            var thirdrow = document.createElement("div");
+            thirdrow.classList.add("row");
+            var thirdrow_col1 = document.createElement("div");
+            thirdrow_col1.classList.add("col-8");
+            var thirdrow_price = document.createElement("h4");
+            thirdrow_price.textContent = `가격 : ${values[3]}`;
+            thirdrow_col1.appendChild(thirdrow_price);
+            var deleteButton = document.createElement("button");
+            deleteButton.classList.add("btn");
+            deleteButton.classList.add("btn-primary");
+            deleteButton.textContent = "빼기";
+            deleteButton.addEventListener("click", function () {
+                newItem.remove();  // 항목을 삭제합니다.
+            });
+            var thirdrow_col2 = document.createElement("div");
+            thirdrow_col2.classList.add("col-4");
+            var hidden_input = document.createElement("input");
+            hidden_input.type = "hidden";
+            hidden_input.value = values[4];
+            newItem.appendChild(hidden_input);
+            thirdrow_col2.appendChild(deleteButton);
+            newItem.appendChild(firstrow);
+            firstrow.appendChild(firstrow_col1);
+            newItem.appendChild(secondrow);
+            secondrow.appendChild(secondrow_col1);
+            secondrow.appendChild(secondrow_col2);
+            newItem.appendChild(thirdrow);
+            thirdrow.appendChild(thirdrow_col1);
+            thirdrow.appendChild(thirdrow_col2);
+            itemList.appendChild(newItem);
+        }
+        );
         console.log(button);
     }
     // addButton에 클릭 이벤트 리스너를 추가합니다.
