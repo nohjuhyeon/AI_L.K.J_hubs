@@ -26,6 +26,19 @@ async def list_post(request:Request):
     print(dict(await request.form()))
     return templates.TemplateResponse("consult/user_notice.html" , context={"request": request, "notices": notices} )
 
+## 1대1 문의
+@router.post("/one_on_one_CS") # 펑션 호출 방식
+async def list_post(request:Request):
+    await request.form()
+    print(dict(await request.form()))
+    return templates.TemplateResponse(name="consult/one_on_one_CS.html", context={'request':request})
+
+@router.get("/one_on_one_CS") # 펑션 호출 방식
+async def list_post(request:Request):
+    await request.form()
+    print(dict(await request.form()))
+    return templates.TemplateResponse(name="consult/one_on_one_CS.html", context={'request':request})
+
 ## 데이터 현황 차트
 @router.post("/data_chart") # 펑션 호출 방식
 async def list_post(request:Request):
