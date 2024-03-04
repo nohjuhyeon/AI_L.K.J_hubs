@@ -9,7 +9,7 @@
             <tr>
                 <th colspan="4">
                     <div class="text-end">
-                        <a href="/admin/admin_notice_write" class="btn btn-primary">글 작성</a>
+                        <a href="/consult/user_notice" class="btn btn-primary">글 작성</a>
                     </div>
                 </th>
             </tr>
@@ -26,7 +26,7 @@
             <tr >
                 <td>{{ loop.index }}</td>
                 <td>
-                    <a href="/admin/admin_notice_content/{{notice.id}}">{{ notice.title }}</a>
+                    <a href="/consult/user_notice{{notice.id}}">{{ notice.title }}</a>
                 </td>
                 <td>{{ notice.writer }}</td>
                 <td>{{ notice.date }}</td>
