@@ -98,6 +98,7 @@ async def list_get(request:Request, page_number: Optional[int]=1, ):
                                                                                            'pagination':pagination})
 
 
+
 @router.get("/reserve_dorm") # 펑션 호출 방식
 @router.get("/reserve_dorm/{page_number}") # 펑션 호출 방식
 async def list_get(request:Request, page_number: Optional[int]=1, ):
@@ -115,6 +116,21 @@ async def list_get(request:Request, page_number: Optional[int]=1, ):
     return templates.TemplateResponse(name="plan_trip/reserve_dorm.html", context={'request':request,
                                                                                            'list_dorm':dorm_list_pagination,
                                                                                            'pagination':pagination})
+
+@router.get("/reserve_dorm_test") # 펑션 호출 방식
+async def list_get(request:Request):
+    dorm_type = dict(request._query_params)
+    dorm_list = await collection_reserve_dorm.get_all()
+    await request.form()
+    conditions = { }
+    try :
+        search_word = dorm_type["dorm_cate"]
+    except:
+        search_word = None
+    if search_word:     # 검색어 작성
+        conditions = {"dorm_cate" : { '$regex': search_word}}
+    return templates.TemplateResponse(name="plan_trip/reserve_dorm_test.html", context={'request':request,
+                                                                                           'list_dorm':dorm_list[:5]})
 
 
 @router.get("/reserve_tour") # 펑션 호출 방식
