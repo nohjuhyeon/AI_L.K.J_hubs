@@ -1,7 +1,6 @@
 {% extends "template.html" %}
 
 {% block main_container %}
-<div class="container">
     <h1 class="mt-5">1대1 문의</h1>
     <form id="inquiryForm">
         <div class="mb-3">
@@ -18,38 +17,32 @@
         </div>
         <button type="submit" class="btn btn-primary">제출</button>
     </form>
-</div>
+{% endblock %}
 
-<script>
+{% block custom_js %}
+    <script>
     document.getElementById("inquiryForm").addEventListener("submit", function(event){
       event.preventDefault();
-    
+
       const userName = document.getElementById("userName").value;
       const userEmail = document.getElementById("userEmail").value;
       const userInquiry = document.getElementById("userInquiry").value;
-    
-      fetch('/consult/one_on_one_CS_main.html', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userName: userName,
-          userEmail: userEmail,
-          userInquiry: userInquiry
-        }),
+
+      axios.post('/one_on_one_add', {
+        userName: userName,
+        userEmail: userEmail,
+        userInquiry: userInquiry
       })
-      .then(response => response.json())
-      .then(data => {
-        if(data.success) {
-          window.location.href = '/consult/one_on_one_CS_main.html';
+      .then(function (response) {
+        if(response.data.success) {
+          window.location.href = '/one_on_one_CS_main.html';
         } else {
-          alert('문의 하지마 귀찮아.....');
+          alert('문의 제출에 실패했습니다.');
         }
       })
-      .catch((error) => {
-        console.error('Error:', error);
+      .catch(function (error) {
+        console.log(error);
       });
     });
     </script>
-    {% endblock %}
+{% endblock %}
