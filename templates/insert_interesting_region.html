@@ -8,10 +8,8 @@
     <form class="row">
         <h1>{{user_dict.user_name}}님,</h1>
         <h1>어느 곳에 가고 싶으세요?</h1>
-        <br>
-        <br>
-        <br>
-        <div style="font-size: 30px; padding: 10;">
+
+        <div style="font-size: 30px; padding: 10%;">
             <div>
                 <label for="seoul">서울</label>
                 <input type="checkbox" name="region" id="seoul">
@@ -33,23 +31,15 @@
                 <input type="checkbox" name="region" id="jeju">
             </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <div style="padding: 10%;">
-            <button class="btn btn-primary" type="submit" formaction="" formmethod="post">next</button>
-            <button class="btn btn-light" type="reset">reset</button>
-        </div>
     </form>
 
     <div class="row" style="text-align: center; margin-top: 15%; margin-bottom: 15%;">
         <form class="row">
-            <h1>{{user_dict.user_name}}님,</h1>
             <h1>어느 여행 컨셉을 원하세요?</h1>
             <br>
             <br>
             <br>
-            <div style="font-size: 30px; padding: 10;">
+            <div style="font-size: 30px; padding: 10%;">
                 <div>
                     <label for="nature">자연관광</label>
                     <input type="checkbox" name="attraction" id="nature">
@@ -75,7 +65,7 @@
             <br>
             <br>
             <div style="padding: 10%;">
-                <button class="btn btn-primary" type="submit" formaction="" formmethod="post">next</button>
+                <button class="btn btn-primary" type="submit" formaction="/login" formmethod="get">next</button>
                 <button class="btn btn-light" type="reset">reset</button>
             </div>
         </form>
