@@ -33,7 +33,63 @@
             width: 95%;
         }
 
+        .image-list>a .screen {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-list>a .screen .top {
+            position: absolute;
+            bottom: 150%;
+            left: 30px;
+            z-index: 2;
+            color: #fff;
+            font-size: 26px;
+            font-weight: 900;
+            transition: all .35s;
+        }
+
+        .image-list>a:hover .top {
+            bottom: 52%;
+        }
+
+        .image-list>a .screen .bottom {
+            position: absolute;
+            top: 150%;
+            left: 30px;
+            z-index: 2;
+            color: #fff;
+            font-size: 12px;
+            transition: all .35s;
+        }
+
+        .image-list>a:hover .bottom {
+            top: 52%;
+        }
+
+        .image-list>a .screen::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+            z-index: 1;
+            opacity: 0;
+            transition: all .35s;
+        }
+
+        .image-list>a:hover .screen::after {
+            opacity: 1;
+        }
+
         .slider-wrapper {
+            position: relative;
+        }
+
+        .image-item {
             position: relative;
         }
 
@@ -50,6 +106,8 @@
             cursor: pointer;
             border-radius: 50%;
             transform: translateY(-50%);
+            z-index: 10; 
+            /*  z-index는 CSS 속성 중 하나로, 웹 페이지의 요소들 사이에 쌓임 순서 (z축 순서)를 설정하는 속성입니다. 값이 클수록 사용자에게 가까운 위치에 표시 */
         }
 
         .slider-wrapper .slide-button:hover {
@@ -148,11 +206,11 @@
             .slider-scrollbar .scrollbar-thumb {
                 width: 20%;
 
-            } 
+            }
         }
-
     </style>
 </head>
+
 <body>
     <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
@@ -177,38 +235,59 @@
             </form>
         </div>
     </nav>
-    
+
     <div class="container">
         <div class="slider-wrapper">
             <button id="prev-slide" class="slide-button material-symbols-rounded">&lt;</button>
             <div class="image-list">
                 <a href="/detailed_region/info_Seoul">
-                <img src='/images/pictures1.jpg' alt="img-1" class="image-item">
+                    <div class="screen">
+                        <div class="top">서울</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src='/images/pictures1.jpg' alt="img-1" class="image-item">
+                    </div>
                 </a>
                 <a href="/detailed_region/info_Busan">
-                <img src="/images/pictures2.jpg" alt="img-2" class="image-item">
+                    <div class="screen">
+                        <div class="top">부산</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src="/images/pictures2.jpg" alt="img-2" class="image-item">
+                    </div>
                 </a>
                 <a href="/detailed_region/info_Gangwondo">
-                <img src="/images/pictures3.jpg" alt="img-3" class="image-item">
+                    <div class="screen">
+                        <div class="top">강원도</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src="/images/pictures3.jpg" alt="img-3" class="image-item">
+                    </div>
                 </a>
                 <a href="/detailed_region/info_Jeju">
-                <img src="/images/pictures4.jpg" alt="img-4" class="image-item">
+                    <div class="screen">
+                        <div class="top">제주도</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src="/images/pictures4.jpg" alt="img-4" class="image-item">
+                    </div>
                 </a>
                 <a href="/detailed_region/info_Incheon">
-                <img src="/images/pictures5.jpg" alt="img-5" class="image-item">
+                    <div class="screen">
+                        <div class="top">인천</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src="/images/pictures5.jpg" alt="img-5" class="image-item">
+                    </div>
                 </a>
                 <a href="">
-                <img src="/images/pictures6.jpg" alt="img-6" class="image-item">
+                    <img src="/images/pictures6.jpg" alt="img-6" class="image-item">
                 </a>
                 <a href="">
-                <img src="/images/pictures7.jpg" alt="img-7" class="image-item">
+                    <img src="/images/pictures7.jpg" alt="img-7" class="image-item">
                 </a>
                 <a href="">
-                <img src="/images/pictures8.jpg" alt="img-8" class="image-item">
+                    <img src="/images/pictures8.jpg" alt="img-8" class="image-item">
                 </a>
                 <a href="">
-                <img src="/images/pictures9.jpg" alt="img-9" class="image-item">
+                    <img src="/images/pictures9.jpg" alt="img-9" class="image-item">
                 </a>
+
             </div>
             <button id="next-slide" class="slide-button material-symbols-rounded">&gt;</button>
         </div>
@@ -218,7 +297,7 @@
             </div>
         </div>
     </div>
-    
+
 
 </body>
 <script>
