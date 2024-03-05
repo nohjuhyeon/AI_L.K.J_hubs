@@ -129,8 +129,11 @@ async def list_get(request:Request):
         search_word = None
     if search_word:     # 검색어 작성
         conditions = {"dorm_cate" : { '$regex': search_word}}
+    dorm_list = await collection_reserve_dorm.getsbyconditions(conditions
+                                                                     )    # pagenumber = 1
+    dorm_dict_list = [module.dict() for module in dorm_list]
     return templates.TemplateResponse(name="plan_trip/reserve_dorm_test.html", context={'request':request,
-                                                                                           'list_dorm':dorm_list[:5]})
+                                                                                           'list_dorm':dorm_dict_list})
 
 
 @router.get("/reserve_tour") # 펑션 호출 방식
