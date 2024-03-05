@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from databases.connections import Database
 from fastapi import HTTPException
+import requests
 from models.admin_notice import Admin_notice_list
 collection_admin_notice_list = Database(Admin_notice_list)
 from models.one_on_one_CS import One_on_one_CS_list
@@ -13,8 +14,6 @@ One_on_one_CS_list = Database(One_on_one_CS_list)
 router = APIRouter()
 
 templates = Jinja2Templates(directory="templates/")
-
-
 
 ## 공지 사항
 @router.post("/user_notice") # 펑션 호출 방식
@@ -63,6 +62,22 @@ async def add_one_on_one(request : Request):
     await One_on_one_CS_list.save(add_qna)
     qna = await One_on_one_CS_list.get_all()
     return templates.TemplateResponse("consult/one_on_one_CS_main.html", context={'request':request, 'qna': qna})
+
+## 카카오톡 상담
+@router.post("/kakaotalk_CS")
+@router.get("/kakaotalk_CS")
+async def kakaotalk_CS(request: Request):
+    access_token = "Kuah5OooBvqo_gpRWE075RorCj1vn8ZYkucKKwynAAABjgy4pJ-oblpFv_zasg"  # 실제 액세스 토큰으로 바꿔주세요
+
+    headers = {
+        "Authorization": f"Bearer {access_token}"
+    }
+
+    response = requests.get("https://kapi.kakao.com/v2/api/talk/memo/default/send", headers=headers)
+
+    return templates.TemplateResponse("consult/kakaotalk_CS.html", context={'request':request, 'response': response.json()})
+
+
 
 ## 데이터 현황 차트
 @router.post("/data_chart") # 펑션 호출 방식
