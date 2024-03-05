@@ -75,7 +75,7 @@ async def kakaotalk_CS(request: Request):
 
     response = requests.get("https://kapi.kakao.com/v2/api/talk/memo/default/send", headers=headers)
 
-    return templates.TemplateResponse("consult/kakaotalk_CS.html", context={'request':request, 'response': response.json()})
+    return templates.TemplateResponse("template.html", context={'request':request, 'response': response.json()})
 
 
 
