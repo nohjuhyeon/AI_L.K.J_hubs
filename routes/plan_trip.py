@@ -111,11 +111,23 @@ async def list_get(request:Request, page_number: Optional[int]=1, ):
         search_word = None
     if search_word:     # 검색어 작성
         conditions = {"dorm_cate" : { '$regex': search_word}}
+    check_dorm = []
+    added_items=[]
+    for i in range(len(dorm_type)):
+        pass
+        if str(i+1) in dorm_type.keys():
+            if dorm_type[str(i+1)] not in added_items:
+                added_items.append(dorm_type[str(i+1)])
+                dorm_element = await collection_reserve_dorm.get(dorm_type[str(i+1)])
+                check_dorm.append(dorm_element)
+    print(check_dorm)
     dorm_list_pagination, pagination = await collection_reserve_dorm.getsbyconditionswithpagination(conditions
                                                                      ,page_number)
     return templates.TemplateResponse(name="plan_trip/reserve_dorm.html", context={'request':request,
                                                                                            'list_dorm':dorm_list_pagination,
-                                                                                           'pagination':pagination})
+                                                                                           'pagination':pagination,
+                                                                                           'check_dorm':check_dorm,
+                                                                                           'added_items':added_items})
 
 @router.get("/reserve_dorm_test") # 펑션 호출 방식
 async def list_get(request:Request):

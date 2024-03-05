@@ -93,13 +93,29 @@
             </ul>
         </nav>
     </div>
-</form>
-<form action="" method="get">
     <div class="row justify-content-end">
         <div class="col-3 position-fixed top-40 end-0 mb-3 ms-3 ml-3 bd-mode-toggl" style="top: 30% ;width: 20%">
             <li class="list-group-item list-group-item-primary">가격 비교하기</li>
             <div class="scrollable-box-list" style="height: 50%;">
                 <ul id="itemList" class="list-group scrollarea">
+                    {%for check_element in check_dorm%}
+                    <li class="list-group-item">
+                        <input type="hidden" value={{check_element.id}} name={{loop.index}}>
+                        <div class="row">
+                            <div class="col">이름 : {{check_element.dorm_name}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">유형 : {{check_element.dorm_cate}}</div>
+                            <div class="col-6">위치 : {{check_element.dorm_address}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>가격 : {{check_element.dorm_price}}</h4>
+                            </div>
+                            <div class="col-4"><button class="btn btn-primary">빼기</button></div>
+                        </div>
+                    </li>
+                    {%endfor%}
                 </ul>
             </div>
             <button type="submit" class=" list-group-item" style="top: 30% ;width: 100%">예약 리스트에 추가하기</button>
@@ -110,10 +126,9 @@
     var totalList = '{{ list_dorm}}';
     // addButton 요소를 가져옵니다.
     var addButton = document.getElementById("addButton");
-
+    var added_items = JSON.parse('{{ added_items | tojson | safe }}');
     // itemList 요소를 가져옵니다.
     var itemList = document.getElementById("itemList");
-    var addedItems = []; // 이미 추가된 항목을 저장하는 배열
 
     for (var i = 1; i <= totalList.length; i++) {
         var buttonId = "addButton" + i;
@@ -126,10 +141,10 @@
             var values = value.split("/");
             // 중복 체크를 위해 리스트에 이미 해당 값이 있는지 확인합니다.
             // 중복 체크
-            if (addedItems.includes(values[4])) {
+            if (added_items.includes(values[4])) {
                 return; // 이미 추가된 항목이라면 추가 중단
             }
-            addedItems.push(values[2]); // 배열에 항목 추가
+            added_items.push(values[4]); // 배열에 항목 추가
 
             var newItem = document.createElement("li");
             newItem.classList.add("list-group-item");
@@ -171,6 +186,7 @@
             var hidden_input = document.createElement("input");
             hidden_input.type = "hidden";
             hidden_input.value = values[4];
+            hidden_input.name = added_items.length;
             newItem.appendChild(hidden_input);
             thirdrow_col2.appendChild(deleteButton);
             newItem.appendChild(firstrow);
