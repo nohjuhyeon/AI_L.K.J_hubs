@@ -141,7 +141,8 @@ async def login_insert_post(request:Request):
     else:
         user = User_list(**user_dict)
         await collection_user_list.save(user)
-        return templates.TemplateResponse("insert_interesting_region.html",{'request':request})
+        return templates.TemplateResponse("insert_interesting_region.html",{'request':request,
+                                                                  'user_dict' : user_dict}) # login.html
 
 # 커뮤니티 페이지로 이동
 @app.get("/community")                     
