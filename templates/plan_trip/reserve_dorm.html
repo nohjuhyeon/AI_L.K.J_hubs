@@ -129,7 +129,18 @@
     var added_items = JSON.parse('{{ added_items | tojson | safe }}');
     // itemList 요소를 가져옵니다.
     var itemList = document.getElementById("itemList");
+    // deletebtn 버튼 클릭 이벤트 핸들러
+    function deleteListItem(event) {
+        // 클릭된 deletebtn 버튼의 부모 요소인 li 요소를 찾아서 삭제
+        var listItem = event.target.closest('.list-group-item');
+        listItem.remove();
+    }
 
+    // deletebtn 버튼에 이벤트 핸들러 등록
+    var deleteButtons = document.querySelectorAll('.btn-primary');
+    deleteButtons.forEach(function (button) {
+        button.addEventListener('click', deleteListItem);
+    });
     for (var i = 1; i <= totalList.length; i++) {
         var buttonId = "addButton" + i;
         var button = document.getElementById(buttonId);
@@ -178,9 +189,6 @@
             deleteButton.classList.add("btn");
             deleteButton.classList.add("btn-primary");
             deleteButton.textContent = "빼기";
-            deleteButton.addEventListener("click", function () {
-                newItem.remove();  // 항목을 삭제합니다.
-            });
             var thirdrow_col2 = document.createElement("div");
             thirdrow_col2.classList.add("col-4");
             var hidden_input = document.createElement("input");
