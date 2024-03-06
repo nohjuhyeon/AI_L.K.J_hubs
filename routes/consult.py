@@ -45,7 +45,7 @@ async def list_get_by_id(request:Request, objected_id: PydanticObjectId):
 @router.get("/consult/frequent_CS")
 async def list_get(request:Request):
     faqs = await FAQ_list.get_all()
-    return templates.TemplateResponse(name="consult/frequent_CS_list.html", context={'request':request, 'faqs':faqs})
+    return templates.TemplateResponse(name="consult/frequent_CS.html", context={'request':request, 'faqs':faqs})
 
 
 ## 1대1 문의 메인페이지
