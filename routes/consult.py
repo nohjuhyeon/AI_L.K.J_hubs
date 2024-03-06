@@ -6,17 +6,18 @@ from databases.connections import Database
 from fastapi import HTTPException
 from beanie import PydanticObjectId
 import requests
+
+router = APIRouter()
+
+templates = Jinja2Templates(directory="templates/")
+
+
 from models.admin_notice import Admin_notice_list
 collection_admin_notice_list = Database(Admin_notice_list)
 from models.one_on_one_CS import One_on_one_CS_list
 One_on_one_CS_list = Database(One_on_one_CS_list)
 from models.frequent_CS import FAQ_list
-FAQ_list = Database(FAQ_list)
-
-
-router = APIRouter()
-
-templates = Jinja2Templates(directory="templates/")
+collection_FAQ_list = Database(FAQ_list)
 
 ## 공지 사항
 @router.post("/user_notice") # 펑션 호출 방식
@@ -32,16 +33,16 @@ async def list_post(request:Request):
     return templates.TemplateResponse("consult/user_notice.html" , context={"request": request, "notices": notices} )
 
 ## 자주 묻는 질문 페이지
-@router.post("/frequent_CS/{objected_id}")
-async def list_post(request:Request, object_id: PydanticObjectId):
-    faqs = await FAQ_list.get(object_id)
-    # print(dict(await request.form()))
+@router.post("/frequent_CS")
+async def frequent_cs_post(request:Request):
+    form_data = await request.form()
+    print(dict(form_data))
+    faqs = await collection_FAQ_list.get_all()
     return templates.TemplateResponse(name="consult/frequent_CS.html", context={'request':request, 'faqs':faqs})
 
-@router.get("/frequent_CS/{objected_id}")
-async def list_post(request:Request, object_id: PydanticObjectId):
-    faqs = await FAQ_list.get(object_id)
-    # print(dict(await request.form()))
+@router.get("/frequent_CS")
+async def frequent_cs_get(request:Request):
+    faqs = await collection_FAQ_list.get_all()
     return templates.TemplateResponse(name="consult/frequent_CS.html", context={'request':request, 'faqs':faqs})
 
 ## 1대1 문의 메인페이지

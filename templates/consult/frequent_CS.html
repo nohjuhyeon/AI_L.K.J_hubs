@@ -21,9 +21,6 @@
             {% for faq in faqs %}
             <tr >
                 <td>{{ loop.index }}</td>
-                <td>
-                    <a href="/consult/frequent_CS{{faqs._id}}">{{ faq.question }}</a>
-                </td>
                 <td>{{ faq.quesiton }}</td>
                 <td>{{ faq.answer }}</td>
             </tr>
