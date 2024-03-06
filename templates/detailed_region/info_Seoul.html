@@ -2,7 +2,8 @@
 
 {% block main_container %}
 
-    <!DOCTYPE html>
+
+<!DOCTYPE html>
     <html lang="en">
 
     <head>
@@ -137,7 +138,7 @@
     </body>
     <script>
         const multipleCardCarousel = document.querySelector("#carouselExampleControls");
-
+    
         function handleNextClick() {
             const carouselInner = document.querySelector(
                 "#carouselExampleControls .carousel-inner"
@@ -145,7 +146,7 @@
             const carouselWidth = carouselInner.scrollWidth;
             const cardWidth = document.querySelector(".carousel-item").offsetWidth;
             let scrollPosition = carouselInner.scrollLeft;
-
+    
             if (scrollPosition < carouselWidth - cardWidth * 4) {
                 scrollPosition += cardWidth;
                 carouselInner.scrollTo({
@@ -154,14 +155,14 @@
                 });
             }
         }
-
+    
         function handlePrevClick() {
             const carouselInner = document.querySelector(
                 "#carouselExampleControls .carousel-inner"
             );
             const cardWidth = document.querySelector(".carousel-item").offsetWidth;
             let scrollPosition = carouselInner.scrollLeft;
-
+    
             if (scrollPosition > 0) {
                 scrollPosition -= cardWidth;
                 carouselInner.scrollTo({
@@ -170,28 +171,22 @@
                 });
             }
         }
-
+    
         if (window.matchMedia("(min-width: 768px)").matches) {
-            const carousel = new bootstrap.Carousel(multipleCardCarousel, {
-                interval: false,
-            });
-
             const nextButton = document.querySelector(
                 "#carouselExampleControls .carousel-control-next"
             );
             const prevButton = document.querySelector(
                 "#carouselExampleControls .carousel-control-prev"
             );
-
+    
             nextButton.addEventListener("click", handleNextClick);
             prevButton.addEventListener("click", handlePrevClick);
         } else {
             multipleCardCarousel.classList.add("slide");
         }
-
     </script>
 
 
 </html>
-
 {% endblock %}

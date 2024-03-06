@@ -2,25 +2,27 @@
 
 {% block main_container %}
 <h1 class="mt-5 mb-4 text-center">자주 묻는 질문</h1>
-<div ckass="container my-3">
+<div class="container my-3">
     <table class="table">
         <thead class="table-light rounded-corners">
             <tr>
-                <th colspan="4">
+                <th colspan="3">
                 </th>
             </tr>
         </thead>
         <thead class="table-primary rounded-corners">
             <tr>
             <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성날짜</th>
+            <th>질문</th>
+            <th>답변</th>
             </tr>
         </thead>
             {% for faq in faqs %}
-            <tr >
+            <tr>
                 <td>{{ loop.index }}</td>
+                <td>
+                    <a href="/consult/frequent_CS{{faqs._id}}">{{ faq.question }}</a>
+                </td>
                 <td>{{ faq.quesiton }}</td>
                 <td>{{ faq.answer }}</td>
             </tr>
