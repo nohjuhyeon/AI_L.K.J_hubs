@@ -46,6 +46,11 @@
         background-color: #FEE500;
         color: #000;
         }
+        .consulting-hours {
+        display: block;
+        font-size: 0.8em;
+        color: #000;
+        }
     </style>
 </head>
 
@@ -115,13 +120,10 @@
                             <a class="dropdown-item" href="/consult/user_notice">공지사항</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="/">자주 묻는 질문</a>
+                            <a class="dropdown-item" href="/consult/frequent_CS">자주 묻는 질문</a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="/consult/one_on_one_CS_main">1:1 문의</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="/consult/kakaotalk_CS">카카오톡 문의</a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="/consult/data_chart">데이터 현황 차트</a>
@@ -137,7 +139,10 @@
                 <div class="row justify-content-end">
                     <div class="col-3 position-fixed top-40 start-0 mb-3 ms-3 ml-3 bd-mode-toggl"
                         style="top: 30% ;width: 20% ">
-                        <a href="https://pf.kakao.com/_xaxdSxiG/chat" target="_blank" class="kakao-button">카카오톡 1대1 상담</a>
+                        <a href="https://pf.kakao.com/_xaxdSxiG/chat" target="_blank" class="kakao-button">
+                            카카오톡 1대1 상담
+                            <span class="consulting-hours">상담시간 : 09:00~18:00</span>
+                        </a>
                     </div>
                 </div>
             </form>
@@ -171,6 +176,8 @@
 
         </footer>
     </div>
+    {% block custom_js %}
+    {% endblock %}
 </body>
 <!-- Latest compiled JavaScript -->
 

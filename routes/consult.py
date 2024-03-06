@@ -28,6 +28,19 @@ async def list_post(request:Request):
     print(dict(await request.form()))
     return templates.TemplateResponse("consult/user_notice.html" , context={"request": request, "notices": notices} )
 
+## 자주 묻는 질문 페이지
+@router.post("/frequent_CS")
+async def list_post(request:Request):
+    faqs = await FAQ_list.get_all()
+    print(dict(await request.form()))
+    return templates.TemplateResponse(name="consult/frequent_CS.html", context={'request':request, 'faqs':faqs})
+
+@router.get("/frequent_CS")
+async def list_post(request:Request):
+    faqs = await FAQ_list.get_all()
+    print(dict(await request.form()))
+    return templates.TemplateResponse(name="consult/frequent_CS.html", context={'request':request, 'faqs':faqs})
+
 ## 1대1 문의 메인페이지
 @router.post("/one_on_one_CS_main") # 펑션 호출 방식
 async def list_post(request:Request):
@@ -55,13 +68,17 @@ async def list_post(request:Request):
     return templates.TemplateResponse(name="consult/one_on_one_CS.html", context={'request':request})
 
 ## 새로운 1대1 질문 추가
+@router.get("/one_on_one_add")
+async def get_one_on_one(request: Request):
+    qna = await One_on_one_CS_list.get_all()
+    return templates.TemplateResponse("consult/one_on_one_CS_main.html", context={'request':request, 'qna': qna})
+
 @router.post("/one_on_one_add")
-async def add_one_on_one(request : Request):
+async def add_one_on_one(request: Request):
     qna_dict = dict(await request.form())
     add_qna = One_on_one_CS_list(**qna_dict)
     await One_on_one_CS_list.save(add_qna)
-    qna = await One_on_one_CS_list.get_all()
-    return templates.TemplateResponse("consult/one_on_one_CS_main.html", context={'request':request, 'qna': qna})
+    return {"success": True}
 
 ## 카카오톡 상담
 @router.post("/kakaotalk_CS")

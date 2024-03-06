@@ -1,0 +1,44 @@
+{% extends "template.html" %}
+
+{% block main_container %}
+<h1 class="mt-5 mb-4 text-center">자주 묻는 질문</h1>
+<div ckass="container my-3">
+    <table class="table">
+        <thead class="table-light rounded-corners">
+            <tr>
+                <th colspan="4">
+                </th>
+            </tr>
+        </thead>
+        <thead class="table-primary rounded-corners">
+            <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성날짜</th>
+            </tr>
+        </thead>
+            {% for faq in faqs %}
+            <tr >
+                <td>{{ loop.index }}</td>
+                <td>
+                    <a href="/consult/user_notice{{faqs._id}}">{{ faqs.inquiryContent }}</a>
+                </td>
+                <td>{{ faqs.quesiton }}</td>
+                <td>{{ faqs.answer }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+  <div>
+    <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+    </div>
+
+{% endblock %}
