@@ -32,17 +32,21 @@ async def list_post(request:Request):
     return templates.TemplateResponse("consult/user_notice.html" , context={"request": request, "notices": notices} )
 
 ## 자주 묻는 질문 페이지
-@router.post("/frequent_CS/{objected_id}")
-async def list_post(request:Request, object_id: PydanticObjectId):
-    faqs = await FAQ_list.get(object_id)
-    # print(dict(await request.form()))
-    return templates.TemplateResponse(name="consult/frequent_CS.html", context={'request':request, 'faqs':faqs})
+@router.post("/consult/frequent_CS/{objected_id}")
+async def list_post_by_id(request:Request, objected_id: PydanticObjectId):
+    faq = await FAQ_list.get(objected_id)
+    return templates.TemplateResponse(name="consult/frequent_CS.html", context={'request':request, 'faq':faq})
 
-@router.get("/frequent_CS/{objected_id}")
-async def list_post(request:Request, object_id: PydanticObjectId):
-    faqs = await FAQ_list.get(object_id)
-    # print(dict(await request.form()))
-    return templates.TemplateResponse(name="consult/frequent_CS.html", context={'request':request, 'faqs':faqs})
+@router.get("/consult/frequent_CS/{objected_id}")
+async def list_get_by_id(request:Request, objected_id: PydanticObjectId):
+    faq = await FAQ_list.get(objected_id)
+    return templates.TemplateResponse(name="consult/frequent_CS.html", context={'request':request, 'faq':faq})
+
+@router.get("/consult/frequent_CS")
+async def list_get(request:Request):
+    faqs = await FAQ_list.get_all()
+    return templates.TemplateResponse(name="consult/frequent_CS_list.html", context={'request':request, 'faqs':faqs})
+
 
 ## 1대1 문의 메인페이지
 @router.post("/one_on_one_CS_main") # 펑션 호출 방식
