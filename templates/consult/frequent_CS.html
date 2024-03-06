@@ -22,10 +22,10 @@
             <tr >
                 <td>{{ loop.index }}</td>
                 <td>
-                    <a href="/consult/user_notice{{faqs._id}}">{{ faqs.inquiryContent }}</a>
+                    <a href="/consult/frequent_CS{{faqs._id}}">{{ faq.question }}</a>
                 </td>
-                <td>{{ faqs.quesiton }}</td>
-                <td>{{ faqs.answer }}</td>
+                <td>{{ faq.quesiton }}</td>
+                <td>{{ faq.answer }}</td>
             </tr>
             {% endfor %}
         </tbody>
