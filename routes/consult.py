@@ -138,14 +138,14 @@ async def list_post(request:Request):
     for i in range(len(concept_list)):
         dict_concept[concept_list[i]["destination_type"]] = dict_concept[concept_list[i]["destination_type"]] +  concept_list[i]['destination_search']/40000
 
-    # 월별 관광 소비 추이
-    visitor_conditions = {"destination_type" : { '$regex': '전체'}}
-    visitor_list = await collection_data_concept_search.getsbyconditions(visitor_conditions)
-    visitor_list = [module.dict() for module in visitor_list]
-    dict_visitor = {'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'11':0,'12':0}
-    for i in range(len(visitor_list)):
-        if visitor_list[i]['region'] == region_list[5]:
-            dict_visitor[str(visitor_list[i]['std_month'])] = dict_visitor[str(visitor_list[i]['std_month'])]  + visitor_list[i]['destination_search']/40000
+    # 월별 관광 소비 추이 이거
+    consume_transition = {"destination_type" : { '$regex': '전체'}}
+    consume_transition_list = await collection_data_consume_transition.getsbyconditions(consume_transition)
+    consume_transition_list = [module.dict() for module in consume_transition_list]
+    dict_consume_transition = {'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'11':0,'12':0}
+    for i in range(len(consume_transition_list)):
+        if consume_transition_list[i]['region'] == consume_transition_list[5]:
+            dict_consume_transition[str(consume_transition_list[i]['std_month'])] = dict_consume_transition[str(consume_transition_list[i]['std_month'])]  + consume_transition_list[i]['destination_search']/40000
     
     # 월별 키워드 검색량
     trend_list = await collection_data_trend_search.get_all()
@@ -166,4 +166,5 @@ async def list_post(request:Request):
     consume_list = [module.dict() for module in consume_list]
     for i in range(len(consume_list)):
         dict_consume[consume_list[i]["industry_major_cate"]] = dict_consume[consume_list[i]["industry_major_cate"]] +  consume_list[i]['consumption_amount']/40000
+
     return templates.TemplateResponse(name="consult/data_chart.html", context={'request':request, 'dict_visitor':dict_visitor,'dict_concept':dict_concept,'list_month_trend':list_month_trend,'consume_list':consume_list})
