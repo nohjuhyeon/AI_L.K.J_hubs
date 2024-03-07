@@ -128,6 +128,31 @@ async def list_get(request:Request, page_number: Optional[int]=1, ):
                                                                                            'pagination':pagination,
                                                                                            'check_dorm':check_dorm,
                                                                                            'added_items':added_items})
+@router.get("/reserve_tour") # 펑션 호출 방식
+@router.get("/reserve_tour/{page_number}") # 펑션 호출 방식
+async def tour_post(request:Request, page_number: Optional[int]=1):
+    tour_type = dict(request._query_params)
+    await request.form()
+    conditions = {}
+    check_tour = []
+    added_items=[]
+    for i in range(len(tour_type)):
+        pass
+        if str(i+1) in tour_type.keys():
+            if tour_type[str(i+1)] not in added_items:
+                added_items.append(tour_type[str(i+1)])
+                tour_element = await collection_tour_list.get(tour_type[str(i+1)])
+                check_tour.append(tour_element)
+    print(check_tour)
+
+    print(dict(await request.form()))
+    tour_list_pagination, pagination = await collection_tour_list.getsbyconditionswithpagination(conditions
+                                                                     ,page_number)
+    return templates.TemplateResponse(name="plan_trip/reserve_tour.html", context={'request':request,
+                                                                                           'tour_list':tour_list_pagination,
+                                                                                           'pagination':pagination,
+                                                                                           'check_tour':check_tour,
+                                                                                           'added_items':added_items})
 
 @router.get("/reserve_dorm_test") # 펑션 호출 방식
 async def list_get(request:Request):
@@ -148,14 +173,3 @@ async def list_get(request:Request):
                                                                                            'list_dorm':dorm_dict_list})
 
 
-@router.get("/reserve_tour") # 펑션 호출 방식
-@router.get("/reserve_tour/{page_number}") # 펑션 호출 방식
-async def tour_post(request:Request, page_number: Optional[int]=1):
-    await request.form()
-    conditions = {}
-    print(dict(await request.form()))
-    tour_list_pagination, pagination = await collection_tour_list.getsbyconditionswithpagination(conditions
-                                                                     ,page_number)
-    return templates.TemplateResponse(name="plan_trip/reserve_tour.html", context={'request':request,
-                                                                                           'tour_list':tour_list_pagination,
-                                                                                           'pagination':pagination})

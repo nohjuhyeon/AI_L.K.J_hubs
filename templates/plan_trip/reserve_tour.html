@@ -91,13 +91,24 @@
             </ul>
         </nav>
     </div>
-</form>
-<form action="" method="get">
     <div class="row justify-content-end">
         <div class="col-3 position-fixed top-40 end-0 mb-3 ms-3 ml-3 bd-mode-toggl" style="top: 30% ;width: 20% ">
             <li class="list-group-item list-group-item-primary">가격 비교하기</li>
             <div class="scrollable-box-list" style="height: 50%;">
                 <ul id="itemList" class="list-group scrollarea">
+                    {%for check_element in check_tour%}
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col">이름 : {{check_element.tour_name}}</div>
+                        </div><input type="hidden" value={{check_element.id}} name={{loop.index}}>
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>가격 : {{check_element.tour_price}}</h4>
+                            </div>
+                            <div class="col-4"><button class="btn btn-primary">빼기</button></div>
+                        </div>
+                    </li>
+                    {%endfor%}
                 </ul>
             </div>
             <button type="submit" class=" list-group-item" style="top: 30% ;width: 100%">예약 리스트에 추가하기</button>
@@ -107,12 +118,20 @@
 <script>
     var totalList = '{{tour_list|length}}';
     // addButton 요소를 가져옵니다.
-
+    var addButton = document.getElementById("addButton");
+    var added_items = JSON.parse('{{ added_items | tojson | safe }}');
     // itemList 요소를 가져옵니다.
     var itemList = document.getElementById("itemList");
-
-    var addedItems = []; // 이미 추가된 항목을 저장하는 배열
-
+    function deleteListItem(event) {
+        // 클릭된 deletebtn 버튼의 부모 요소인 li 요소를 찾아서 삭제
+        var listItem = event.target.closest('.list-group-item');
+        listItem.remove();
+    }
+    // deletebtn 버튼에 이벤트 핸들러 등록
+    var deleteButtons = document.querySelectorAll('.btn-primary');
+    deleteButtons.forEach(function (button) {
+        button.addEventListener('click', deleteListItem);
+    });
     for (var i = 1; i <= totalList; i++) {
         var buttonId = "addButton" + i;
         var button = document.getElementById(buttonId);
@@ -124,18 +143,20 @@
             var values = value.split("/");
 
             // 중복 체크
-            if (addedItems.includes(values[2])) {
+            if (added_items.includes(values[2])) {
                 return; // 이미 추가된 항목이라면 추가 중단
             }
 
             // 중복 체크 통과한 경우
-            addedItems.push(values[2]); // 배열에 항목 추가
+            added_items.push(values[2]); // 배열에 항목 추가
 
             // 항목 생성 및 추가하는 코드
             var newItem = document.createElement("li");
             newItem.classList.add("list-group-item");
+
             var firstrow = document.createElement("div");
             firstrow.classList.add("row");
+
             var firstrow_col1 = document.createElement("div");
             firstrow_col1.classList.add("col");
             firstrow_col1.textContent = `이름 : ${values[0]}`;
@@ -159,14 +180,12 @@
             deleteButton.classList.add("btn");
             deleteButton.classList.add("btn-primary");
             deleteButton.textContent = "빼기";
-            deleteButton.addEventListener("click", function () {
-                newItem.remove();  // 항목을 삭제합니다.
-            });
             thirdrow_col2.appendChild(deleteButton);
 
             var hidden_input = document.createElement("input");
             hidden_input.type = "hidden";
             hidden_input.value = values[2];
+            hidden_input.name = added_items.length;
             newItem.appendChild(hidden_input);
 
             thirdrow.appendChild(thirdrow_col1);
