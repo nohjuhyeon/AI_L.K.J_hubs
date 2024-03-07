@@ -53,6 +53,6 @@ class data_consume_transition(Document): # 상속을 위한 것                 
     std_year : Optional[int] = None
     std_month : Optional[int] = None
     std_year_month : Optional[int] = None
-    consumption_amount: Optional[int] = None
+    consumption_amount: Optional[float] = None
     class Settings:                             # 데이터 베이스에서 이용할 collection을 지정
         name = "data_consume_transition" # collection의 이름
