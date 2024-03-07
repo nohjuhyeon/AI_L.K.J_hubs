@@ -2,9 +2,11 @@
 {%block main_container%}
 <style>
     #map {
-            height: 100%; /* 원하는 지도의 높이로 조정 */
-            width: 100%; /* 부모 요소의 전체 너비를 사용 */
-        }
+        height: 100%;
+        /* 원하는 지도의 높이로 조정 */
+        width: 100%;
+        /* 부모 요소의 전체 너비를 사용 */
+    }
 </style>
 <form>
     <div class="container row justify-content-between">
@@ -63,6 +65,27 @@
             </div>
         </div>
     </div>
+    <div class="row justify-content-end">
+        <div class="col-3 position-fixed top-40 end-0 mb-3 ms-3 ml-3 bd-mode-toggl" style="top: 30% ;width: 20% ">
+            <li class="list-group-item list-group-item-primary">여행갈 때 가져가면 좋은 상품</li>
+            <div class="scrollable-box-list" style="height: 50%;">
+                <ul id="itemList" class="list-group scrollarea">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col">이름 : {{check_element.tour_name}}</div>
+                        </div><input type="hidden" value={{check_element.id}} name={{loop.index}}>
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>가격 : {{check_element.tour_price}}</h4>
+                            </div>
+                            <div class="col-4"><button class="btn btn-primary">빼기</button></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <button type="submit" class=" list-group-item" style="top: 30% ;width: 100%">준비물 리스트에 추가하기</button>
+        </div>
+    </div>
 </form>
 
 <hr>
@@ -98,7 +121,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQ_kYWZ4VVspJmtqALaf29ie60BAx2gYw&callback=initMap" async
     defer></script>
 <script>
-   
+
     async function initMap() {
         // const { Map } = await google.maps.importLibrary("maps");
 
@@ -107,7 +130,7 @@
             center: { lat: 37.5666791, lng: 126.9782914 }, // markers 위한 중앙값
             zoom: 13,
         });
-       
+
     }
 </script>
 {%endblock%}
