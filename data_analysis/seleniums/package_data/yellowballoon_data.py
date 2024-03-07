@@ -86,7 +86,7 @@ for i in range(1, num_of_items_first + 1) :
         }
 
         # MongoDB 컬렉션에 데이터 삽입
-        collection.insert_one(data)
+        # collection.insert_one(data)
         
     browser.back()
     time.sleep(2)
@@ -145,7 +145,7 @@ for i in range(1, num_of_items_second + 1):
         }
 
         # MongoDB 컬렉션에 데이터 삽입
-        collection.insert_one(data)
+        # collection.insert_one(data)
 
     browser.back()
     time.sleep(2)
