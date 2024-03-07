@@ -117,7 +117,10 @@ async def list_post(request:Request):
 
 @router.get("/data_chart") # 펑션 호출 방식
 async def list_post(request:Request):
-    select_region = dict(request._query_params)['select_region']
+    # if dict(request._query_params)['select_region']:
+    #     select_region = dict(request._query_params)['select_region']
+    # else:
+    select_region = ""
     region_list = ['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '세종', '울산', '인천', '전남', '전북', '제주', '충남', '충북']
     await request.form()
     print(dict(await request.form()))
@@ -141,7 +144,7 @@ async def list_post(request:Request):
             dict_concept[concept_list[i]["destination_type"]] = dict_concept[concept_list[i]["destination_type"]] +  concept_list[i]['destination_search']/40000
 
     # 월별 관광 소비 추이 이거
-    consume_transition = {"destination_type" : { '$ne': '전체'}}
+    consume_transition = {"industry_major_cate" : { '$ne': '전체'}}
     consume_transition_list = await collection_data_consume_transition.getsbyconditions(consume_transition)
     consume_transition_list = [module.dict() for module in consume_transition_list]
     consume_transition_column = ['운송업', '여행업', '숙박업', '식음료업', '여가서비스업', '쇼핑업']
