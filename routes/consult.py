@@ -117,11 +117,10 @@ async def list_post(request:Request):
 
 @router.get("/data_chart") # 펑션 호출 방식
 async def list_post(request:Request):
-    # if dict(request._query_params)['select_region']:
-    #     select_region = dict(request._query_params)['select_region']
-    # else:
-    select_region = ""
-    region_list = ['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '세종', '울산', '인천', '전남', '전북', '제주', '충남', '충북']
+    if len(dict(request._query_params))>0:
+        select_region = dict(request._query_params)['select_region']
+    else:
+        select_region = "서울"
     await request.form()
     print(dict(await request.form()))
 

@@ -3,12 +3,15 @@
 
 
 {% block main_container %}
-<nav class="navbar bg-body-tertiary">
+
+<hr>
+<h2 class="text-center">데이터 현황 차트</h2>
+<hr>
+<nav class="navbar bg-body-tertiary" id="chart_nav">
     <div class="container-fluid d-flex justify-content-center">
         <form class="d-flex" role="search">
             <select name="select_region" class="form-select me-2 text-center" aria-label="지역 선택" style="width: 300px;">
-                <option selected>지역 선택</option>
-                <option value="서울">서울특별시</option>
+                <option selected value="서울">서울특별시</option>
                 <option value="부산">부산광역시</option>
                 <option value="대구">대구광역시</option>
                 <option value="인천">인천광역시</option>
@@ -30,9 +33,6 @@
         </form>
     </div>
 </nav>
-<hr>
-<h2 class="text-center">데이터 현황 차트</h2>
-<hr>
 <div class="">
     <table class="table table-striped table-sm">
         <thead>
@@ -64,177 +64,178 @@
                 <div class="container" id="month_trend_Chart"></div>
             </div>
         </div>
-        <div class="col-md-6 mb-3">
-            <div class="border bg-body-secondary">
-                <div class="col c-12">
-                    <h3 class="text-center">관광소비 유형</h3>
-                </div>
-                <div class="col-auto d-lg-block" style="width:200px; height:200px;">
-                </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="border bg-body-secondary">
+            <div class="col c-12">
+                <h3 class="text-center">관광소비 유형</h3>
+            </div>
+            <div class="col-auto d-lg-block" style="width:200px; height:200px;">
             </div>
         </div>
-        <div class="col-md-6 mb-3">
-            <div class="border">
-                <div class="col c-12">
-                    <div class="container" id="conceptchart"></div>
-                </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="border">
+            <div class="col c-12">
+                <div class="container" id="conceptchart"></div>
             </div>
         </div>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script>
-            // Load the Visualization API and the corechart package.
-            google.charts.load('current', { 'packages': ['corechart'] });
+    </div>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', { 'packages': ['corechart'] });
 
-            // Set a callback to run when the Google Visualization API is loaded.
-            google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
-                var dict_concept = JSON.parse('{{ dict_concept | tojson | safe }}');
-                /////////////////// 월별 방문객 수 ///////////////////////////////////////////
-                var dict_visitor = JSON.parse('{{ dict_visitor | tojson | safe }}');
-                let visitorData = new google.visualization.DataTable();
-                visitorData.addColumn('string', 'X');
-                visitorData.addColumn('number', '방문자');
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var dict_concept = JSON.parse('{{ dict_concept | tojson | safe }}');
+            /////////////////// 월별 방문객 수 ///////////////////////////////////////////
+            var dict_visitor = JSON.parse('{{ dict_visitor | tojson | safe }}');
+            let visitorData = new google.visualization.DataTable();
+            visitorData.addColumn('string', 'X');
+            visitorData.addColumn('number', '방문자');
 
-                visitorData.addRows([
-                    ['1월', dict_visitor['1']],
-                    ['2월', dict_visitor['2']],
-                    ['3월', dict_visitor['3']],
-                    ['4월', dict_visitor['4']],
-                    ['5월', dict_visitor['5']],
-                    ['6월', dict_visitor['6']],
-                    ['7월', dict_visitor['7']],
-                    ['8월', dict_visitor['8']],
-                    ['9월', dict_visitor['9']],
-                    ['10월', dict_visitor['10']],
-                    ['11월', dict_visitor['11']],
-                    ['12월', dict_visitor['12']]
-                ]);
-                let visitorOptions = {
-                    legend: { position: 'none' },
-                    title: '                  월별 방문객 수',
-                    titleTextStyle: {
-                        fontSize: 30,
-                        textAlign: 'center'
-                    },
-                    pointSize: 5,
-                    vAxis: {
-                        title: '방문객 수(만 명 )'
-                    },
-                    'width': 1200,
-                    'height': 500,
-                };
-                let visitorchart = new google.visualization.LineChart(document.querySelector('#visitorChart'));
-                visitorchart.draw(visitorData, visitorOptions);
+            visitorData.addRows([
+                ['1월', dict_visitor['1']],
+                ['2월', dict_visitor['2']],
+                ['3월', dict_visitor['3']],
+                ['4월', dict_visitor['4']],
+                ['5월', dict_visitor['5']],
+                ['6월', dict_visitor['6']],
+                ['7월', dict_visitor['7']],
+                ['8월', dict_visitor['8']],
+                ['9월', dict_visitor['9']],
+                ['10월', dict_visitor['10']],
+                ['11월', dict_visitor['11']],
+                ['12월', dict_visitor['12']]
+            ]);
+            let visitorOptions = {
+                legend: { position: 'none' },
+                title: '                  월별 방문객 수',
+                titleTextStyle: {
+                    fontSize: 30,
+                    textAlign: 'center'
+                },
+                pointSize: 5,
+                vAxis: {
+                    title: '방문객 수(만 명 )'
+                },
+                'width': 1200,
+                'height': 500,
+            };
+            let visitorchart = new google.visualization.LineChart(document.querySelector('#visitorChart'));
+            visitorchart.draw(visitorData, visitorOptions);
 
-                ////////////////////////////////////유형별 목적지 검색량 //////////////////////////////////
-                var dict_concept = JSON.parse('{{ dict_concept | tojson | safe }}');
-                let conceptdata = new google.visualization.DataTable();
-                conceptdata.addColumn('string', 'concept');
-                conceptdata.addColumn('number', 'visitor');
-                conceptdata.addRows(
-                    [['숙박', dict_concept['숙박']], ['음식', dict_concept['음식']], ['기타관광', dict_concept['기타관광']], ['쇼핑', dict_concept['쇼핑']], ['문화관광', dict_concept['문화관광']], ['역사관광', dict_concept['역사관광']], ['자연관광', dict_concept['자연관광']], ['체험관광', dict_concept['체험관광']], ['레저스포츠', dict_concept['레저스포츠']]]
-                );
+            ////////////////////////////////////유형별 목적지 검색량 //////////////////////////////////
+            var dict_concept = JSON.parse('{{ dict_concept | tojson | safe }}');
+            let conceptdata = new google.visualization.DataTable();
+            conceptdata.addColumn('string', 'concept');
+            conceptdata.addColumn('number', 'visitor');
+            conceptdata.addRows(
+                [['숙박', dict_concept['숙박']], ['음식', dict_concept['음식']], ['기타관광', dict_concept['기타관광']], ['쇼핑', dict_concept['쇼핑']], ['문화관광', dict_concept['문화관광']], ['역사관광', dict_concept['역사관광']], ['자연관광', dict_concept['자연관광']], ['체험관광', dict_concept['체험관광']], ['레저스포츠', dict_concept['레저스포츠']]]
+            );
 
-                // Set chart options
-                var conceptoptions = {
-                    legend: { position: 'none' },
-                    title: '유형별 목적지 검색량',
-                    titleTextStyle: {
-                        fontSize: 30,    // 제목의 글꼴 크기
-                    },
-                    'width': 800,
-                    'height': 500,
-                };
+            // Set chart options
+            var conceptoptions = {
+                legend: { position: 'none' },
+                title: '유형별 목적지 검색량',
+                titleTextStyle: {
+                    fontSize: 30,    // 제목의 글꼴 크기
+                },
+                'width': 800,
+                'height': 500,
+            };
 
-                // Instantiate and draw our chart, passing in some options.
-                var conceptchart = new google.visualization.BarChart(document.querySelector('#conceptchart'));
-                conceptchart.draw(conceptdata, conceptoptions);
+            // Instantiate and draw our chart, passing in some options.
+            var conceptchart = new google.visualization.BarChart(document.querySelector('#conceptchart'));
+            conceptchart.draw(conceptdata, conceptoptions);
 
-                //////////////////////////////////// 월별 관광 소비 추이 //////////////////////////////////
-                var dict_consume_transition = JSON.parse('{{ list_consume_transition | tojson | safe }}');
-                let consume_transition_Data = new google.visualization.DataTable();
-                consume_transition_Data.addColumn('string', 'X');
-                consume_transition_Data.addColumn('number', '운송업');
-                consume_transition_Data.addColumn('number', '여행업');
-                consume_transition_Data.addColumn('number', '숙박업');
-                consume_transition_Data.addColumn('number', '식음료업');
-                consume_transition_Data.addColumn('number', '여가서비스업');
-                consume_transition_Data.addColumn('number', '쇼핑업');
-                consume_transition_Data.addRows([
-                    ['1월', dict_consume_transition[0]['1'], dict_consume_transition[1]['1'], dict_consume_transition[2]['1'], dict_consume_transition[3]['1'], dict_consume_transition[4]['1'], dict_consume_transition[5]['1'],],
-                    ['2월', dict_consume_transition[0]['2'], dict_consume_transition[1]['2'], dict_consume_transition[2]['2'], dict_consume_transition[3]['2'], dict_consume_transition[4]['2'], dict_consume_transition[5]['2'],],
-                    ['3월', dict_consume_transition[0]['3'], dict_consume_transition[1]['3'], dict_consume_transition[2]['3'], dict_consume_transition[3]['3'], dict_consume_transition[4]['3'], dict_consume_transition[5]['3'],],
-                    ['4월', dict_consume_transition[0]['4'], dict_consume_transition[1]['4'], dict_consume_transition[2]['4'], dict_consume_transition[3]['4'], dict_consume_transition[4]['4'], dict_consume_transition[5]['4'],],
-                    ['5월', dict_consume_transition[0]['5'], dict_consume_transition[1]['5'], dict_consume_transition[2]['5'], dict_consume_transition[3]['5'], dict_consume_transition[4]['5'], dict_consume_transition[5]['5'],],
-                    ['6월', dict_consume_transition[0]['6'], dict_consume_transition[1]['6'], dict_consume_transition[2]['6'], dict_consume_transition[3]['6'], dict_consume_transition[4]['6'], dict_consume_transition[5]['6'],],
-                    ['7월', dict_consume_transition[0]['7'], dict_consume_transition[1]['7'], dict_consume_transition[2]['7'], dict_consume_transition[3]['7'], dict_consume_transition[4]['7'], dict_consume_transition[5]['7'],],
-                    ['8월', dict_consume_transition[0]['8'], dict_consume_transition[1]['8'], dict_consume_transition[2]['8'], dict_consume_transition[3]['8'], dict_consume_transition[4]['8'], dict_consume_transition[5]['8'],],
-                    ['9월', dict_consume_transition[0]['9'], dict_consume_transition[1]['9'], dict_consume_transition[2]['9'], dict_consume_transition[3]['9'], dict_consume_transition[4]['9'], dict_consume_transition[5]['9'],],
-                    ['10월', dict_consume_transition[0]['10'], dict_consume_transition[1]['10'], dict_consume_transition[2]['10'], dict_consume_transition[3]['10'], dict_consume_transition[4]['10'], dict_consume_transition[5]['10'],],
-                    ['11월', dict_consume_transition[0]['11'], dict_consume_transition[1]['11'], dict_consume_transition[2]['11'], dict_consume_transition[3]['11'], dict_consume_transition[4]['11'], dict_consume_transition[5]['11'],],
-                    ['12월', dict_consume_transition[0]['12'], dict_consume_transition[1]['12'], dict_consume_transition[2]['12'], dict_consume_transition[3]['12'], dict_consume_transition[4]['12'], dict_consume_transition[5]['12']]
-                ]);
-                let consume_transition_Options = {
-                    legend: { position: 'none' },
-                    title: '월별 관광 소비 추이',
-                    titleTextStyle: {
-                        fontSize: 30,
-                        textAlign: 'center'
-                    },
-                    pointSize: 5,
-                    vAxis: {
-                        title: '소비액'
-                    },
-                    'width': 500,
-                    'height': 500,
-                };
-                let consume_transition_chart = new google.visualization.LineChart(document.querySelector('#consume_transition_chart'));
-                consume_transition_chart.draw(consume_transition_Data, consume_transition_Options);
-
-
+            //////////////////////////////////// 월별 관광 소비 추이 //////////////////////////////////
+            var dict_consume_transition = JSON.parse('{{ list_consume_transition | tojson | safe }}');
+            let consume_transition_Data = new google.visualization.DataTable();
+            consume_transition_Data.addColumn('string', 'X');
+            consume_transition_Data.addColumn('number', '운송업');
+            consume_transition_Data.addColumn('number', '여행업');
+            consume_transition_Data.addColumn('number', '숙박업');
+            consume_transition_Data.addColumn('number', '식음료업');
+            consume_transition_Data.addColumn('number', '여가서비스업');
+            consume_transition_Data.addColumn('number', '쇼핑업');
+            consume_transition_Data.addRows([
+                ['1월', dict_consume_transition[0]['1'], dict_consume_transition[1]['1'], dict_consume_transition[2]['1'], dict_consume_transition[3]['1'], dict_consume_transition[4]['1'], dict_consume_transition[5]['1'],],
+                ['2월', dict_consume_transition[0]['2'], dict_consume_transition[1]['2'], dict_consume_transition[2]['2'], dict_consume_transition[3]['2'], dict_consume_transition[4]['2'], dict_consume_transition[5]['2'],],
+                ['3월', dict_consume_transition[0]['3'], dict_consume_transition[1]['3'], dict_consume_transition[2]['3'], dict_consume_transition[3]['3'], dict_consume_transition[4]['3'], dict_consume_transition[5]['3'],],
+                ['4월', dict_consume_transition[0]['4'], dict_consume_transition[1]['4'], dict_consume_transition[2]['4'], dict_consume_transition[3]['4'], dict_consume_transition[4]['4'], dict_consume_transition[5]['4'],],
+                ['5월', dict_consume_transition[0]['5'], dict_consume_transition[1]['5'], dict_consume_transition[2]['5'], dict_consume_transition[3]['5'], dict_consume_transition[4]['5'], dict_consume_transition[5]['5'],],
+                ['6월', dict_consume_transition[0]['6'], dict_consume_transition[1]['6'], dict_consume_transition[2]['6'], dict_consume_transition[3]['6'], dict_consume_transition[4]['6'], dict_consume_transition[5]['6'],],
+                ['7월', dict_consume_transition[0]['7'], dict_consume_transition[1]['7'], dict_consume_transition[2]['7'], dict_consume_transition[3]['7'], dict_consume_transition[4]['7'], dict_consume_transition[5]['7'],],
+                ['8월', dict_consume_transition[0]['8'], dict_consume_transition[1]['8'], dict_consume_transition[2]['8'], dict_consume_transition[3]['8'], dict_consume_transition[4]['8'], dict_consume_transition[5]['8'],],
+                ['9월', dict_consume_transition[0]['9'], dict_consume_transition[1]['9'], dict_consume_transition[2]['9'], dict_consume_transition[3]['9'], dict_consume_transition[4]['9'], dict_consume_transition[5]['9'],],
+                ['10월', dict_consume_transition[0]['10'], dict_consume_transition[1]['10'], dict_consume_transition[2]['10'], dict_consume_transition[3]['10'], dict_consume_transition[4]['10'], dict_consume_transition[5]['10'],],
+                ['11월', dict_consume_transition[0]['11'], dict_consume_transition[1]['11'], dict_consume_transition[2]['11'], dict_consume_transition[3]['11'], dict_consume_transition[4]['11'], dict_consume_transition[5]['11'],],
+                ['12월', dict_consume_transition[0]['12'], dict_consume_transition[1]['12'], dict_consume_transition[2]['12'], dict_consume_transition[3]['12'], dict_consume_transition[4]['12'], dict_consume_transition[5]['12']]
+            ]);
+            let consume_transition_Options = {
+                legend: { position: 'none' },
+                title: '월별 관광 소비 추이',
+                titleTextStyle: {
+                    fontSize: 30,
+                    textAlign: 'center'
+                },
+                pointSize: 5,
+                vAxis: {
+                    title: '소비액'
+                },
+                'width': 500,
+                'height': 500,
+            };
+            let consume_transition_chart = new google.visualization.LineChart(document.querySelector('#consume_transition_chart'));
+            consume_transition_chart.draw(consume_transition_Data, consume_transition_Options);
 
 
-                ////////////////////////////////////월별 키워드 검색량 //////////////////////////////////
-                var dict_consume_transition = JSON.parse('{{ list_month_trend | tojson | safe }}');
-                let month_trend_data = new google.visualization.DataTable();
-                month_trend_data.addColumn('string', 'X');
-                month_trend_data.addColumn('number', '레포츠');
-                month_trend_data.addColumn('number', '휴식/힐링');
-                month_trend_data.addColumn('number', '기타');
-                month_trend_data.addColumn('number', '미식');
-                month_trend_data.addColumn('number', '체험');
-                month_trend_data.addRows([
-                    ['1월', list_month_trend[0]['1'], list_month_trend[1]['1'], list_month_trend[2]['1'], list_month_trend[3]['1'], list_month_trend[4]['1']],
-                    ['2월', list_month_trend[0]['2'], list_month_trend[1]['2'], list_month_trend[2]['2'], list_month_trend[3]['2'], list_month_trend[4]['2'],],
-                    ['3월', list_month_trend[0]['3'], list_month_trend[1]['3'], list_month_trend[2]['3'], list_month_trend[3]['3'], list_month_trend[4]['3'],],
-                    ['4월', list_month_trend[0]['4'], list_month_trend[1]['4'], list_month_trend[2]['4'], list_month_trend[3]['4'], list_month_trend[4]['4'],],
-                    ['5월', list_month_trend[0]['5'], list_month_trend[1]['5'], list_month_trend[2]['5'], list_month_trend[3]['5'], list_month_trend[4]['5'],],
-                    ['6월', list_month_trend[0]['6'], list_month_trend[1]['6'], list_month_trend[2]['6'], list_month_trend[3]['6'], list_month_trend[4]['6'],],
-                    ['7월', list_month_trend[0]['7'], list_month_trend[1]['7'], list_month_trend[2]['7'], list_month_trend[3]['7'], list_month_trend[4]['7'],],
-                    ['8월', list_month_trend[0]['8'], list_month_trend[1]['8'], list_month_trend[2]['8'], list_month_trend[3]['8'], list_month_trend[4]['8'],],
-                    ['9월', list_month_trend[0]['9'], list_month_trend[1]['9'], list_month_trend[2]['9'], list_month_trend[3]['9'], list_month_trend[4]['9'],],
-                    ['10월', list_month_trend[0]['10'], list_month_trend[1]['10'], list_month_trend[2]['10'], list_month_trend[3]['10'], list_month_trend[4]['10']],
-                    ['11월', list_month_trend[0]['11'], list_month_trend[1]['11'], list_month_trend[2]['11'], list_month_trend[3]['11'], list_month_trend[4]['11']],
-                    ['12월', list_month_trend[0]['12'], list_month_trend[1]['12'], list_month_trend[2]['12'], list_month_trend[3]['12'], list_month_trend[4]['12']]
-                ]);
-                let month_trend_option = {
-                    legend: { position: 'right' },
-                    title: '월별 키워드 검색량',
-                    titleTextStyle: {
-                        fontSize: 30,
-                        textAlign: 'center'
-                    },
-                    pointSize: 5,
-                    vAxis: {
-                        title: '키워드 검색량'
-                    },
-                    'width': 800,
-                    'height': 500,
-                };
-                let month_trend_chart = new google.visualization.LineChart(document.querySelector('#month_trend_Chart'));
-                month_trend_chart.draw(month_trend_data, month_trend_option);
-            }
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        {% endblock %}
+
+            ////////////////////////////////////월별 키워드 검색량 //////////////////////////////////
+            var list_month_trend = JSON.parse('{{ list_month_trend | tojson | safe }}');
+            let month_trend_data = new google.visualization.DataTable();
+            month_trend_data.addColumn('string', 'X');
+            month_trend_data.addColumn('number', '레포츠');
+            month_trend_data.addColumn('number', '휴식/힐링');
+            month_trend_data.addColumn('number', '기타');
+            month_trend_data.addColumn('number', '미식');
+            month_trend_data.addColumn('number', '체험');
+            month_trend_data.addRows([
+                ['1월', list_month_trend[0]['1'], list_month_trend[1]['1'], list_month_trend[2]['1'], list_month_trend[3]['1'], list_month_trend[4]['1']],
+                ['2월', list_month_trend[0]['2'], list_month_trend[1]['2'], list_month_trend[2]['2'], list_month_trend[3]['2'], list_month_trend[4]['2'],],
+                ['3월', list_month_trend[0]['3'], list_month_trend[1]['3'], list_month_trend[2]['3'], list_month_trend[3]['3'], list_month_trend[4]['3'],],
+                ['4월', list_month_trend[0]['4'], list_month_trend[1]['4'], list_month_trend[2]['4'], list_month_trend[3]['4'], list_month_trend[4]['4'],],
+                ['5월', list_month_trend[0]['5'], list_month_trend[1]['5'], list_month_trend[2]['5'], list_month_trend[3]['5'], list_month_trend[4]['5'],],
+                ['6월', list_month_trend[0]['6'], list_month_trend[1]['6'], list_month_trend[2]['6'], list_month_trend[3]['6'], list_month_trend[4]['6'],],
+                ['7월', list_month_trend[0]['7'], list_month_trend[1]['7'], list_month_trend[2]['7'], list_month_trend[3]['7'], list_month_trend[4]['7'],],
+                ['8월', list_month_trend[0]['8'], list_month_trend[1]['8'], list_month_trend[2]['8'], list_month_trend[3]['8'], list_month_trend[4]['8'],],
+                ['9월', list_month_trend[0]['9'], list_month_trend[1]['9'], list_month_trend[2]['9'], list_month_trend[3]['9'], list_month_trend[4]['9'],],
+                ['10월', list_month_trend[0]['10'], list_month_trend[1]['10'], list_month_trend[2]['10'], list_month_trend[3]['10'], list_month_trend[4]['10']],
+                ['11월', list_month_trend[0]['11'], list_month_trend[1]['11'], list_month_trend[2]['11'], list_month_trend[3]['11'], list_month_trend[4]['11']],
+                ['12월', list_month_trend[0]['12'], list_month_trend[1]['12'], list_month_trend[2]['12'], list_month_trend[3]['12'], list_month_trend[4]['12']]
+            ]);
+            let month_trend_option = {
+                legend: { position: 'right' },
+                title: '월별 키워드 검색량',
+                titleTextStyle: {
+                    fontSize: 30,
+                    textAlign: 'center'
+                },
+                pointSize: 5,
+                vAxis: {
+                    title: '키워드 검색량'
+                },
+                'width': 500,
+                'height': 500,
+            };
+            let month_trend_chart = new google.visualization.LineChart(document.querySelector('#month_trend_Chart'));
+            month_trend_chart.draw(month_trend_data, month_trend_option);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% endblock %}
