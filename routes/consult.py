@@ -139,7 +139,14 @@ async def list_post(request:Request):
         dict_concept[concept_list[i]["destination_type"]] = dict_concept[concept_list[i]["destination_type"]] +  concept_list[i]['destination_search']/40000
 
     # 월별 관광 소비 추이
-        
+    visitor_conditions = {"destination_type" : { '$regex': '전체'}}
+    visitor_list = await collection_data_concept_search.getsbyconditions(visitor_conditions)
+    visitor_list = [module.dict() for module in visitor_list]
+    dict_visitor = {'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'11':0,'12':0}
+    for i in range(len(visitor_list)):
+        if visitor_list[i]['region'] == region_list[5]:
+            dict_visitor[str(visitor_list[i]['std_month'])] = dict_visitor[str(visitor_list[i]['std_month'])]  + visitor_list[i]['destination_search']/40000
+    
     # 월별 키워드 검색량
     trend_list = await collection_data_trend_search.get_all()
     trend_list = [module.dict() for module in trend_list]
@@ -152,6 +159,7 @@ async def list_post(request:Request):
     for j in range(len(trend_list)):
         list_month_trend[tour_trend_column.index(trend_list[j]['tour_trend'])][str(trend_list[j]['std_month'])] =list_month_trend[tour_trend_column.index(trend_list[j]['tour_trend'])][str(trend_list[j]['std_month'])] + trend_list[j]['num_mention']
         pass
+    
     # 관광소비 유형
     dict_consume={'쇼핑업':0, '숙박업':0, '식음료업':0, '여가서비스업':0, '여행업':0, '운송업':0}
     consume_list = await collection_data_consume.get_all()
