@@ -180,4 +180,4 @@ async def list_post(request:Request):
     for i in range(len(consume_list)):
         dict_consume[consume_list[i]["industry_major_cate"]] = dict_consume[consume_list[i]["industry_major_cate"]] +  consume_list[i]['consumption_amount']/40000
 
-    return templates.TemplateResponse(name="consult/data_chart.html", context={'request':request, 'dict_visitor':dict_visitor,'dict_concept':dict_concept,'list_month_trend':list_month_trend,'consume_list':consume_list,'list_consume_transition':list_consume_transition})
+    return templates.TemplateResponse(name="consult/data_chart.html", context={'request':request, 'dict_visitor':dict_visitor,'dict_concept':dict_concept,'list_month_trend':list_month_trend,'consume_list':consume_list,'list_consume_transition':list_consume_transition, 'dict_consume':dict_consume})
