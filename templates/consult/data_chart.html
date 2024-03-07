@@ -55,15 +55,12 @@
             </div>
             <div class="col-auto d-lg-block" style="width:200px; height:200px;">
             </div>
-        </div>
+        </div>month_trend_Chart
     </div>
     <div class="col-md-6 mb-3">
         <div class="border bg-body-secondary">
             <div class="col c-12">
-                <h3 class="text-center">월별 키워드 검색량 - 꺾은선형</h3>
-            </div>
-            <div class="col-auto d-lg-block" style="width:200px; height:200px;">
-            </div>
+                <div class="container" id="month_trend_Chart"></div>
         </div>
     </div>
     <div class="col-md-6 mb-3">
@@ -154,9 +151,46 @@
             };
 
             // Instantiate and draw our chart, passing in some options.
-            var conceptchart = new google.visualization.BarChart(document.querySelector('#barchart'));
+            var conceptchart = new google.visualization.BarChart(document.querySelector('#conceptchart'));
             conceptchart.draw(conceptdata, conceptoptions);
         }
+        ////////////////////////////////////월별 키워드 검색량 //////////////////////////////////
+        var list_month_trend = JSON.parse('{{ list_month_trend | tojson | safe }}');
+        let month_trend_data = new google.visualization.DataTable();
+        month_trend_data.addColumn('string', 'X');
+        month_trend_data.addColumn('number', '방문자');
+
+        month_trend_data.addRows([
+            ['1월', dict_visitor['1']],
+            ['2월', dict_visitor['2']],
+            ['3월', dict_visitor['3']],
+            ['4월', dict_visitor['4']],
+            ['5월', dict_visitor['5']],
+            ['6월', dict_visitor['6']],
+            ['7월', dict_visitor['7']],
+            ['8월', dict_visitor['8']],
+            ['9월', dict_visitor['9']],
+            ['10월', dict_visitor['10']],
+            ['11월', dict_visitor['11']],
+            ['12월', dict_visitor['12']]
+        ]);
+        let month_trend_option = {
+            legend: { position: 'none' },
+            title: '                  월별 방문객 수',
+            titleTextStyle: {
+                fontSize: 30,
+                textAlign: 'center'
+            },
+            pointSize: 5,
+            vAxis: {
+                title: '방문객 수(만 명 )'
+            },
+            'width': 1000,
+            'height': 500,
+        };
+        let month_trend_chart = new google.visualization.LineChart(document.querySelector('#month_trend_Chart'));
+        month_trend_chart.draw(month_trend_data, month_trend_option);
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
