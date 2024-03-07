@@ -41,7 +41,7 @@ class data_concept_search(Document): # 상속을 위한 것                 # �
 class data_consume(Document): # 상속을 위한 것                 # 데이터 베이스에서 이용할 값들을 설정
     industry_major_cate: Optional[str] = None
     industry_middle_cate: Optional[str] = None
-    consumption_amount: Optional[int] = None
+    consumption_amount: Optional[float] = None
     region : Optional[str] = None
     std_year : Optional[int] = None
     class Settings:                             # 데이터 베이스에서 이용할 collection을 지정

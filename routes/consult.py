@@ -29,6 +29,7 @@ collection_FAQ_list = Database(FAQ_list)
 ## 공지 사항
 @router.post("/user_notice") # 펑션 호출 방식
 async def list_post(request:Request):
+    
     notices = await collection_admin_notice_list.get_all()
     print(dict(await request.form()))
     return templates.TemplateResponse(name="consult/user_notice.html", context={'request':request, "notices": notices})
@@ -140,7 +141,18 @@ async def list_post(request:Request):
     # 월별 관광 소비 추이
         
     # 월별 키워드 검색량
-        
+    # trend_list = await collection_data_trend_search.get_all()
+    # trend_list = [module.dict() for module in trend_list]
+    # tour_trend_column = ['레포츠', '휴식/힐링', '기타', '미식', '체험']
+    # dict_trend = {'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'11':0,'12':0}
+    # list_month_trend = [dict_trend,dict_trend,dict_trend,dict_trend,dict_trend]
+    # for j in range(len(trend_list)):
+    #     list_month_trend[tour_trend_column.index(trend_list[j]['tour_trend'])][str(trend_list[j]['std_month'])] =list_month_trend[tour_trend_column.index(trend_list[j]['tour_trend'])][str(trend_list[j]['std_month'])] + trend_list[j]['num_mention']
+    #     pass
     # 관광소비 유형
-
+    dict_consume={'쇼핑업':0, '숙박업':0, '식음료업':0, '여가서비스업':0, '여행업':0, '운송업':0}
+    consume_list = await collection_data_consume.get_all()
+    consume_list = [module.dict() for module in consume_list]
+    for i in range(len(consume_list)):
+        dict_consume[consume_list[i]["industry_major_cate"]] = dict_consume[consume_list[i]["industry_major_cate"]] +  consume_list[i]['consumption_amount']/40000
     return templates.TemplateResponse(name="consult/data_chart.html", context={'request':request, 'dict_visitor':dict_visitor,'dict_concept':dict_concept})
