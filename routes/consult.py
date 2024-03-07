@@ -17,11 +17,11 @@ collection_admin_notice_list = Database(Admin_notice_list)
 from models.one_on_one_CS import One_on_one_CS_list
 One_on_one_CS_list = Database(One_on_one_CS_list)
 from models.data_chart import data_attraction, data_concept_search, data_consume,data_consume_transition,data_trend_search
-collection_data_attraction=data_attraction
-collection_data_concept_search=data_concept_search
-collection_data_consume=data_consume
-collection_data_consume_transition=data_consume_transition
-collection_data_trend_search=data_trend_search
+collection_data_attraction=Database(data_attraction)
+collection_data_concept_search=Database(data_concept_search)
+collection_data_consume=Database(data_consume)
+collection_data_consume_transition=Database(data_consume_transition)
+collection_data_trend_search=Database(data_trend_search)
 
 from models.frequent_CS import FAQ_list
 collection_FAQ_list = Database(FAQ_list)
@@ -116,6 +116,31 @@ async def list_post(request:Request):
 
 @router.get("/data_chart") # 펑션 호출 방식
 async def list_post(request:Request):
+    region_list = ['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '세종', '울산', '인천', '전남', '전북', '제주', '충남', '충북']
     await request.form()
     print(dict(await request.form()))
-    return templates.TemplateResponse(name="consult/data_chart.html", context={'request':request})
+
+    # 월별 방문객 수 
+    visitor_conditions = {"destination_type" : { '$regex': '전체'}}
+    visitor_list = await collection_data_concept_search.getsbyconditions(visitor_conditions)
+    visitor_list = [module.dict() for module in visitor_list]
+    dict_visitor = {'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'11':0,'12':0}
+    for i in range(len(visitor_list)):
+        if visitor_list[i]['region'] == region_list[5]:
+            dict_visitor[str(visitor_list[i]['std_month'])] = dict_visitor[str(visitor_list[i]['std_month'])]  + visitor_list[i]['destination_search']/40000
+
+    # 유형별 목적지 검색량
+    concept_conditions = {"destination_type": { "$ne": "전체" }}
+    dict_concept={'숙박':0, '음식':0, '기타관광':0, '쇼핑':0, '문화관광':0, '역사관광':0, '자연관광':0, '체험관광':0, '레저스포츠':0}
+    concept_list = await collection_data_concept_search.getsbyconditions(concept_conditions)
+    concept_list = [module.dict() for module in concept_list]
+    for i in range(len(concept_list)):
+        dict_concept[concept_list[i]["destination_type"]] = dict_concept[concept_list[i]["destination_type"]] +  concept_list[i]['destination_search']/40000
+
+    # 월별 관광 소비 추이
+        
+    # 월별 키워드 검색량
+        
+    # 관광소비 유형
+
+    return templates.TemplateResponse(name="consult/data_chart.html", context={'request':request, 'dict_visitor':dict_visitor,'dict_concept':dict_concept})

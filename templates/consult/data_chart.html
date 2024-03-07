@@ -42,13 +42,9 @@
         </tbody>
     </table>
 </div>
-<div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+<div class="p-4 p-md-5 mb-4 rounded text-body-emphasis">
     <div class="col-lg-12 px-0">
-        <h1 class="text-center">월별 방문객 수 - 꺾은선형</h1>
-        <p class=""></p>
-        <p class="text-center">
-            <a href="#" class="text-body-emphasis fw-bold">coming soon</a>
-        </p>
+        <div class="container" id="visitorChart"></div>
     </div>
 </div>
 <div class="row mb-2 ">
@@ -80,14 +76,88 @@
         </div>
     </div>
     <div class="col-md-6 mb-3">
-        <div class="border bg-body-secondary">
+        <div class="border">
             <div class="col c-12">
-                <h3 class="text-center">유형별 목적지 검색량</h3>
-            </div>
-            <div class="col-auto d-lg-block" style="width:200px; height:200px;">
+                <div class="container" id="barchart"></div>
             </div>
         </div>
     </div>
-</div>
-</div>
-{% endblock %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', { 'packages': ['corechart'] });
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            // chart 사용 종류 지정
+            // data, chart 종류, option(꾸미기)
+            var dict_concept = JSON.parse('{{ dict_concept | tojson | safe }}');
+            // const values = Object.values(dict_visitor)
+            // const maxValue = Math.max(...values);
+            // const minValue = Math.min(...values);
+            /////////////////// 월별 방문객 수 ///////////////////////////////////////////
+            var dict_visitor = JSON.parse('{{ dict_visitor | tojson | safe }}');
+            let visitorData = new google.visualization.DataTable();
+            visitorData.addColumn('string', 'X');
+            visitorData.addColumn('number', '방문자');
+
+            visitorData.addRows([
+                ['1월', dict_visitor['1']],
+                ['2월', dict_visitor['2']],
+                ['3월', dict_visitor['3']],
+                ['4월', dict_visitor['4']],
+                ['5월', dict_visitor['5']],
+                ['6월', dict_visitor['6']],
+                ['7월', dict_visitor['7']],
+                ['8월', dict_visitor['8']],
+                ['9월', dict_visitor['9']],
+                ['10월', dict_visitor['10']],
+                ['11월', dict_visitor['11']],
+                ['12월', dict_visitor['12']]
+            ]);
+            let visitorOptions = {
+                legend: { position: 'none' },
+                title: '                  월별 방문객 수',
+                titleTextStyle: {
+                    fontSize: 30,
+                    textAlign: 'center'
+                },
+                pointSize: 5,
+                vAxis: {
+                    title: '방문객 수(만 명 )'
+                },
+                'width': 1000,
+                'height': 500,
+            };
+            let visitorchart = new google.visualization.LineChart(document.querySelector('#visitorChart'));
+            visitorchart.draw(visitorData, visitorOptions);
+
+            ////////////////////////////////////유형별 목적지 검색량 //////////////////////////////////
+            var dict_concept = JSON.parse('{{ dict_concept | tojson | safe }}');
+            let conceptdata = new google.visualization.DataTable();
+            conceptdata.addColumn('string', 'concept');
+            conceptdata.addColumn('number', 'visitor');
+            conceptdata.addRows(
+                [['숙박', dict_concept['숙박']], ['음식', dict_concept['음식']], ['기타관광', dict_concept['기타관광']], ['쇼핑', dict_concept['쇼핑']], ['문화관광', dict_concept['문화관광']], ['역사관광', dict_concept['역사관광']], ['자연관광', dict_concept['자연관광']], ['체험관광', dict_concept['체험관광']], ['레저스포츠', dict_concept['레저스포츠']]]
+            );
+
+            // Set chart options
+            var conceptoptions = {
+                legend: { position: 'none' },
+                title: '유형별 목적지 검색량',
+                titleTextStyle: {
+                    fontSize: 30,    // 제목의 글꼴 크기
+                },
+                'width': 480,
+                'height': 500,
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var conceptchart = new google.visualization.BarChart(document.querySelector('#barchart'));
+            conceptchart.draw(conceptdata, conceptoptions);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% endblock %}
