@@ -1,5 +1,11 @@
 {% extends "template.html"%}
 {%block main_container%}
+<style>
+    #map {
+            height: 100%; /* 원하는 지도의 높이로 조정 */
+            width: 100%; /* 부모 요소의 전체 너비를 사용 */
+        }
+</style>
 <form>
     <div class="container row justify-content-between">
         <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary col-md-auto"
@@ -37,7 +43,7 @@
                                         </div>
                                     </a>
                                     {%endfor%}
-                                {%endfor%}
+                                    {%endfor%}
                             </div>
                         </div>
                     </div>
@@ -45,7 +51,7 @@
             </div>
         </div>
         <div class="flex-column col-md-auto" style="width: 60%;">
-            <img style="width: 100%; height: 100%;" src="..\..\images\map.png" alt="지도">
+            <div id="map"></div>
         </div>
     </div>
     <hr>
@@ -88,4 +94,20 @@
         {%endfor%}
     </div>
 </div>
+<!-- Google Maps API Script -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQ_kYWZ4VVspJmtqALaf29ie60BAx2gYw&callback=initMap" async
+    defer></script>
+<script>
+   
+    async function initMap() {
+        // const { Map } = await google.maps.importLibrary("maps");
+
+        // 아래 표시 지도
+        map_center = new google.maps.Map(document.querySelector("#map"), {
+            center: { lat: 37.5666791, lng: 126.9782914 }, // markers 위한 중앙값
+            zoom: 13,
+        });
+       
+    }
+</script>
 {%endblock%}
