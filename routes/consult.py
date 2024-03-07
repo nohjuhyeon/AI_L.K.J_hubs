@@ -16,6 +16,13 @@ from models.admin_notice import Admin_notice_list
 collection_admin_notice_list = Database(Admin_notice_list)
 from models.one_on_one_CS import One_on_one_CS_list
 One_on_one_CS_list = Database(One_on_one_CS_list)
+from models.data_chart import data_attraction, data_concept_search, data_consume,data_consume_transition,data_trend_search
+collection_data_attraction=data_attraction
+collection_data_concept_search=data_concept_search
+collection_data_consume=data_consume
+collection_data_consume_transition=data_consume_transition
+collection_data_trend_search=data_trend_search
+
 from models.frequent_CS import FAQ_list
 collection_FAQ_list = Database(FAQ_list)
 
