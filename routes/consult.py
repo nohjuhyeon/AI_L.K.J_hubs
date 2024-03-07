@@ -138,14 +138,14 @@ async def list_post(request:Request):
     for i in range(len(concept_list)):
         dict_concept[concept_list[i]["destination_type"]] = dict_concept[concept_list[i]["destination_type"]] +  concept_list[i]['destination_search']/40000
 
-    # 월별 관광 소비 추이 이거
-    consume_transition = {"destination_type" : { '$regex': '전체'}}
+    # 월별 관광 소비 추이
+    consume_transition = {"industry_major_cate" : { '$regex': '전체'}}
     consume_transition_list = await collection_data_consume_transition.getsbyconditions(consume_transition)
     consume_transition_list = [module.dict() for module in consume_transition_list]
     dict_consume_transition = {'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'11':0,'12':0}
     for i in range(len(consume_transition_list)):
-        if consume_transition_list[i]['region'] == consume_transition_list[5]:
-            dict_consume_transition[str(consume_transition_list[i]['std_month'])] = dict_consume_transition[str(consume_transition_list[i]['std_month'])]  + consume_transition_list[i]['destination_search']/40000
+        dict_consume_transition[str(consume_transition_list[i]['std_month'])] = dict_consume_transition[str(consume_transition_list[i]['std_month'])]  + consume_transition_list[i]['consumption_amount']/40000
+        pass
     
     # 월별 키워드 검색량
     trend_list = await collection_data_trend_search.get_all()
