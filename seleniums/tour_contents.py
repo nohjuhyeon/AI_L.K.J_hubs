@@ -35,20 +35,61 @@ from selenium.webdriver.common.by import By          # - 정보 획득
 from selenium.webdriver.common.keys import Keys
 import time
 
+# 돋보기
+search_button = "div.header_sub__z2ac0 > button"
+element_search = browser.find_element(by=By.CSS_SELECTOR, value=search_button)
+
+
 #더보기 버튼
+more_button = "div > div > main > div> div.guide_GuidePanel__hO6Rf > div > div > button"
+element_more = browser.find_element(by=By.CSS_SELECTOR, value=more_button)
 
-more_button = "#__next > div > div.mainContainer_container__1fQYb > div > div > main > div:nth-child(2) > div.guide_GuidePanel__hO6Rf > div > div > button"
-element_more = browser.find_elements(by=By.CSS_SELECTOR, value=more_button)
+# 리뷰 제목
+review_title = "b.guide_name__OKy4W.expandableText_EllipsisText__gaduJ"
+element_review = browser.find_elements(by=By.CSS_SELECTOR, value=review_title)
 
 
-while True:
-    try:
+
+element_search.click()
+time.sleep(1)
+
+# 지역
+region_button = "div.searchbox_svc_tabs__MkKLI > a.searchbox_svc_tab__kjMI2"
+element_region = browser.find_elements(by=By.CSS_SELECTOR, value=region_button)
+
+# 세부지역
+detail_region_button = "div.searchbox_svc_PanelItem__nQUao.as_domestic > a"
+element_detail = browser.find_element(by=By.CSS_SELECTOR, value=detail_region_button)
+
+# 여행컨텐츠 버튼
+contents_button = "nav > div > a:nth-child(2)"
+element_contents = browser.find_element(by=By.CSS_SELECTOR, value=detail_region_button)
+
+for x in range(len(element_region)):
+    element_region[x].click()
+    time.sleep(1)
+    element_detail.click()
+    time.sleep(2)
+    element_contents.click()
+    time.sleep(1)   
+
+# while True:
+    for y in range(5):
         # 더보기 버튼을 찾아 클릭
         element_more.click()
-    except:
-        # 더보기 버튼이 없으면 반복문 종료
-        break
+        time.sleep(1)
 
+    list_review = []
+    for z in range(len(element_review)):
+        review_text = element_review[z].text
+        list_review.append(review_text)
+print(list_review)
+
+    # # MongoDB에 댓글 저장
+    # collection.insert_one({"": author, "content": content, "rating": rating})
+
+        # 더보기 버튼이 없으면 빈 리스트에 리뷰 제목들을 추가
+        
 
 
 # while True:
