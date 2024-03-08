@@ -5,12 +5,13 @@
 {% block main_container %}
 
 <hr>
-<h2 class="text-center">데이터 현황 차트</h2>
+<h2 class="text-center">{{selected_region}} 데이터 현황 차트</h2>
 <hr>
 <nav class="navbar bg-body-tertiary" id="chart_nav">
     <div class="container-fluid d-flex justify-content-center">
         <form class="d-flex" role="search">
             <select name="select_region" class="form-select me-2 text-center" aria-label="지역 선택" style="width: 300px;">
+                <option selected disabled>전체</option>
                 <option value="서울">서울특별시</option>
                 <option value="부산">부산광역시</option>
                 <option value="대구">대구광역시</option>

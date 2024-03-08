@@ -180,4 +180,4 @@ async def list_post(request:Request):
         if consume_list[y]['region'] == select_region:
             dict_consume[consume_list[y]["industry_major_cate"]] = dict_consume[consume_list[y]["industry_major_cate"]] +  consume_list[y]['consumption_amount']/4
 
-    return templates.TemplateResponse(name="consult/data_chart.html", context={'request':request, 'dict_visitor':dict_visitor,'dict_concept':dict_concept,'list_month_trend':list_month_trend,'consume_list':consume_list,'list_consume_transition':list_consume_transition, 'dict_consume':dict_consume})
+    return templates.TemplateResponse(name="consult/data_chart.html", context={'request':request, 'dict_visitor':dict_visitor,'dict_concept':dict_concept,'list_month_trend':list_month_trend,'consume_list':consume_list,'list_consume_transition':list_consume_transition, 'dict_consume':dict_consume, 'selected_region':select_region})
