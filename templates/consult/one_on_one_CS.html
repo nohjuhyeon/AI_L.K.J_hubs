@@ -18,31 +18,3 @@
         <button type="submit" class="btn btn-primary">제출</button>
     </form>
 {% endblock %}
-
-{% block custom_js %}
-    <script>
-    document.getElementById("inquiryForm").addEventListener("submit", function(event){
-      event.preventDefault();
-
-      const userName = document.getElementById("userName").value;
-      const userEmail = document.getElementById("userEmail").value;
-      const userInquiry = document.getElementById("userInquiry").value;
-
-      axios.post('/one_on_one_add', {
-        userName: userName,
-        userEmail: userEmail,
-        userInquiry: userInquiry
-      })
-      .then(function (response) {
-        if(response.data.success) {
-          window.location.href = '/one_on_one_CS_main';
-        } else {
-          alert('문의 제출에 실패했습니다.');
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    });
-    </script>
-{% endblock %}
