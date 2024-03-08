@@ -131,16 +131,16 @@ async def list_post(request:Request):
     dict_visitor = {'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'11':0,'12':0}
     for i in range(len(visitor_list)):
         if visitor_list[i]['region'] == select_region:
-            dict_visitor[str(visitor_list[i]['std_month'])] = dict_visitor[str(visitor_list[i]['std_month'])]  + visitor_list[i]['destination_search']/40000
+            dict_visitor[str(visitor_list[i]['std_month'])] = dict_visitor[str(visitor_list[i]['std_month'])]  + visitor_list[i]['destination_search']/4
 
     # 유형별 목적지 검색량
     concept_conditions = {"destination_type": { "$ne": "전체" }}
     dict_concept={'숙박':0, '음식':0, '기타관광':0, '쇼핑':0, '문화관광':0, '역사관광':0, '자연관광':0, '체험관광':0, '레저스포츠':0}
     concept_list = await collection_data_concept_search.getsbyconditions(concept_conditions)
     concept_list = [module.dict() for module in concept_list]
-    for i in range(len(concept_list)):
-        if concept_list[i]['region'] == select_region:
-            dict_concept[concept_list[i]["destination_type"]] = dict_concept[concept_list[i]["destination_type"]] +  concept_list[i]['destination_search']/40000
+    for k in range(len(concept_list)):
+        if concept_list[k]['region'] == select_region:
+            dict_concept[concept_list[k]["destination_type"]] = dict_concept[concept_list[k]["destination_type"]] +  concept_list[k]['destination_search']/4
 
     # 월별 관광 소비 추이 이거
     consume_transition = {"industry_major_cate" : { '$ne': '전체'}}
@@ -153,9 +153,9 @@ async def list_post(request:Request):
                                {'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'11':0,'12':0},
                                {'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'11':0,'12':0},
                                {'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'11':0,'12':0}]
-    for i in range(len(consume_transition_list)):
-        if concept_list[i]['region'] == select_region:
-            list_consume_transition[consume_transition_column.index(consume_transition_list[i]['industry_major_cate'])][str(consume_transition_list[i]['std_month'])] = list_consume_transition[consume_transition_column.index(consume_transition_list[i]['industry_major_cate'])][str(consume_transition_list[i]['std_month'])]+ consume_transition_list[i]['consumption_amount']
+    for x in range(len(consume_transition_list)):
+        if concept_list[x]['region'] == select_region:
+            list_consume_transition[consume_transition_column.index(consume_transition_list[x]['industry_major_cate'])][str(consume_transition_list[x]['std_month'])] = list_consume_transition[consume_transition_column.index(consume_transition_list[x]['industry_major_cate'])][str(consume_transition_list[x]['std_month'])]+ consume_transition_list[x]['consumption_amount']/4
         pass
     
     # 월별 키워드 검색량
@@ -169,15 +169,15 @@ async def list_post(request:Request):
                         {'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'11':0,'12':0}]
     for j in range(len(trend_list)):
         if concept_list[j]['region'] == select_region:
-            list_month_trend[tour_trend_column.index(trend_list[j]['tour_trend'])][str(trend_list[j]['std_month'])] =list_month_trend[tour_trend_column.index(trend_list[j]['tour_trend'])][str(trend_list[j]['std_month'])] + trend_list[j]['num_mention']
+            list_month_trend[tour_trend_column.index(trend_list[j]['tour_trend'])][str(trend_list[j]['std_month'])] =list_month_trend[tour_trend_column.index(trend_list[j]['tour_trend'])][str(trend_list[j]['std_month'])] + trend_list[j]['num_mention']/4
         pass
     
     # 관광소비 유형
     dict_consume={'쇼핑업':0, '숙박업':0, '식음료업':0, '여가서비스업':0, '여행업':0, '운송업':0}
     consume_list = await collection_data_consume.get_all()
     consume_list = [module.dict() for module in consume_list]
-    for i in range(len(consume_list)):
-        if concept_list[i]['region'] == select_region:
-            dict_consume[consume_list[i]["industry_major_cate"]] = dict_consume[consume_list[i]["industry_major_cate"]] +  consume_list[i]['consumption_amount']/40000
+    for y in range(len(consume_list)):
+        if concept_list[y]['region'] == select_region:
+            dict_consume[consume_list[y]["industry_major_cate"]] = dict_consume[consume_list[y]["industry_major_cate"]] +  consume_list[y]['consumption_amount']/4
 
     return templates.TemplateResponse(name="consult/data_chart.html", context={'request':request, 'dict_visitor':dict_visitor,'dict_concept':dict_concept,'list_month_trend':list_month_trend,'consume_list':consume_list,'list_consume_transition':list_consume_transition, 'dict_consume':dict_consume})
