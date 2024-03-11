@@ -63,9 +63,9 @@ element_detail = browser.find_element(by=By.CSS_SELECTOR, value=detail_region_bu
 
 # 여행컨텐츠 버튼
 contents_button = "nav > div > a:nth-child(2)"
-element_contents = browser.find_element(by=By.CSS_SELECTOR, value=detail_region_button)
+element_contents = browser.find_element(by=By.CSS_SELECTOR, value=contents_button)
 
-for x in range(len(element_region)):
+for x in range(6,18):
     element_region[x].click()
     time.sleep(1)
     element_detail.click()
