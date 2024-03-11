@@ -4,6 +4,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from databases.connections import Database
+from fastapi import Form
 from fastapi import HTTPException
 from beanie import PydanticObjectId
 import requests
@@ -84,18 +85,20 @@ async def list_post(request:Request):
 
 ## 1대1 문의 저장
 @router.post("/inquiryForm")
-async def create_inquiry(request: Request, inquiry_data: Inquiry):
-    # 문의사항 인스턴스 생성
-    new_inquiry = Inquiry(
-        userName=inquiry_data.userName,
-        userEmail=inquiry_data.userEmail,
-        inquiryContent=inquiry_data.userInquiry
-    )
+async def create_inquiry(userName: str = Form(...), userEmail: str = Form(...), userInquiry: str = Form(...)):
+    # 폼 데이터를 사용하여 문의사항 인스턴스 생성
+    inquiry_data = {
+        "name": userName,
+        "email": userEmail,
+        "inquiry": userInquiry
+    }
+    new_inquiry = Inquiry(**inquiry_data)
+    
     # 데이터베이스에 문의사항을 저장
-    await new_inquiry.insert()  # Beanie의 `insert` 메소드를 이용해 문서를 데이터베이스에 저장
+    await new_inquiry.create()  # Beanie의 `create` 메소드를 사용해 문서를 데이터베이스에 저장
 
     # 문의 생성 후 one_on_one_CS_main.html로 리다이렉션
-    return RedirectResponse(url="/one_on_one_CS_main.html")
+    return RedirectResponse(url="consult/one_on_one_CS_main.html")
 
 ## 카카오톡 상담
 @router.post("/kakaotalk_CS")
