@@ -84,7 +84,7 @@ async def list_post(request:Request):
     return templates.TemplateResponse(name="consult/one_on_one_CS.html", context={'request':request})
 
 ## 1대1 문의 저장
-@router.post("/inquiryForm")
+@router.post("inquiryForm")
 async def create_inquiry(userName: str = Form(...), userEmail: str = Form(...), userInquiry: str = Form(...)):
     # 폼 데이터를 사용하여 문의사항 인스턴스 생성
     inquiry_data = {
@@ -98,7 +98,7 @@ async def create_inquiry(userName: str = Form(...), userEmail: str = Form(...), 
     await new_inquiry.create()  # Beanie의 `create` 메소드를 사용해 문서를 데이터베이스에 저장
 
     # 문의 생성 후 one_on_one_CS_main.html로 리다이렉션
-    return RedirectResponse(url="consult/one_on_one_CS_main.html")
+    return RedirectResponse(url="one_on_one_CS_main.html")
 
 ## 카카오톡 상담
 @router.post("/kakaotalk_CS")
