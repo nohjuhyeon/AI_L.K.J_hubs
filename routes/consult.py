@@ -19,7 +19,7 @@ from models.one_on_one_CS_inquiry import Inquiry
 from models.admin_notice import Admin_notice_list
 collection_admin_notice_list = Database(Admin_notice_list)
 from models.one_on_one_CS import One_on_one_CS_list
-One_on_one_CS_list = Database(One_on_one_CS_list)
+collection_one_on_one_CS_list = Database(One_on_one_CS_list)
 from models.data_chart import data_attraction, data_concept_search, data_consume,data_consume_transition,data_trend_search
 collection_data_attraction=Database(data_attraction)
 collection_data_concept_search=Database(data_concept_search)
@@ -27,8 +27,7 @@ collection_data_consume=Database(data_consume)
 collection_data_consume_transition=Database(data_consume_transition)
 collection_data_trend_search=Database(data_trend_search)
 
-from models.frequent_CS import FAQ_list
-collection_FAQ_list = Database(FAQ_list)
+collection_FAQ_list = Database(Inquiry)
 
 ## 공지 사항
 @router.post("/user_notice") # 펑션 호출 방식
@@ -60,13 +59,13 @@ async def frequent_cs_get(request:Request):
 ## 1대1 문의 메인페이지
 @router.post("/one_on_one_CS_main") # 펑션 호출 방식
 async def list_post(request:Request):
-    qna = await One_on_one_CS_list.get_all()
+    qna = await collection_one_on_one_CS_list.get_all()
     print(dict(await request.form()))
     return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request, "qnas": qna})
 
 @router.get("/one_on_one_CS_main") # 펑션 호출 방식
 async def list_post(request:Request):
-    qna = await One_on_one_CS_list.get_all()
+    qna = await collection_one_on_one_CS_list.get_all()
     print(dict(await request.form()))
     return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request, "qnas": qna})
 
@@ -85,20 +84,24 @@ async def list_post(request:Request):
 
 ## 1대1 문의 저장
 @router.post("/inquiryForm")
-async def create_inquiry(userName: str = Form(...), userEmail: str = Form(...), userInquiry: str = Form(...)):
+async def create_inquiry(request:Request):
+    user_info = dict(await request.form())
     # 폼 데이터를 사용하여 문의사항 인스턴스 생성
-    inquiry_data = {
-        "name": userName,
-        "email": userEmail,
-        "inquiry": userInquiry
-    }
-    new_inquiry = Inquiry(**inquiry_data)
+    # inquiry_data = {
+    #     "name": userName,
+    #     "email": userEmail,
+    #     "inquiry": userInquiry
+    # }
+    # new_inquiry = Inquiry(**inquiry_data)
     
     # 데이터베이스에 문의사항을 저장
-    await new_inquiry.create()  # Beanie의 `create` 메소드를 사용해 문서를 데이터베이스에 저장
+    # await new_inquiry.create()  # Beanie의 `create` 메소드를 사용해 문서를 데이터베이스에 저장
 
     # 문의 생성 후 one_on_one_CS_main.html로 리다이렉션
-    return RedirectResponse(url="consult/one_on_one_CS_main.html")
+    user_inform = One_on_one_CS_list(**user_info)
+    await collection_one_on_one_CS_list.save(user_inform)
+    list_user_question = await collection_one_on_one_CS_list.get_all()
+    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request,'qnas':list_user_question})
 
 ## 카카오톡 상담
 @router.post("/kakaotalk_CS")

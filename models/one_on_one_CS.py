@@ -7,10 +7,9 @@ from bson import ObjectId                 # 데이터베이스의 데이터를 �
 
 # 개발자 실수로 들어가는 field 제한
 class One_on_one_CS_list(Document):
-    _id : ObjectId
     userName : Optional[str] = None 
     userEmail : Optional[str] = None
-    inquiryContent : Optional[str] = None
+    inqueryContent : Optional[str] = None
     date : Optional[str] = None
     class Settings:
         name = "one_on_one_CS"
