@@ -1,20 +1,22 @@
 {% extends "template.html" %}
 
 {% block main_container %}
-    <h1 class="mt-5">1대1 문의</h1>
-    <form id="inquiryForm">
-        <div class="mb-3">
-            <label for="userName" class="form-label">이름</label>
-            <input type="text" class="form-control" id="userName" required>
+<div class="container">
+    <h2 class = "fs-4">1대1 문의</h2>
+    <form action="/inquiryForm" method="post">
+        <div class="form-group">
+            <label for="name">이름:</label>
+            <input type="text" class="form-control" id="name" name="userName" required>
         </div>
-        <div class="mb-3">
-            <label for="userEmail" class="form-label">이메일</label>
-            <input type="email" class="form-control" id="userEmail" required>
+        <div class="form-group">
+            <label for="email">이메일:</label>
+            <input type="email" class="form-control" id="email" name="userEmail" required>
         </div>
-        <div class="mb-3">
-            <label for="userInquiry" class="form-label">문의 내용</label>
-            <textarea class="form-control" id="userInquiry" rows="3" required></textarea>
+        <div class="form-group">
+            <label for="inquiry">문의내용:</label>
+            <textarea class="form-control" id="inquiry" name="userInquiry" rows="3" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">제출</button>
+        <button type="submit" class="btn btn-primary">문의하기</button>
     </form>
+</div>
 {% endblock %}
