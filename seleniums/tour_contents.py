@@ -5,7 +5,7 @@ mongoClient = MongoClient("mongodb://192.168.10.240:27017")
 database = mongoClient["AI_LKJ"]
 # collection 작업
 collection = database['tour_contents']
-collection.delete_many({})
+# collection.delete_many({})
 
 
 # * 웹 크롤링 동작
@@ -39,100 +39,63 @@ import time
 search_button = "div.header_sub__z2ac0 > button"
 element_search = browser.find_element(by=By.CSS_SELECTOR, value=search_button)
 
-
-#더보기 버튼
-more_button = "div > div > main > div> div.guide_GuidePanel__hO6Rf > div > div > button"
-element_more = browser.find_element(by=By.CSS_SELECTOR, value=more_button)
-
-# 리뷰 제목
-review_title = "b.guide_name__OKy4W.expandableText_EllipsisText__gaduJ"
-element_review = browser.find_elements(by=By.CSS_SELECTOR, value=review_title)
-
-
-
 element_search.click()
-time.sleep(1)
 
 # 지역
 region_button = "div.searchbox_svc_tabs__MkKLI > a.searchbox_svc_tab__kjMI2"
 element_region = browser.find_elements(by=By.CSS_SELECTOR, value=region_button)
 
-# 세부지역
-detail_region_button = "div.searchbox_svc_PanelItem__nQUao.as_domestic > a"
-element_detail = browser.find_element(by=By.CSS_SELECTOR, value=detail_region_button)
 
-# 여행컨텐츠 버튼
-contents_button = "nav > div > a:nth-child(2)"
-element_contents = browser.find_element(by=By.CSS_SELECTOR, value=detail_region_button)
 
+# element_search.click()
+# time.sleep(1)
+
+pass
 for x in range(len(element_region)):
+    
+    region_button = "div.searchbox_svc_tabs__MkKLI > a.searchbox_svc_tab__kjMI2"
+    element_region = browser.find_elements(by=By.CSS_SELECTOR, value=region_button)
     element_region[x].click()
+    region_text = element_region[x].text
     time.sleep(1)
+    # 세부지역
+    detail_region_button = "div.searchbox_svc_PanelItem__nQUao.as_domestic > a"
+    element_detail = browser.find_element(by=By.CSS_SELECTOR, value=detail_region_button)
     element_detail.click()
-    time.sleep(2)
+    time.sleep(1)
+    # 여행컨텐츠 버튼
+    contents_button = "nav > div > a:nth-child(2)"
+    element_contents = browser.find_element(by=By.CSS_SELECTOR, value=contents_button)
     element_contents.click()
     time.sleep(1)   
 
-# while True:
-    for y in range(5):
-        # 더보기 버튼을 찾아 클릭
-        element_more.click()
-        time.sleep(1)
-
-    list_review = []
-    for z in range(len(element_review)):
-        review_text = element_review[z].text
-        list_review.append(review_text)
-print(list_review)
-
-    # # MongoDB에 댓글 저장
-    # collection.insert_one({"": author, "content": content, "rating": rating})
-
-        # 더보기 버튼이 없으면 빈 리스트에 리뷰 제목들을 추가
+    while True:
+        try :
+            #더보기 버튼
+            more_button = "div > div > main > div> div.guide_GuidePanel__hO6Rf > div > div > button"
+            element_more = browser.find_element(by=By.CSS_SELECTOR, value=more_button)
+            # 더보기 버튼을 찾아 클릭
+            element_more.click()
+            time.sleep(1)
+        except :
+            break
         
-
-
-# while True:
-# # for i in range(3):
-#     element_body.send_keys(Keys.END)
-#     current_scrollHeight = browser.execute_script("return document.body.scrollHeight")
-#     if previous_scrollHeight >= current_scrollHeight:
-#         break
-#     else:
-#         previous_scrollHeight = current_scrollHeight
-#     time.sleep(3)
-# pass
-# user_list = element_body.find_elements(by=By.CSS_SELECTOR,value = "div.css-13j4ly.egj9y8a4")
-# user_name_list = []
-# grade_list = []
-# content_list = []
-# for user_item in user_list:
-#     try:
-#         user_name = user_item.find_element(by=By.CSS_SELECTOR,value = "div.css-drz8qh.egj9y8a2")                    # 작성자 정보 추출
-#         str_user_name = user_name.text
-#     except: 
-#         str_user_name = ""
-#     user_name_list.append(str_user_name)
-#     try:
-#         grade = user_item.find_element(by=By.CSS_SELECTOR,value = "div.css-31ods0.egj9y8a0")                        # 별점 점수 정보 추출
-#         str_grade = grade.text
-#     except:
-#         str_grade = ""
-#     grade_list.append(str_grade)
-#     try:
-#         content = user_item.find_element(by=By.CSS_SELECTOR,value = "div.css-2occzs.egj9y8a1")                      # 내용 정보 추출                                                                             # 데이터 데이스에 정보 전달
-#         str_content = content.text
-#     except:
-#         str_content = ""
-#     content_list.append(str_content)
-# for i in range(len(user_list)):
-#     collection.insert_one({"작성자": user_name_list[i],                                                         
-#                             "별점 점수": grade_list[i],
-#                             "내용": content_list[i]})
+    list_review = []
+    # 리뷰 제목
+    review_title = "b.guide_name__OKy4W.expandableText_EllipsisText__gaduJ"
+    element_review = browser.find_elements(by=By.CSS_SELECTOR, value=review_title)
+    for z in range(len(element_review)):
+        # 리뷰 제목
+        review_title = "b.guide_name__OKy4W.expandableText_EllipsisText__gaduJ"
+        element_review = browser.find_elements(by=By.CSS_SELECTOR, value=review_title)
+        review_text = element_review[z].text
+        
+        # MongoDB에 저장
+        collection.insert_one({"review_text": review_text , "지역" :region_text })
+        
+    search_button = "div.header_sub__z2ac0 > button"
+    element_search = browser.find_element(by=By.CSS_SELECTOR, value=search_button)
+    element_search.click()
 
 pass
 browser.quit()                                      # - 브라우저 종료
-
-# 작성자: div.css-drz8qh.egj9y8a2
-# 별점: div.css-31ods0.egj9y8a0
-# 내용: div.css-2occzs.egj9y8a1
