@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from starlette.responses import HTMLResponse
+from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from databases.connections import Database
@@ -11,7 +12,9 @@ router = APIRouter()
 
 templates = Jinja2Templates(directory="templates/")
 
+from databases.connections import Database
 
+from models.one_on_one_CS_inquiry import Inquiry
 from models.admin_notice import Admin_notice_list
 collection_admin_notice_list = Database(Admin_notice_list)
 from models.one_on_one_CS import One_on_one_CS_list
@@ -79,18 +82,20 @@ async def list_post(request:Request):
     print(dict(await request.form()))
     return templates.TemplateResponse(name="consult/one_on_one_CS.html", context={'request':request})
 
-## 새로운 1대1 질문 추가
-@router.get("/one_on_one_add")
-async def get_one_on_one(request: Request):
-    qna = await One_on_one_CS_list.get_all()
-    return templates.TemplateResponse("consult/one_on_one_CS_main.html", context={'request':request, 'qna': qna})
+## 1대1 문의 저장
+@router.post("/inquiryForm")
+async def create_inquiry(request: Request, inquiry_data: Inquiry):
+    # 문의사항 인스턴스 생성
+    new_inquiry = Inquiry(
+        userName=inquiry_data.userName,
+        userEmail=inquiry_data.userEmail,
+        inquiryContent=inquiry_data.userInquiry
+    )
+    # 데이터베이스에 문의사항을 저장
+    await new_inquiry.insert()  # Beanie의 `insert` 메소드를 이용해 문서를 데이터베이스에 저장
 
-@router.post("/one_on_one_add")
-async def add_one_on_one(request: Request):
-    qna_dict = dict(await request.form())
-    add_qna = One_on_one_CS_list(**qna_dict)
-    await One_on_one_CS_list.save(add_qna)
-    return {"success": True}
+    # 문의 생성 후 one_on_one_CS_main.html로 리다이렉션
+    return RedirectResponse(url="/one_on_one_CS_main.html")
 
 ## 카카오톡 상담
 @router.post("/kakaotalk_CS")
