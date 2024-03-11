@@ -50,7 +50,7 @@ element_region = browser.find_elements(by=By.CSS_SELECTOR, value=region_button)
 # time.sleep(1)
 
 pass
-for x in range(len(element_region)):
+for x in range(0,5):
     
     region_button = "div.searchbox_svc_tabs__MkKLI > a.searchbox_svc_tab__kjMI2"
     element_region = browser.find_elements(by=By.CSS_SELECTOR, value=region_button)
