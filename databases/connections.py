@@ -26,27 +26,46 @@ class Settings(BaseSettings):
         env_file = ".env"                                                
 
 class Database : 
-
+    # model 즉 collection
     def __init__(self, model) -> None:
         self.model = model
         pass
 
-
+    # 전체 리스트
     async def get_all(self) :
         documents = await self.model.find_all().to_list()         
         pass
         return documents
     
-
+    # 상세 보기
     async def get(self, id: PydanticObjectId) -> Any: 
         doc = await self.model.get(id)               
         if doc:                                  
             return doc
         return False
     
+    # 저장
     async def save(self, document) -> None:
         await document.create()
         return None
+    
+    # 업데이트
+    async def update_one(self, id: PydanticObjectId, dic) -> Any:
+        doc = await self.model.get(id)
+        if doc:
+            for key, value in dic.items():
+                setattr(doc, key, value)
+            await doc.save()
+            return True
+        return False
+    
+    # 삭제
+    async def delete_one(self, id: PydanticObjectId) -> bool:
+        doc = await self.model.get(id)
+        if doc:
+            await doc.delete()
+            return True
+        return False
 
     async def getsbyconditions(self, conditions:dict) -> [Any]:
         documents = await self.model.find(conditions).to_list()  # find({})

@@ -230,7 +230,7 @@
             .then((json) => {
                 console.log(json);
                 const place = json.name;
-                const temperature = json.main.temp;
+                const temperature = Math.round(json.main.temp); // 반올림
                 const description = json.weather[0].main;
 
                 placeSection.innerHTML = place;
