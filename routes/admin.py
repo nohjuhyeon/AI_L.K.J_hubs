@@ -48,6 +48,7 @@ async def list_post(request:Request):
     # 템플릿에 데이터 전달하여 HTML 페이지 렌더링
     return templates.TemplateResponse("admin/admin_notice.html" , context={"request": request, "notices": notices} )
 
+## 공지사항 수정 업데이트
 @router.post("/notice_update") # 펑션 호출 방식
 async def list_post(request:Request):
     # MongoDB에서 공지사항 데이터 가져오기
@@ -62,11 +63,9 @@ async def list_post(request:Request):
 
     await collection_admin_notice_list.update_one(form_data['id'], update_fields)
     notices = await collection_admin_notice_list.get_all() # 메서드를 사용하여 모든 공지사항을 가져옴
-    # print(notices)
     # 템플릿에 데이터 전달하여 HTML 페이지 렌더링
     return templates.TemplateResponse("admin/admin_notice.html" , context={"request": request, "notices": notices} )
 
-# 
 
 @router.get("/notice") # 펑션 호출 방식
 async def list_post(request:Request):
@@ -92,33 +91,6 @@ async def post_notice_content(request : Request, object_id: PydanticObjectId) :
     print(notices)
     return templates.TemplateResponse(name="admin/admin_notice_content.html", context={'request' : request, 'notices' : notices})
 
-## 공지사항 수정 업데이트
-@router.post("/admin_notice_content/{object_id}", response_class=HTMLResponse)
-async def post_notice_content(request : Request, object_id: PydanticObjectId, 
-    title : Optional[str] = None, 
-    content : Optional[str] = None, 
-    writer : Optional[str] = None,
-    date : Optional[str] = None) :
-    form_data = await request.form()
-    # dict_form_data = dict(form_data)
-
-    # 업데이트할 데이터 필드 설정
-    update_fields = {}
-    if title is not None:
-        update_fields['title'] = title
-    if content is not None:
-        update_fields['content'] = content
-    if writer is not None:
-        update_fields['writer'] = writer
-    if date is not None:
-        update_fields['date'] = date
-
-    # MongoDB에서 해당 object_id에 해당하는 데이터를 가져옴
-    await collection_admin_notice_list.update_one({'_id':object_id}, {"$set": update_fields})
-
-    # 수정된 내용을 다시 가져옴
-    updated_notices = await collection_admin_notice_list.get(object_id)
-    return templates.TemplateResponse(name="admin/admin_notice_content.html", context={'request' : request, 'notices' : updated_notices})
     
 ## 공지사항 글쓰기
 @router.get("/admin_notice_write")
