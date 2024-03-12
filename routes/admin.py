@@ -54,7 +54,6 @@ async def list_post(request:Request):
     # MongoDB에서 공지사항 데이터 가져오기
     await request.form()
     form_data = dict(await request.form())
-    print(form_data)
     update_fields = {}
     update_fields['title'] = form_data['title']
     update_fields['writer'] = form_data['writer']
