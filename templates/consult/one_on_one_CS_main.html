@@ -1,12 +1,68 @@
 {% extends "template.html" %}
 
 {% block main_container %}
+
+<style>
+    .collapsible {
+        background-color: #f9f9f9; 
+        color: black;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+    .active, .collapsible:hover {
+        background-color: #e6e6e6;
+    }
+
+    .collapsible:after {
+        content: '\02795'; 
+        font-size: 13px;
+        color: black; 
+        float: right;
+        margin-left: 5px;
+    }
+
+    .active:after {
+        content: "\2796"; 
+    }
+
+    .content {
+        transition: max-height 0.2s ease-out;
+        background-color: #e6e6e6;   
+        overflow: hidden;
+        max-height: 0;
+    }
+
+    .activeContent {
+        padding: 18px;
+        display: none; 
+    }
+
+    th, td {
+        word-wrap: break-word; 
+    }
+
+    .qna-title {
+        max-width: 60%; 
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+    }
+
+</style>
+
 <h1 class="mt-5 mb-4 text-center">1대1 문의</h1>
-<div ckass="container my-3">
+
+<div class="container my-3">
     <table class="table">
         <thead class="table-light rounded-corners">
             <tr>
-                <th colspan="4">
+                <th colspan="3">
                     <div class="text-end">
                         <a href="/consult/one_on_one_CS" class="btn btn-primary">글 작성</a>
                     </div>
@@ -15,33 +71,106 @@
         </thead>
         <thead class="table-primary rounded-corners">
             <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성날짜</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성날짜</th>
             </tr>
         </thead>
+        <tbody>
             {% for qna in qnas %}
-            <tr >
-                <td>{{ loop.index }}</td>
-                <td>
-                    <a href="/consult/user_notice{{qna._id}}">{{ qna.inquiryContent }}</a>
-                </td>
-                <td>{{ qna.userName }}</td>
-                <td>{{ qna.date }}</td>
+            <tr>
+               <td class="collapsible qna-title" data-index="{{ qna.id }}">{{ qna.title }}</td>
+               <td>{{ qna.userName }}</td>
+               <td>{{ qna.date }}</td>
+            </tr>
+            <tr>
+               <td colspan="3" style="padding:0;">
+                  <div id="content{{ qna.id }}" class="content">
+                        <div class="passwordForm" style="display:none; padding:18px;">
+                           <input type="password" placeholder="비밀번호 4자리 입력" class="passwordInput">
+                           <button class="checkPassword" data-inquiry-id="{{ qna.id }}">확인</button>
+                        </div>
+                        <div class="activeContent" style="display:none;">{{ qna.inquiryContent }}</div>
+                  </div>
+               </td>
+            </tr>
+            {% else %}
+            <tr>
+               <td colspan="3">등록된 문의가 없습니다.</td>
             </tr>
             {% endfor %}
+
         </tbody>
     </table>
 </div>
-  <div>
-    <ul class="pagination justify-content-center">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
-    </div>
+
+<script>
+   // collapsible 요소에 대한 이벤트 리스너 설정
+   var coll = document.getElementsByClassName("collapsible");
+   var i;
+
+   for (i = 0; i < coll.length; i++) {
+       coll[i].addEventListener("click", function() {
+           this.classList.toggle("active");
+           var content = this.parentElement.nextElementSibling.children[0].children[0];
+           var passwordForm = content.children[0]; // 비밀번호 입력 폼
+           var activeContent = content.children[1]; // 실제 문의 내용
+           if (content.style.maxHeight){
+               content.style.maxHeight = null;
+               passwordForm.style.display = "none";
+               activeContent.style.display = "none";
+           } else {
+               passwordForm.style.display = "block"; // 비밀번호 입력 폼을 보이도록 설정
+               content.style.maxHeight = content.scrollHeight + "px";
+           }
+       });
+   }
+
+   // 비밀번호 확인 버튼에 대한 이벤트 리스너 설정
+   var passwordCheckButtons = document.getElementsByClassName("checkPassword");
+   for (i = 0; i < passwordCheckButtons.length; i++) {
+       passwordCheckButtons[i].addEventListener("click", function() {
+           var passwordInput = this.previousElementSibling;
+           var content = this.parentElement.parentElement;
+           var activeContent = this.parentElement.nextElementSibling;
+           var inquiryId = this.parentElement.querySelector('.checkPassword').getAttribute('data-inquiry-id');
+
+           // AJAX 요청을 서버로 보냅니다.
+           fetch('/api/verifyPassword', {
+               method: 'POST',
+               headers: {
+                   'Content-Type': 'application/json',
+               },
+               body: JSON.stringify({
+                  inquiryNumber: inquiryId,
+                  password: passwordInput.value
+               }),
+           })
+           .then(response => {
+               if (!response.ok) {
+                  throw new Error('Server response not OK');
+               }
+               return response.json();
+            })
+           .then(data => {
+               if(data.isValid) {
+                   // 비밀번호가 일치하는 경우
+                   activeContent.style.display = "block";
+                   this.parentElement.style.display = "none";
+                   content.style.maxHeight = content.scrollHeight + "px";
+               } else {
+                   // 비밀번호가 일치하지 않는 경우
+                   alert("비밀번호가 틀렸습니다.");
+               }
+           })
+           .catch((error) => {
+               console.error('Error:', error);
+               alert("서버 오류가 발생했습니다. 나중에 다시 시도해주세요.");
+           });
+       });
+   }
+</script>
+
+
 
 {% endblock %}

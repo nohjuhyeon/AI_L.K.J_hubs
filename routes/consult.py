@@ -4,10 +4,13 @@ from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from databases.connections import Database
+from datetime import datetime
+import pytz
 from fastapi import Form
 from fastapi import HTTPException
 from beanie import PydanticObjectId
 import requests
+import hashlib
 
 router = APIRouter()
 
@@ -15,7 +18,8 @@ templates = Jinja2Templates(directory="templates/")
 
 from databases.connections import Database
 
-from models.one_on_one_CS_inquiry import Inquiry
+from models.frequent_CS import FAQ_list
+collection_FAQ_list = Database(FAQ_list)
 from models.admin_notice import Admin_notice_list
 collection_admin_notice_list = Database(Admin_notice_list)
 from models.one_on_one_CS import One_on_one_CS_list
@@ -27,7 +31,6 @@ collection_data_consume=Database(data_consume)
 collection_data_consume_transition=Database(data_consume_transition)
 collection_data_trend_search=Database(data_trend_search)
 
-collection_FAQ_list = Database(Inquiry)
 
 ## 공지 사항
 @router.post("/user_notice") # 펑션 호출 방식
@@ -82,35 +85,33 @@ async def list_post(request:Request):
     print(dict(await request.form()))
     return templates.TemplateResponse(name="consult/one_on_one_CS.html", context={'request':request})
 
-## 1대1 문의 저장
-<<<<<<< HEAD
-@router.post("inquiryForm")
-async def create_inquiry(userName: str = Form(...), userEmail: str = Form(...), userInquiry: str = Form(...)):
-=======
+## 1대1 문의 페이지 제출 및 리디렉션
 @router.post("/inquiryForm")
-async def create_inquiry(request:Request):
-    user_info = dict(await request.form())
->>>>>>> ea3d722acc1bb1d93b474a9dd0b9ef5183927c26
-    # 폼 데이터를 사용하여 문의사항 인스턴스 생성
-    # inquiry_data = {
-    #     "name": userName,
-    #     "email": userEmail,
-    #     "inquiry": userInquiry
-    # }
-    # new_inquiry = Inquiry(**inquiry_data)
-    
-    # 데이터베이스에 문의사항을 저장
-    # await new_inquiry.create()  # Beanie의 `create` 메소드를 사용해 문서를 데이터베이스에 저장
+async def create_inquiry(request: Request):
+    form_data = await request.form()
+    user_info = dict(form_data)
 
-    # 문의 생성 후 one_on_one_CS_main.html로 리다이렉션
-<<<<<<< HEAD
-    return RedirectResponse(url="one_on_one_CS_main.html")
-=======
-    user_inform = One_on_one_CS_list(**user_info)
-    await collection_one_on_one_CS_list.save(user_inform)
-    list_user_question = await collection_one_on_one_CS_list.get_all()
-    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request,'qnas':list_user_question})
->>>>>>> ea3d722acc1bb1d93b474a9dd0b9ef5183927c26
+    user_info['date'] = datetime.now().strftime("%Y-%m-%d")
+
+    # MongoDB에서 현재 가장 높은 inquiryNumber 찾기
+    results = await One_on_one_CS_list.find().sort("-inquiryNumber").to_list(1)
+    if results:
+        last_inquiry = results[0]
+    else:
+        last_inquiry = None
+
+    if last_inquiry:
+        user_info['inquiryNumber'] = last_inquiry.inquiryNumber + 1
+    else:
+        user_info['inquiryNumber'] = 1
+
+    # 데이터 유효성 검사 및 저장
+    inquiry = One_on_one_CS_list(**user_info)
+    await inquiry.create()
+
+    # 사용자를 1대1 상담 메인 페이지로 리디렉션
+    return RedirectResponse(url="/consult/one_on_one_CS_main", status_code=303)
+
 
 ## 카카오톡 상담
 @router.post("/kakaotalk_CS")
