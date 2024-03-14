@@ -63,6 +63,9 @@
     .show {
         display: block; /* 내용 보여줄 때 사용 */
     }
+    .pagination .page-item.active::after {
+    display: none;
+    }
 </style>
 </head>
 
@@ -112,33 +115,74 @@
         </table>
     </div>
 
-    <div>
-        <script>
-            $(document).ready(function () {
-                $('body').on('click', '.collapsible', function () {
-                    var content = $(this).closest('tr').next('tr').find('.content');
-                    var formContainer = content.find('.form-container');
+    <form>
+        <div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item {% if not pagination.has_previous_block %}disabled{% endif %}">
+                        <button type="submit" class="page-link"
+                            formaction="/consult/one_on_one_CS_main/{{pagination.first_page}}">
+                            맨 처음
+                        </button>
+                    </li>
+                    <li class="page-item {% if not pagination.has_previous_page %}disabled{% endif %}">
+                        <button type="submit" class="page-link"
+                            formaction="/consult/one_on_one_CS_main/{{pagination.previous_page}}">
+                            이전
+                        </button>
+                    </li>
+    
+                    {% for page_num in pagination.current_page_range %}
+                    <li class="page-item {% if page_num == pagination.current_page %}active{% endif %}">
+                        <button type="submit" class="page-link" formaction="/consult/one_on_one_CS_main/{{page_num}}">
+                            {{page_num}}
+                        </button>
+                    </li>
+                    {% endfor %}
+    
+                    <li class="page-item {% if not pagination.has_next_page %}disabled{% endif %}">
+                        <button type="submit" class="page-link"
+                            formaction="/consult/one_on_one_CS_main/{{pagination.next_page}}">
+                            다음
+                        </button>
+                    </li>
+                    <li class="page-item {% if not pagination.has_next_block %}disabled{% endif %}">
+                        <button type="submit" class="page-link"
+                            formaction="/consult/one_on_one_CS_main/{{pagination.last_page}}">
+                            맨 끝
+                        </button>
+                    </li>
+    
+                </ul>
+            </nav>
+        </div>
+    </form>
 
-                    // 게시글 내용이 이미 표시된 상태라면, 비밀번호를 다시 묻지 않고 내용을 토글합니다.
-                    if (formContainer.hasClass("show")) {
+
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.collapsible', function () {
+                var content = $(this).closest('tr').next('tr').find('.content');
+                var formContainer = content.find('.form-container');
+
+                if (formContainer.hasClass("show")) {
+                    formContainer.toggleClass("show");
+                    content.css('max-height', formContainer.hasClass("show") ? content.prop('scrollHeight') + 'px' : 0);
+                    $(this).toggleClass("active");
+                } else {
+                    var user_password = $(this).attr('value');
+                    var password = prompt("비밀번호 4자리를 입력하세요.");
+                    if (password == user_password) {
                         formContainer.toggleClass("show");
                         content.css('max-height', formContainer.hasClass("show") ? content.prop('scrollHeight') + 'px' : 0);
                         $(this).toggleClass("active");
-                    } else { // 내용을 처음 보려고 할 때만 비밀번호를 요구합니다.
-                        var user_password = $(this).attr('value');
-                        var password = prompt("비밀번호 4자리를 입력하세요.");
-                        if (password == user_password) {
-                            formContainer.toggleClass("show");
-                            content.css('max-height', formContainer.hasClass("show") ? content.prop('scrollHeight') + 'px' : 0);
-                            $(this).toggleClass("active");
-                        } else {
-                            alert("비밀번호가 틀렸습니다.");
-                        }
+                    } else {
+                        alert("비밀번호가 틀렸습니다.");
                     }
-                });
+                }
             });
-        </script>
-    </div>
+        });
+    </script>
 </body>
 
 </html>

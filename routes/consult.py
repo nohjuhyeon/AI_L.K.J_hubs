@@ -3,14 +3,11 @@ from starlette.responses import HTMLResponse
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
+from fastapi import Query
 from databases.connections import Database
+from typing import Optional
 from datetime import datetime
-import pytz
-from fastapi import Form
-from fastapi import HTTPException
-from beanie import PydanticObjectId
 import requests
-import hashlib
 
 router = APIRouter()
 
@@ -61,16 +58,22 @@ async def frequent_cs_get(request:Request):
 
 ## 1대1 문의 메인페이지
 @router.post("/one_on_one_CS_main") # 펑션 호출 방식
-async def list_post(request:Request):
-    qna = await collection_one_on_one_CS_list.get_all()
+@router.post("/one_on_one_CS_main/{page_number}") # 펑션 호출 방식
+async def list_post(request:Request, page_number: Optional[int]=1):
     print(dict(await request.form()))
-    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request, "qnas": qna})
+    conditions = {}
+    qna_list_pagination, pagination = await collection_one_on_one_CS_list.getsbyconditionswithpagination(conditions
+                                                                     ,page_number)
+    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request, "qnas": qna_list_pagination, 'pagination':pagination})
 
 @router.get("/one_on_one_CS_main") # 펑션 호출 방식
-async def list_post(request:Request):
-    qna = await collection_one_on_one_CS_list.get_all()
+@router.get("/one_on_one_CS_main/{page_number}") # 펑션 호출 방식
+async def list_get(request:Request, page_number: Optional[int]=1):
     print(dict(await request.form()))
-    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request, "qnas": qna})
+    conditions = {}
+    qna_list_pagination, pagination = await collection_one_on_one_CS_list.getsbyconditionswithpagination(conditions
+                                                                     ,page_number)
+    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request, "qnas": qna_list_pagination, 'pagination':pagination})
 
 ## 1대1 문의 페이지
 @router.post("/one_on_one_CS") # 펑션 호출 방식
