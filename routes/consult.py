@@ -57,23 +57,22 @@ async def frequent_cs_get(request:Request):
     return templates.TemplateResponse(name="consult/frequent_CS.html", context={'request':request, 'faqs':faqs})
 
 ## 1대1 문의 메인페이지
-@router.post("/one_on_one_CS_main") # 펑션 호출 방식
-@router.post("/one_on_one_CS_main/{page_number}") # 펑션 호출 방식
-async def list_post(request:Request, page_number: Optional[int]=1):
+@router.post("/one_on_one_CS_main")  # 펑션 호출 방식
+@router.post("/one_on_one_CS_main/{page_number}")  # 펑션 호출 방식
+async def list_post(request: Request, page_number: Optional[int] = 1):
     print(dict(await request.form()))
     conditions = {}
-    qna_list_pagination, pagination = await collection_one_on_one_CS_list.getsbyconditionswithpagination(conditions
-                                                                     ,page_number)
-    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request, "qnas": qna_list_pagination, 'pagination':pagination})
+    qna_list_pagination, pagination = await collection_one_on_one_CS_list.getsbyconditionswithpagination(conditions, page_number, records_per_page=6)  
+    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request': request, "qnas": qna_list_pagination, 'pagination': pagination})
 
-@router.get("/one_on_one_CS_main") # 펑션 호출 방식
-@router.get("/one_on_one_CS_main/{page_number}") # 펑션 호출 방식
-async def list_get(request:Request, page_number: Optional[int]=1):
+
+@router.get("/one_on_one_CS_main")  # 펑션 호출 방식
+@router.get("/one_on_one_CS_main/{page_number}")  # 펑션 호출 방식
+async def list_get(request: Request, page_number: Optional[int] = 1):
     print(dict(await request.form()))
     conditions = {}
-    qna_list_pagination, pagination = await collection_one_on_one_CS_list.getsbyconditionswithpagination(conditions
-                                                                     ,page_number)
-    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request, "qnas": qna_list_pagination, 'pagination':pagination})
+    qna_list_pagination, pagination = await collection_one_on_one_CS_list.getsbyconditionswithpagination(conditions, page_number, records_per_page=6)  
+    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request': request, "qnas": qna_list_pagination, 'pagination': pagination})
 
 ## 1대1 문의 페이지
 @router.post("/one_on_one_CS") # 펑션 호출 방식

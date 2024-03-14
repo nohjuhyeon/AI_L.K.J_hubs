@@ -75,10 +75,10 @@ class Database :
         return False    
     
     async def getsbyconditionswithpagination(self
-                                             , conditions:dict, page_number) -> [Any]:
+                                             , conditions:dict, page_number, records_per_page=10) -> [Any]:
         # find({})
         total = await self.model.find(conditions).count()
-        pagination = Paginations(total_records=total, current_page=page_number)
+        pagination = Paginations(total_records=total, current_page=page_number, records_per_page=records_per_page)
         documents = await self.model.find(conditions).skip(pagination.start_record_number-1).limit(pagination.records_per_page).to_list()
         if documents:
             return documents, pagination
