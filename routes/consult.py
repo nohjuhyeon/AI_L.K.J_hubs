@@ -112,7 +112,6 @@ async def create_inquiry(request: Request):
     # 사용자를 1대1 상담 메인 페이지로 리디렉션
     return RedirectResponse(url="/consult/one_on_one_CS_main", status_code=303)
 
-
 ## 카카오톡 상담
 @router.post("/kakaotalk_CS")
 @router.get("/kakaotalk_CS")
