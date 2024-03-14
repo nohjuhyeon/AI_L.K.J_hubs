@@ -10,8 +10,10 @@ router = APIRouter()
 templates = Jinja2Templates(directory="templates/")
 
 from models.admin_notice import Admin_notice_list
+from models.user_list import User_list
 from databases.connections import Database
 collection_admin_notice_list = Database(Admin_notice_list)
+collection_user_list = Database(User_list)
 
 
 ## 메인
@@ -168,14 +170,21 @@ async def add_notice(request : Request):
 
 ## 회원 관리
 @router.post("/users") # 펑션 호출 방식
-async def list_post(request:Request):
+async def user_post(request:Request):
     await request.form()
     print(dict(await request.form()))
-    return templates.TemplateResponse(name="admin/admin_users.html", context={'request':request})
+    users = await collection_user_list.get_all()
+    return templates.TemplateResponse(name="admin/admin_users.html", context={'request':request, 'users':users})
 
 @router.get("/users") # 펑션 호출 방식
-async def list_post(request:Request):
+@router.get("/users/{page_number}") # 펑션 호출 방식
+async def user_get(request:Request, page_number: Optional[int]=1):
     await request.form()
     print(dict(await request.form()))
-    return templates.TemplateResponse(name="admin/admin_users.html", context={'request':request})
+    conditions = {}
+    users_list_pagination, pagination = await collection_user_list.getsbyconditionswithpagination(conditions
+                                                                     ,page_number)
+    return templates.TemplateResponse(name="admin/admin_users.html", context={'request':request,
+                                                                              'users' : users_list_pagination,
+                                                                              'pagination' : pagination})
 
