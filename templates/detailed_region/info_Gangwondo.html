@@ -66,6 +66,15 @@
             height: 560px; /* 세로 크기 */
         }
 
+        .card_second {
+            margin: 0 0.5em;
+            box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+            border: none;
+            height: 35em;
+            width: 340px; /* 가로 크기 */
+            height: 600px; /* 세로 크기 */
+        }
+
         .carousel-control-prev,
         .carousel-control-next {
             background-color: #e1e1e1;
@@ -130,7 +139,7 @@
             text-shadow: 1px 1px 1px #000;
         }
 
-        .card .card_region {
+        .card_region {
             color: rgb(245, 171, 183);
             text-shadow: 1px 1px 1px #000;
         }
@@ -163,7 +172,7 @@
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <div class="card">
-                    <div class="img-wrapper"><img src="/images/경포해변.jpg" class="d-block w-100" alt="..."> </div>
+                    <div class="img-wrapper"><img src="/images/경포해변.jpg" class="d-block w-100" alt="..." > </div>
                     <div class="card-body">
                         <h3 class="card_num">No.1</h3>
                         <h5 class="card-title"><strong>경포해변</strong></h5>
@@ -224,8 +233,8 @@
             {% for package in packages %}
                 {% if package.region == '강원' %}
                 <div class="carousel-item {% if loop.first %}active{% endif %}">
-                    <div class="card">
-                        <div class="img-wrapper"><img src="{{ package.image }}" class="d-block w-100" alt="..."> </div>
+                    <div class="card_second">
+                        <div class="img-wrapper"><img src="{{ package.image }}" class="d-block w-100" alt="..." style = "height: 242px;"> </div>
                         <div class="card-body">
                             <h3 class="card_region">{{ package.region }}</h3>
                             <h5 class="card-title2"><strong>{{ package.title }}</strong></h5>
@@ -233,6 +242,7 @@
                             <p class="card-text2">{{ package.departure_day }}</p>
                             <p class="card-text3">{{ package.transportation }}</p>
                             <p class="card-text4">{{ package.price }}</p>
+                            <a href="/" class="btn btn-primary">Go to view</a>
                         </div>
                     </div>
                 </div>
