@@ -31,17 +31,20 @@ collection_data_trend_search=Database(data_trend_search)
 
 ## 공지 사항
 @router.post("/user_notice") # 펑션 호출 방식
-async def list_post(request:Request):
-    
-    notices = await collection_admin_notice_list.get_all()
+@router.post("/user_notice/{page_number}")
+async def list_post(request: Request, page_number: Optional[int] = 1):
     print(dict(await request.form()))
-    return templates.TemplateResponse(name="consult/user_notice.html", context={'request':request, "notices": notices})
+    conditions = {}
+    notice_pagination, pagination = await collection_admin_notice_list.getsbyconditionswithpagination(conditions, page_number, records_per_page=10)  
+    return templates.TemplateResponse(name="consult/user_notice.html", context={'request': request, "notices": notice_pagination, 'pagination': pagination})
 
 @router.get("/user_notice") # 펑션 호출 방식
-async def list_post(request:Request):
-    notices = await collection_admin_notice_list.get_all()
+@router.get("/user_notice/{page_number}")
+async def list_get(request: Request, page_number: Optional[int] = 1):
     print(dict(await request.form()))
-    return templates.TemplateResponse("consult/user_notice.html" , context={"request": request, "notices": notices} )
+    conditions = {}
+    notice_pagination, pagination = await collection_admin_notice_list.getsbyconditionswithpagination(conditions, page_number, records_per_page=10)  
+    return templates.TemplateResponse(name="consult/user_notice.html", context={'request': request, "notices": notice_pagination, 'pagination': pagination})
 
 ## 자주 묻는 질문 페이지
 @router.post("/frequent_CS")
