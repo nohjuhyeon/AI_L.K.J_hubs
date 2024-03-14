@@ -81,10 +81,10 @@ async def list_post(request:Request):
 
 @router.get("/reserve_transfer") # 펑션 호출 방식
 @router.get("/reserve_transfer/{page_number}") # 펑션 호출 방식
-async def list_get(request:Request, page_number: Optional[int]=1, ):
+async def list_get(request:Request, page_number: Optional[int]=1):
     transfer_type = dict(request._query_params)
     await request.form()
-    conditions = { }
+    conditions = {} 
     try :
         search_word = transfer_type["transfer_cate"]
     except:
@@ -101,7 +101,7 @@ async def list_get(request:Request, page_number: Optional[int]=1, ):
 
 @router.get("/reserve_dorm") # 펑션 호출 방식
 @router.get("/reserve_dorm/{page_number}") # 펑션 호출 방식
-async def list_get(request:Request, page_number: Optional[int]=1, ):
+async def list_get(request:Request, page_number: Optional[int]=1):
     dorm_type = dict(request._query_params)
     await request.form()
     conditions = { }
