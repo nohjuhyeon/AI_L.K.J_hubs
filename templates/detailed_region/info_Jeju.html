@@ -62,6 +62,8 @@
             box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
             border: none;
             height: 35em;
+            width: 340px; /* 가로 크기 */
+            height: 560px; /* 세로 크기 */
         }
 
         .carousel-control-prev,
@@ -103,8 +105,33 @@
 
         }
 
+        .card .card-text1 {
+            height: 10px;
+
+        }
+
+        .card .card-text2 {
+            height: 10px;
+
+        }
+
+        .card .card-text3 {
+            height: 10px;
+
+        }
+
+        .card .card-text4 {
+            height: 10px;
+
+        }
+
         .card .card_num {
             color: rgb(241, 162, 43);
+            text-shadow: 1px 1px 1px #000;
+        }
+
+        .card .card_region {
+            color: rgb(245, 171, 183);
             text-shadow: 1px 1px 1px #000;
         }
 
@@ -130,7 +157,8 @@
         </thead>
     </table>
 
-    <div id="carouselExampleControls" class="carousel">
+    <div id="carouselExampleControls1" class="carousel">
+        <h4><strong><제주의 인기 관광지></strong></h4>
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <div class="card">
@@ -177,17 +205,51 @@
                 </div>
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls1"
             data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls1"
             data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+
+    <div id="carouselExampleControls2" class="carousel">
+        <h4><strong><제주의 관광 패키지></strong></h4>
+        <div class="carousel-inner">
+            {% for package in packages %}
+                {% if package.region == '제주' %}
+                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                    <div class="card">
+                        <div class="img-wrapper"><img src="{{ package.image }}" class="d-block w-100" alt="..."> </div>
+                        <div class="card-body">
+                            <h3 class="card_region">{{ package.region }}</h3>
+                            <h5 class="card-title2"><strong>{{ package.title }}</strong></h5>
+                            <p class="card-text1">{{ package.departure_period }}</p>
+                            <p class="card-text2">{{ package.departure_day }}</p>
+                            <p class="card-text3">{{ package.transportation }}</p>
+                            <p class="card-text4">{{ package.price }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls2"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls2"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
 
 </body>
 <script>
@@ -266,14 +328,13 @@
 
     }
 
-    const multipleCardCarousel = document.querySelector("#carouselExampleControls");
+    const multipleCardCarousel1 = document.querySelector("#carouselExampleControls1");
+    const multipleCardCarousel2 = document.querySelector("#carouselExampleControls2");
 
-    function handleNextClick() {
-        const carouselInner = document.querySelector(
-            "#carouselExampleControls .carousel-inner"
-        );
+    function handleNextClick1() {
+        const carouselInner = document.querySelector("#carouselExampleControls1 .carousel-inner");
         const carouselWidth = carouselInner.scrollWidth;
-        const cardWidth = document.querySelector(".carousel-item").offsetWidth;
+        const cardWidth = document.querySelector("#carouselExampleControls1 .carousel-item").offsetWidth;
         let scrollPosition = carouselInner.scrollLeft;
 
         if (scrollPosition < carouselWidth - cardWidth * 4) {
@@ -285,11 +346,38 @@
         }
     }
 
-    function handlePrevClick() {
-        const carouselInner = document.querySelector(
-            "#carouselExampleControls .carousel-inner"
-        );
-        const cardWidth = document.querySelector(".carousel-item").offsetWidth;
+    function handlePrevClick1() {
+        const carouselInner = document.querySelector("#carouselExampleControls1 .carousel-inner");
+        const cardWidth = document.querySelector("#carouselExampleControls1 .carousel-item").offsetWidth;
+        let scrollPosition = carouselInner.scrollLeft;
+
+        if (scrollPosition > 0) {
+            scrollPosition -= cardWidth;
+            carouselInner.scrollTo({
+                left: scrollPosition,
+                behavior: "smooth"
+            });
+        }
+    }
+
+    function handleNextClick2() {
+        const carouselInner = document.querySelector("#carouselExampleControls2 .carousel-inner");
+        const carouselWidth = carouselInner.scrollWidth;
+        const cardWidth = document.querySelector("#carouselExampleControls2 .carousel-item").offsetWidth;
+        let scrollPosition = carouselInner.scrollLeft;
+
+        if (scrollPosition < carouselWidth - cardWidth * 4) {
+            scrollPosition += cardWidth;
+            carouselInner.scrollTo({
+                left: scrollPosition,
+                behavior: "smooth"
+            });
+        }
+    }
+
+    function handlePrevClick2() {
+        const carouselInner = document.querySelector("#carouselExampleControls2 .carousel-inner");
+        const cardWidth = document.querySelector("#carouselExampleControls2 .carousel-item").offsetWidth;
         let scrollPosition = carouselInner.scrollLeft;
 
         if (scrollPosition > 0) {
@@ -302,17 +390,18 @@
     }
 
     if (window.matchMedia("(min-width: 768px)").matches) {
-        const nextButton = document.querySelector(
-            "#carouselExampleControls .carousel-control-next"
-        );
-        const prevButton = document.querySelector(
-            "#carouselExampleControls .carousel-control-prev"
-        );
+        const nextButton1 = document.querySelector("#carouselExampleControls1 .carousel-control-next");
+        const prevButton1 = document.querySelector("#carouselExampleControls1 .carousel-control-prev");
+        const nextButton2 = document.querySelector("#carouselExampleControls2 .carousel-control-next");
+        const prevButton2 = document.querySelector("#carouselExampleControls2 .carousel-control-prev");
 
-        nextButton.addEventListener("click", handleNextClick);
-        prevButton.addEventListener("click", handlePrevClick);
+        nextButton1.addEventListener("click", handleNextClick1);
+        prevButton1.addEventListener("click", handlePrevClick1);
+        nextButton2.addEventListener("click", handleNextClick2);
+        prevButton2.addEventListener("click", handlePrevClick2);
     } else {
-        multipleCardCarousel.classList.add("slide");
+        carousel1.classList.add("slide");
+        carousel2.classList.add("slide");
     }
 </script>
 
