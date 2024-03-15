@@ -15,13 +15,19 @@
         user-select: none;
     }
 
+
+    .link-dark {
+        font-size: 15px;
+        /* 원하는 글씨 크기로 조절 */
+    }
+
     @media (min-width: 768px) {
         .bd-placeholder-img-lg {
             font-size: 3.5rem;
         }
     }
 </style>
-<div class="container-fluid">
+<div class="container-fluid mb-5">
     <div class="row">
         <div class="col-md-3">
             <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
@@ -29,7 +35,7 @@
                     <svg class="bi me-2" width="30" height="24">
                         <use xlink:href="#bootstrap"></use>
                     </svg>
-                    <h2><span class="fs-5 fw-semibold">마이페이지</span></h2>
+                    <h2><span class="fs-3 fw-semibold">마이페이지</span></h2>
                 </a>
                 <ul class="list-unstyled ps-0">
                     <li class="mb-1">
@@ -68,19 +74,6 @@
                                 <li><a href="/mypage/insert_plan" class="link-dark rounded">여행계획 관리</a></li>
                                 <li><a href="#" class="link-dark rounded">여행 리뷰</a></li>
                                 <li><a href="/mypage/reserve_list" class="link-dark rounded">예약 내역</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="border-top my-3"></li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
-                            data-bs-target="#account-collapse" aria-expanded="true">
-                            <strong>Account</strong>
-                        </button>
-                        <div class="collapse hidden" id="account-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-dark rounded">Settings</a></li>
-                                <li><a href="#" class="link-dark rounded">Sign out</a></li>
                             </ul>
                         </div>
                     </li>
