@@ -1,58 +1,91 @@
 {% extends "template.html"%}
 {%block main_container%}
 
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+rel="stylesheet">
 
 
-<div class="row" style="text-align: center; margin-top: 20%; margin-bottom: 20%;">
-    <h1>마이 페이지</h1>
-    <div>
-        <form>
-            <button class="col-md-3 themed-grid-col btn btn-primary" style="font-size: 15px; height: 100px;"
-                formaction="/mypage/info/" method="get">개인정보수정</button>
-        </form>
-    </div>
+<style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
 
-    <br>
-    <div>
-
-        <form>
-            <button class="col-md-3 themed-grid-col btn btn-primary" style="font-size: 15px ; height: 100px;"
-                formaction="/mypage/insert_plan" method="post">나의 여행계획 관리</button>
-        </form>
-    </div>
-
-    <br>
-    <div>
-
-        <form>
-
-            <button class="col-md-3 themed-grid-col btn btn-primary" style="font-size: 15px ; height: 100px;"
-                formaction="/mypage/plan_list" method="post">나의 여행 후기 관리</button>
-        </form>
-    </div>
-
-    <br>
-    <div>
-
-        <form>
-
-            <button class="col-md-3 themed-grid-col btn btn-primary" style="font-size: 15px ; height: 100px;"
-                formaction="/mypage/plan_list" method="post">내가 찜한 여행기</button>
-        </form>
-    </div>
-
-    <br>
-    <div>
-        <form>
-            <button class="col-md-3 themed-grid-col btn btn-primary" style="font-size: 15px ; height: 100px;"
-                formaction="/mypage/reserve_list" method="post">예약 내역</button>
-
-            <!-- <div>
-            <button class="col-md-3 themed-grid-col btn btn-primary" style="font-size: 15px ; height: 100px;"
-                formaction="" method="post">예약내역</button>
-        </div> -->
-        </form>
-    </div>
-
-</div>
+  
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+<div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+      <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+      <h2><span class="fs-5 fw-semibold">마이페이지</span></h2>
+    </a>
+    <ul class="list-unstyled ps-0">
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+          개인정보
+        </button>
+        <div class="collapse hidden" id="home-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="#" class="link-dark rounded">개인정보 수정</a></li>
+            <li><a href="#" class="link-dark rounded">SNS 연결 설정</a></li>
+            <li><a href="#" class="link-dark rounded">회원탈퇴</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
+          관심내역
+        </button>
+        <div class="collapse hidden" id="dashboard-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="#" class="link-dark rounded">최근 본 상품</a></li>
+            <li><a href="#" class="link-dark rounded">찜한 여행</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="true">
+          참여내역
+        </button>
+        <div class="collapse hidden" id="orders-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="#" class="link-dark rounded">나의 여행기</a></li>
+            <li><a href="#" class="link-dark rounded">여행계획 관리</a></li>
+            <li><a href="#" class="link-dark rounded">여행 리뷰</a></li>
+            <li><a href="#" class="link-dark rounded">예약 내역</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="border-top my-3"></li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="true">
+          Account
+        </button>
+        <div class="collapse hidden" id="account-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="#" class="link-dark rounded">Settings</a></li>
+            <li><a href="#" class="link-dark rounded">Sign out</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+<script>
+ document.getElementById('toggleButton').addEventListener('click', function() {
+        var content = document.getElementById('content');
+        if (content.classList.contains('hidden')) {
+            content.classList.remove('hidden');
+        } else {
+            content.classList.add('hidden');
+        }
+    });
+</script>
 {%endblock%}
