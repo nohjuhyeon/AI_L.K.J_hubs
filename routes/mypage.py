@@ -53,6 +53,19 @@ async def list_post(request:Request):
     print(dict(await request.form()))
     return templates.TemplateResponse(name="mypage/mypage_plan_list.html", context={'request':request})
 
+
+@router.post("/plan_review") # 펑션 호출 방식
+async def list_post(request:Request):
+    await request.form()
+    print(dict(await request.form()))
+    return templates.TemplateResponse(name="mypage/mypage_plan_review.html", context={'request':request})
+
+@router.get("/plan_review") # 펑션 호출 방식
+async def list_post(request:Request):
+    await request.form()
+    print(dict(await request.form()))
+    return templates.TemplateResponse(name="mypage/mypage_plan_review.html", context={'request':request})
+
 @router.post("/reserve_list") # 펑션 호출 방식
 async def list_post(request:Request):
     await request.form()

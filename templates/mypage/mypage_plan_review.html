@@ -3,7 +3,6 @@
 
 
 {% block main_container %}
-
 <div class="row" style="margin-top: 10%; margin-bottom: 10%;">
     <div class="col-4">
         <h3 style="margin: 20px;">마이페이지</h3>
@@ -19,24 +18,24 @@
                 </li>
                 <li>
                     <button class="col-9 themed-grid-col btn btn-light" style="font-size: 15px; margin: 10px;"
-                        formaction="/mypage/plan_review" method="">나의 여행 후기 관리</button>
+                        formaction="/mypage/plan_list" method="">나의 여행 후기 관리</button>
                 </li>
+
                 <li>
                     <button class="col-9 themed-grid-col btn btn-light" style="font-size: 15px; margin: 10px;"
                         formaction="/mypage/plan_list" method="">내가 찜한 여행기</button>
                 </li>
                 <li>
                     <button class="col-9 themed-grid-col btn btn-light" style="font-size: 15px; margin: 10px;"
-                    formaction="/mypage/reserve_list" method="">예약내역</button>
+                        formaction="/mypage/reserve_list" method="">예약내역</button>
                 </li>
             </form>
         </ul>
     </div>
-
     <div class="col-8">
-        <h2>나의 여행계획 관리</h2>
+        <h2>나의 여행 후기 관리</h2>
         <form>
-            <div class="" style="margin-top: 50px; margin-bottom: 50px;">
+            <div style="margin-top: 50px; margin-bottom: 50px;">
 
                 <div></div>
                 <div></div>
@@ -45,8 +44,8 @@
                 <div></div>
                 <div></div>
             </div>
-        </form>
     </div>
+    </form>
 </div>
-
+</div>
 {% endblock %}
