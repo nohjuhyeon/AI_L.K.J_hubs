@@ -3,11 +3,19 @@ app = FastAPI()
 
 from databases.connections import Settings
 from beanie import PydanticObjectId
+from apscheduler.schedulers.background import BackgroundScheduler
+
+# from sample_function import message_print, job_print
 
 settings = Settings()
 @app.on_event("startup")
 async def init_db():
     await settings.initialize_database()
+    # scheduler = BackgroundScheduler()
+    # scheduler.add_job(message_print, trigger='interval', seconds=2, coalesce=True, max_instances=1)
+    # scheduler.add_job(job_print, trigger='interval', seconds=2, coalesce=True, max_instances=1)
+
+    # scheduler.start()
 
 
 from routes.admin import router as admin_router                   

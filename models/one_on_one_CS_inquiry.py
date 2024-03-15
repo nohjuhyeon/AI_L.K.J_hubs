@@ -1,12 +1,16 @@
-from beanie import Document
 from pydantic import BaseModel, Field
-from datetime import datetime
+from typing import Optional, List
+from beanie import Document, Link
+from bson import ObjectId     
 
 class Inquiry(Document):
-    userName: str = Field(...)
-    userEmail: str = Field(...)
-    inquiryContent: str = Field(...)
-    createdAt: datetime = Field(default_factory=datetime.now)  # 현재 시각을 기록하는 필드
+    userName: Optional[str] = None
+    userEmail: Optional[str] = None
+    password: Optional[str] = None
+    inquiryContent: Optional[str] = None
+    date: Optional[str] = None
+    title: Optional[str] = None
+    inquiryNumber: Optional[int] = None
 
-    class Config:
-        collection = "one_on_one_CS"
+    class Settings:
+        name = "one_on_one_CS"

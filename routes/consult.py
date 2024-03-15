@@ -3,9 +3,10 @@ from starlette.responses import HTMLResponse
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
+from fastapi import Query
 from databases.connections import Database
-from fastapi import HTTPException
-from beanie import PydanticObjectId
+from typing import Optional
+from datetime import datetime
 import requests
 
 router = APIRouter()
@@ -14,11 +15,12 @@ templates = Jinja2Templates(directory="templates/")
 
 from databases.connections import Database
 
-from models.one_on_one_CS_inquiry import Inquiry
+from models.frequent_CS import FAQ_list
+collection_FAQ_list = Database(FAQ_list)
 from models.admin_notice import Admin_notice_list
 collection_admin_notice_list = Database(Admin_notice_list)
 from models.one_on_one_CS import One_on_one_CS_list
-One_on_one_CS_list = Database(One_on_one_CS_list)
+collection_one_on_one_CS_list = Database(One_on_one_CS_list)
 from models.data_chart import data_attraction, data_concept_search, data_consume,data_consume_transition,data_trend_search
 collection_data_attraction=Database(data_attraction)
 collection_data_concept_search=Database(data_concept_search)
@@ -26,22 +28,23 @@ collection_data_consume=Database(data_consume)
 collection_data_consume_transition=Database(data_consume_transition)
 collection_data_trend_search=Database(data_trend_search)
 
-from models.frequent_CS import FAQ_list
-collection_FAQ_list = Database(FAQ_list)
 
 ## 공지 사항
 @router.post("/user_notice") # 펑션 호출 방식
-async def list_post(request:Request):
-    
-    notices = await collection_admin_notice_list.get_all()
+@router.post("/user_notice/{page_number}")
+async def list_post(request: Request, page_number: Optional[int] = 1):
     print(dict(await request.form()))
-    return templates.TemplateResponse(name="consult/user_notice.html", context={'request':request, "notices": notices})
+    conditions = {}
+    notice_pagination, pagination = await collection_admin_notice_list.getsbyconditionswithpagination(conditions, page_number, records_per_page=10)  
+    return templates.TemplateResponse(name="consult/user_notice.html", context={'request': request, "notices": notice_pagination, 'pagination': pagination})
 
 @router.get("/user_notice") # 펑션 호출 방식
-async def list_post(request:Request):
-    notices = await collection_admin_notice_list.get_all()
+@router.get("/user_notice/{page_number}")
+async def list_get(request: Request, page_number: Optional[int] = 1):
     print(dict(await request.form()))
-    return templates.TemplateResponse("consult/user_notice.html" , context={"request": request, "notices": notices} )
+    conditions = {}
+    notice_pagination, pagination = await collection_admin_notice_list.getsbyconditionswithpagination(conditions, page_number, records_per_page=10)  
+    return templates.TemplateResponse(name="consult/user_notice.html", context={'request': request, "notices": notice_pagination, 'pagination': pagination})
 
 ## 자주 묻는 질문 페이지
 @router.post("/frequent_CS")
@@ -57,17 +60,22 @@ async def frequent_cs_get(request:Request):
     return templates.TemplateResponse(name="consult/frequent_CS.html", context={'request':request, 'faqs':faqs})
 
 ## 1대1 문의 메인페이지
-@router.post("/one_on_one_CS_main") # 펑션 호출 방식
-async def list_post(request:Request):
-    qna = await One_on_one_CS_list.get_all()
+@router.post("/one_on_one_CS_main")  # 펑션 호출 방식
+@router.post("/one_on_one_CS_main/{page_number}")  # 펑션 호출 방식
+async def list_post(request: Request, page_number: Optional[int] = 1):
     print(dict(await request.form()))
-    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request, "qnas": qna})
+    conditions = {}
+    qna_list_pagination, pagination = await collection_one_on_one_CS_list.getsbyconditionswithpagination(conditions, page_number, records_per_page=6)  
+    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request': request, "qnas": qna_list_pagination, 'pagination': pagination})
 
-@router.get("/one_on_one_CS_main") # 펑션 호출 방식
-async def list_post(request:Request):
-    qna = await One_on_one_CS_list.get_all()
+
+@router.get("/one_on_one_CS_main")  # 펑션 호출 방식
+@router.get("/one_on_one_CS_main/{page_number}")  # 펑션 호출 방식
+async def list_get(request: Request, page_number: Optional[int] = 1):
     print(dict(await request.form()))
-    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request':request, "qnas": qna})
+    conditions = {}
+    qna_list_pagination, pagination = await collection_one_on_one_CS_list.getsbyconditionswithpagination(conditions, page_number, records_per_page=6)  
+    return templates.TemplateResponse(name="consult/one_on_one_CS_main.html", context={'request': request, "qnas": qna_list_pagination, 'pagination': pagination})
 
 ## 1대1 문의 페이지
 @router.post("/one_on_one_CS") # 펑션 호출 방식
@@ -82,20 +90,32 @@ async def list_post(request:Request):
     print(dict(await request.form()))
     return templates.TemplateResponse(name="consult/one_on_one_CS.html", context={'request':request})
 
-## 1대1 문의 저장
+## 1대1 문의 페이지 제출 및 리디렉션
 @router.post("/inquiryForm")
-async def create_inquiry(request: Request, inquiry_data: Inquiry):
-    # 문의사항 인스턴스 생성
-    new_inquiry = Inquiry(
-        userName=inquiry_data.userName,
-        userEmail=inquiry_data.userEmail,
-        inquiryContent=inquiry_data.userInquiry
-    )
-    # 데이터베이스에 문의사항을 저장
-    await new_inquiry.insert()  # Beanie의 `insert` 메소드를 이용해 문서를 데이터베이스에 저장
+async def create_inquiry(request: Request):
+    form_data = await request.form()
+    user_info = dict(form_data)
 
-    # 문의 생성 후 one_on_one_CS_main.html로 리다이렉션
-    return RedirectResponse(url="/one_on_one_CS_main.html")
+    user_info['date'] = datetime.now().strftime("%Y-%m-%d")
+
+    # MongoDB에서 현재 가장 높은 inquiryNumber 찾기
+    results = await One_on_one_CS_list.find().sort("-inquiryNumber").to_list(1)
+    if results:
+        last_inquiry = results[0]
+    else:
+        last_inquiry = None
+
+    if last_inquiry:
+        user_info['inquiryNumber'] = last_inquiry.inquiryNumber + 1
+    else:
+        user_info['inquiryNumber'] = 1
+
+    # 데이터 유효성 검사 및 저장
+    inquiry = One_on_one_CS_list(**user_info)
+    await inquiry.create()
+
+    # 사용자를 1대1 상담 메인 페이지로 리디렉션
+    return RedirectResponse(url="/consult/one_on_one_CS_main", status_code=303)
 
 ## 카카오톡 상담
 @router.post("/kakaotalk_CS")
