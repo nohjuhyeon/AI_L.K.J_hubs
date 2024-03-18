@@ -3,47 +3,170 @@
 
 
 {% block main_container %}
-<div class="row" style="margin-top: 10%; margin-bottom: 10%;">
-    <div class="col-4">
-        <h3 style="margin: 20px;">마이페이지</h3>
-        <ul class="list-unstyled">
-            <form class="row justify-contentt-start" style="margin-left: 10px; margin-top: 50px;">
-                <li>
-                    <button class="col-9 themed-grid-col btn btn-light" style="font-size: 15px; margin: 10px;"
-                        formaction="/mypage/info" method="">개인정보수정</button>
-                </li>
-                <li>
-                    <button class="col-9 themed-grid-col btn btn-light" style="font-size: 15px; margin: 10px;"
-                        formaction="/mypage/insert_plan" method="">나의 여행계획 관리</button>
-                </li>
-                <li>
-                    <button class="col-9 themed-grid-col btn btn-light" style="font-size: 15px; margin: 10px;"
-                        formaction="/mypage/plan_list" method="">나의 여행 후기 관리</button>
-                </li>
 
-                <li>
-                    <button class="col-9 themed-grid-col btn btn-light" style="font-size: 15px; margin: 10px;"
-                        formaction="/mypage/plan_list" method="">내가 찜한 여행기</button>
-                </li>
-                <li>
-                    <button class="col-9 themed-grid-col btn btn-light" style="font-size: 15px; margin: 10px;"
-                        formaction="/mypage/reserve_list" method="">예약내역</button>
-                </li>
-            </form>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+
+    .container {
+        min-width: 1000px;
+        width: 95%;
+    }
+
+    .image-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 30px;
+        margin-left: 5px;
+    }
+
+    .screen {
+        position: relative;
+        overflow: hidden;
+
+    }
+
+    .screen .top {
+        position: absolute;
+        bottom: 150%;
+        left: 30px;
+        z-index: 2;
+        color: #fff;
+        font-size: 26px;
+        font-weight: 900;
+        transition: all .45s;
+    }
+
+    .screen:hover .top {
+        bottom: 52%;
+    }
+
+    .screen .bottom {
+        position: absolute;
+        top: 150%;
+        left: 30px;
+        z-index: 2;
+        color: #fff;
+        font-size: 12px;
+        transition: all .45s;
+    }
+
+    .screen:hover .bottom {
+        top: 52%;
+    }
+
+    .screen::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .5);
+        z-index: 1;
+        opacity: 0;
+        transition: all .35s;
+    }
+
+    .screen:hover::after {
+        opacity: 1;
+    }
+
+    .image-item {
+        width: 300px;
+        height: 400px;
+        object-fit: cover;
+    }
+
+    @media (max-width: 1023px) {
+        .image-item {
+            width: calc(33.33% - 20px);
+            height: auto;
+        }
+    }
+
+    .sidebar h3 {
+        margin: 20px 0;
+    }
+
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .sidebar li {
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="row" style="margin-top: 10%; margin-bottom: 10%;">
+    <div class="col-4 sidebar">
+        <h3>마이페이지</h3>
+        <ul>
+            <li>
+                <button class="btn btn-light btn-block" formaction="/mypage/info" method="">개인정보수정</button>
+            </li>
+            <li>
+                <button class="btn btn-light btn-block" formaction="/mypage/insert_plan" method="">나의 여행계획 관리</button>
+            </li>
+            <li>
+                <button class="btn btn-light btn-block" formaction="/mypage/plan_list" method="">나의 여행 후기 관리</button>
+            </li>
+            <li>
+                <button class="btn btn-light btn-block" formaction="/mypage/plan_list" method="">내가 찜한 여행기</button>
+            </li>
+            <li>
+                <button class="btn btn-light btn-block" formaction="/mypage/reserve_list" method="">예약내역</button>
+            </li>
         </ul>
     </div>
     <div class="col-8">
-        <h2>나의 여행 후기 관리</h2>
-        <form>
-            <div style="margin-top: 50px; margin-bottom: 50px;">
+        <h2 class="mt-4">나의 여행 후기 관리</h2>
+        <form class="mb-4">
+            <!-- <div style="margin-top: 50px; margin-bottom: 50px;"> -->
+            <div class="container">
+                <div class="image-list">
+                    <a href="/detailed_region/info_Seoul" class="screen">
+                        <div class="top">서울</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src='/images/pictures1.jpg' alt="img-1" class="image-item">
+                    </a>
+                    <a href="/detailed_region/info_Busan" class="screen">
+                        <div class="top">부산</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src="/images/pictures2.jpg" alt="img-2" class="image-item">
+                    </a>
+                    <a href="/detailed_region/info_Gangwondo" class="screen">
+                        <div class="top">강원도</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src="/images/pictures3.jpg" alt="img-3" class="image-item">
+                    </a>
+                    <a href="/detailed_region/info_Gangwondo" class="screen">
+                        <div class="top">강원도</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src="/images/pictures3.jpg" alt="img-3" class="image-item">
+                    </a>
+                    <a href="/detailed_region/info_Gangwondo" class="screen">
+                        <div class="top">강원도</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src="/images/pictures3.jpg" alt="img-3" class="image-item">
+                    </a>
+                    <a href="/detailed_region/info_Gangwondo" class="screen">
+                        <div class="top">강원도</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src="/images/pictures3.jpg" alt="img-3" class="image-item">
+                    </a>
 
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+                </div>
             </div>
+
     </div>
     </form>
 </div>
