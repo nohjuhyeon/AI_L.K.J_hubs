@@ -4,7 +4,7 @@ app = FastAPI()
 from databases.connections import Settings
 from beanie import PydanticObjectId
 from apscheduler.schedulers.background import BackgroundScheduler
-
+from seleniums.instargram_scrapping import sns_scrapping
 # from sample_function import message_print, job_print
 
 settings = Settings()
@@ -12,8 +12,7 @@ settings = Settings()
 async def init_db():
     await settings.initialize_database()
     # scheduler = BackgroundScheduler()
-    # scheduler.add_job(message_print, trigger='interval', seconds=2, coalesce=True, max_instances=1)
-    # scheduler.add_job(job_print, trigger='interval', seconds=2, coalesce=True, max_instances=1)
+    # scheduler.add_job(sns_scrapping, trigger='interval', seconds=60, coalesce=True, max_instances=1)
 
     # scheduler.start()
 
