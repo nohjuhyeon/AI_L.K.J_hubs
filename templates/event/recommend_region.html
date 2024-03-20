@@ -1,8 +1,125 @@
-
 {% extends "template.html"%}
 
-
-
 {% block main_container %}
+<style>
+    fieldset {
+        border-style: solid;
+        border-width: 1px;
+    }
+
+    .flex-container {
+        display: flex; /* Flexbox를 활성화합니다. */
+        margin-top: 3px;
+        align-items: flex-start; /* 두 박스를 상단 정렬합니다. */
+        gap: 20px; /* 두 박스 사이의 간격을 설정합니다. */
+    }
+
+    /* 체크박스 간의 간격을 조절하는 스타일 */
+    .flex-container label {
+        margin-right: 9px; /* 체크박스와 라벨 사이의 간격을 조절합니다. */
+    }
+
+    .search-button {
+        margin-left: auto; /* 오른쪽으로 정렬합니다. */
+        margin-top: 20px;
+        height: 122px; /* 버튼의 높이를 조절합니다. */
+        width: 115px; /* 버튼의 너비를 조절합니다. */
+        font-size: 18px; /* 버튼의 글꼴 크기를 조절합니다. */
+    }
+
+</style>
+
+<body>
+    <form>
+        <div class="row">
+            <div class="flex-container col-7">
+                <fieldset class="mt-4">
+                    <div class="ml-3">
+                        <legend class="mt-2">여행 컨셉</legend>
+                        <input type="checkbox" id="total_concept" name="concept" value="total_concept" checked />
+                        <label for="total_concept">전체</label>
+                        <input type="checkbox" id="nature" name="concept" value="nature" />
+                        <label for="nature">자연 관광</label>
+                        <input type="checkbox" id="cultural" name="concept" value="cultural" />
+                        <label for="cultural">문화 관광</label>
+                        <input type="checkbox" id="leisure" name="concept" value="leisure" />
+                        <label for="leisure">레저 스포츠</label>
+                        <input type="checkbox" id="history" name="concept" value="history" />
+                        <label for="history">역사 관광</label>
+                        <input type="checkbox" id="food" name="concept" value="food" />
+                        <label for="food">음식</label>
+                        <input type="checkbox" id="none_concept" name="concept" value="none_concept" />
+                        <label for="none_concept">없음</label>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="flex-container col-5">
+                <fieldset class="mt-4">
+                    <div class="ml-3">
+                        <legend class="mt-2">계절</legend>
+                        <input type="checkbox" id="total_season" name="season" value="total_season" checked />
+                        <label for="total_season">전체</label>
+                        <input type="checkbox" id="spring" name="season" value="spring" />
+                        <label for="spring">봄</label>
+                        <input type="checkbox" id="summer" name="season" value="summer" />
+                        <label for="summer">여름</label>
+                        <input type="checkbox" id="fall" name="season" value="fall" />
+                        <label for="fall">가을</label>
+                        <input type="checkbox" id="winter" name="season" value="winter" />
+                        <label for="winter">겨울</label>
+                        <input type="checkbox" id="none_season" name="season" value="none_season" />
+                        <label for="none_season">없음</label>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="flex-container">
+            <fieldset class="mt-4">
+                <div class="ml-4">
+                    <legend class="mt-2">지역</legend>
+                    <input type="checkbox" id="total_region" name="region" value="total_region" checked />
+                    <label for="total_region">전체</label>
+                    <input type="checkbox" id="seoul" name="region" value="seoul" class="custom-checkbox">
+                    <label for="seoul">서울 특별시</label>
+                    <input type="checkbox" id="gyeonggi" name="region" value="gyeonggi" />
+                    <label for="gyeonggi">경기</label>
+                    <input type="checkbox" id="Incheon" name="region" value="Incheon" />
+                    <label for="Incheon">인천 광역시</label>
+                    <input type="checkbox" id="Gangwon" name="region" value="Gangwon" />
+                    <label for="Gangwon">강원</label>
+                    <input type="checkbox" id="Gyeongsangnam-do" name="region" value="Gyeongsangnam-do" />
+                    <label for="Gyeongsangnam-do">경상남도</label>
+                    <input type="checkbox" id="Gyeongsangbuk-do" name="region" value="Gyeongsangbuk-do" />
+                    <label for="Gyeongsangbuk-do">경상북도</label>
+                    <input type="checkbox" id="Gwangju" name="region" value="Gwangju" />
+                    <label for="Gwangju">광주 광역시</label>
+                    <input type="checkbox" id="Daegu" name="region" value="Daegu" />
+                    <label for="Daegu">대구 광역시</label>
+                    <input type="checkbox" id="Daejeon" name="region" value="Daejeon" />
+                    <label for="Daejeon">대전 광역시</label>
+                    <input type="checkbox" id="busan" name="region" value="busan" />
+                    <label for="busan">부산 광역시</label>
+                    <input type="checkbox" id="Sejong" name="region" value="Sejong" />
+                    <label for="Sejong">세종 특별시</label>
+                    <input type="checkbox" id="Ulsan" name="region" value="Ulsan" />
+                    <label for="Ulsan">울산 광역시</label>
+                    <input type="checkbox" id="Jeollanam-do" name="region" value="Jeollanam-do" />
+                    <label for="Jeollanam-do">전라남도</label>
+                    <input type="checkbox" id="Jeollabuk-do" name="region" value="Jeollabuk-do" />
+                    <label for="Jeollabuk-do">전라북도</label>
+                    <input type="checkbox" id="Chungcheongnam-do" name="region" value="Chungcheongnam-do" />
+                    <label for="Chungcheongnam-do">충청남도</label>
+                    <input type="checkbox" id="Chungcheongbuk-do" name="region" value="Chungcheongbuk-do" />
+                    <label for="Chungcheongbuk-do">충청북도</label>
+                    <input type="checkbox" id="Jeju" name="region" value="Jeju" />
+                    <label for="Jeju">제주 특별자치도</label>
+                    <input type="checkbox" id="none_region" name="region" value="none_region" />
+                    <label for="none_region">없음</label>
+                </div>
+            </fieldset> 
+            <button type="submit" class="btn btn-primary search-button">검색</button> 
+        </div>
+    </form>
+</body>
 
 {% endblock %}
