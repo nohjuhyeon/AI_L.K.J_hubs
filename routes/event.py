@@ -33,5 +33,5 @@ async def list_post(request:Request):
 async def list_post(request:Request):
     await request.form()
     print(dict(await request.form()))
-    return templates.TemplateResponse(name="event/recommend_region", context={'request':request})
+    return templates.TemplateResponse(name="event/recommend_region.html", context={'request':request})
 
