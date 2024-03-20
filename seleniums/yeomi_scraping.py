@@ -114,7 +114,7 @@ def yeomi_scraping():
         time.sleep(3)
 
         pass
-        for i in range(12):
+        for i in range(36):
             card_content=''
             card_date=''
             card_like=''
