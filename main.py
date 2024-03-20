@@ -4,18 +4,21 @@ app = FastAPI()
 from databases.connections import Settings
 from beanie import PydanticObjectId
 from apscheduler.schedulers.background import BackgroundScheduler
-from seleniums.instargram_scrapping import sns_scrapping
+from seleniums.kto9suk9suk_scraping import kto9suk9suk_scraping
+from seleniums.yeomi_scraping import yeomi_scraping
 # from sample_function import message_print, job_print
+import datetime
 
 settings = Settings()
 @app.on_event("startup")
 async def init_db():
     await settings.initialize_database()
-    # scheduler = BackgroundScheduler()
-    # scheduler.add_job(sns_scrapping, trigger='interval', seconds=60, coalesce=True, max_instances=1)
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(kto9suk9suk_scraping, trigger='interval', hours=4, coalesce=True, max_instances=1, start_date=datetime.datetime.now() + datetime.timedelta(hours=2))
+    scheduler.add_job(yeomi_scraping, trigger='interval', hours=4, coalesce=True, max_instances=1)
 
-    # scheduler.start()
-
+# 스케줄러 시작
+    scheduler.start()
 
 from routes.admin import router as admin_router                   
 from routes.mypage import router as second_router
