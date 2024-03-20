@@ -15,6 +15,7 @@
         /* 두 박스를 상단 정렬합니다. */
         gap: 20px;
         /* 두 박스 사이의 간격을 설정합니다. */
+        
     }
 
     /* 체크박스 간의 간격을 조절하는 스타일 */
@@ -77,17 +78,17 @@
                 <fieldset class="mt-4">
                     <div class="ml-3">
                         <legend class="mt-2">여행 컨셉</legend>
-                        <input type="checkbox" id="total_concept" name="concept1" value="total_concept" checked />
+                        <input type="checkbox" id="total_concept" name="concept" value="total_concept" />
                         <label for="total_concept">전체</label>
-                        <input type="checkbox" id="nature" name="concept2" value="nature" />
+                        <input type="checkbox" id="nature" name="concept_01" value="nature" checked/>
                         <label for="nature">자연 관광</label>
-                        <input type="checkbox" id="cultural" name="concept3" value="cultural" />
+                        <input type="checkbox" id="cultural" name="concept_02" value="cultural" />
                         <label for="cultural">문화 관광</label>
-                        <input type="checkbox" id="leisure" name="concept4" value="leisure" />
+                        <input type="checkbox" id="leisure" name="concept_03" value="leisure" />
                         <label for="leisure">레저 스포츠</label>
-                        <input type="checkbox" id="history" name="concept5" value="history" />
+                        <input type="checkbox" id="history" name="concept_04" value="history" />
                         <label for="history">역사 관광</label>
-                        <input type="checkbox" id="food" name="concept6" value="food" />
+                        <input type="checkbox" id="food" name="concept_05" value="food" />
                         <label for="food">음식</label>
                         <input type="checkbox" id="none_concept" name="concept7" value="none_concept" />
                         <label for="none_concept">없음</label>
@@ -98,15 +99,15 @@
                 <fieldset class="mt-4">
                     <div class="ml-3">
                         <legend class="mt-2">계절</legend>
-                        <input type="checkbox" id="total_season" name="season1" value="total_season" checked />
+                        <input type="checkbox" id="total_season" name="season" value="total_season"/>
                         <label for="total_season">전체</label>
-                        <input type="checkbox" id="spring" name="season2" value="spring" />
+                        <input type="checkbox" id="spring" name="season_01" value="spring" checked/>
                         <label for="spring">봄</label>
-                        <input type="checkbox" id="summer" name="season3" value="summer" />
+                        <input type="checkbox" id="summer" name="season_02" value="summer" />
                         <label for="summer">여름</label>
-                        <input type="checkbox" id="fall" name="season4" value="fall" />
+                        <input type="checkbox" id="fall" name="season_03" value="fall" />
                         <label for="fall">가을</label>
-                        <input type="checkbox" id="winter" name="season5" value="winter" />
+                        <input type="checkbox" id="winter" name="season_04" value="winter" />
                         <label for="winter">겨울</label>
                         <input type="checkbox" id="none_season" name="season6" value="none_season" />
                         <label for="none_season">없음</label>
@@ -118,41 +119,41 @@
             <fieldset class="mt-4">
                 <div class="ml-4">
                     <legend class="mt-2">지역</legend>
-                    <input type="checkbox" id="total_region" name="region1" value="total_region" checked />
+                    <input type="checkbox" id="total_region" name="region" value="total_region">
                     <label for="total_region">전체</label>
-                    <input type="checkbox" id="seoul" name="region2" value="seoul" class="custom-checkbox">
+                    <input type="checkbox" id="seoul" name="region_01" value="seoul" checked >
                     <label for="seoul">서울 특별시</label>
-                    <input type="checkbox" id="gyeonggi" name="region3" value="gyeonggi" />
+                    <input type="checkbox" id="gyeonggi" name="region_02" value="gyeonggi" />
                     <label for="gyeonggi">경기</label>
-                    <input type="checkbox" id="Incheon" name="region4" value="Incheon" />
+                    <input type="checkbox" id="Incheon" name="region_03" value="Incheon" />
                     <label for="Incheon">인천 광역시</label>
-                    <input type="checkbox" id="Gangwon" name="region5" value="Gangwon" />
+                    <input type="checkbox" id="Gangwon" name="region_04" value="Gangwon" />
                     <label for="Gangwon">강원</label>
-                    <input type="checkbox" id="Gyeongsangnam-do" name="region6" value="Gyeongsangnam-do" />
+                    <input type="checkbox" id="Gyeongsangnam-do" name="region_05" value="Gyeongsangnam-do" />
                     <label for="Gyeongsangnam-do">경상남도</label>
-                    <input type="checkbox" id="Gyeongsangbuk-do" name="region7" value="Gyeongsangbuk-do" />
+                    <input type="checkbox" id="Gyeongsangbuk-do" name="region_06" value="Gyeongsangbuk-do" />
                     <label for="Gyeongsangbuk-do">경상북도</label>
-                    <input type="checkbox" id="Gwangju" name="region8" value="Gwangju" />
+                    <input type="checkbox" id="Gwangju" name="region_07" value="Gwangju" />
                     <label for="Gwangju">광주 광역시</label>
-                    <input type="checkbox" id="Daegu" name="region9" value="Daegu" />
+                    <input type="checkbox" id="Daegu" name="region_08" value="Daegu" />
                     <label for="Daegu">대구 광역시</label>
-                    <input type="checkbox" id="Daejeon" name="region10" value="Daejeon" />
+                    <input type="checkbox" id="Daejeon" name="region_09" value="Daejeon" />
                     <label for="Daejeon">대전 광역시</label>
-                    <input type="checkbox" id="busan" name="region11" value="busan" />
+                    <input type="checkbox" id="busan" name="region_10" value="busan" />
                     <label for="busan">부산 광역시</label>
-                    <input type="checkbox" id="Sejong" name="region12" value="Sejong" />
+                    <input type="checkbox" id="Sejong" name="region_11" value="Sejong" />
                     <label for="Sejong">세종 특별시</label>
-                    <input type="checkbox" id="Ulsan" name="region13" value="Ulsan" />
+                    <input type="checkbox" id="Ulsan" name="region_12" value="Ulsan" />
                     <label for="Ulsan">울산 광역시</label>
-                    <input type="checkbox" id="Jeollanam-do" name="region14" value="Jeollanam-do" />
+                    <input type="checkbox" id="Jeollanam-do" name="region_13" value="Jeollanam-do" />
                     <label for="Jeollanam-do">전라남도</label>
-                    <input type="checkbox" id="Jeollabuk-do" name="region15" value="Jeollabuk-do" />
+                    <input type="checkbox" id="Jeollabuk-do" name="region_14" value="Jeollabuk-do" />
                     <label for="Jeollabuk-do">전라북도</label>
-                    <input type="checkbox" id="Chungcheongnam-do" name="region16" value="Chungcheongnam-do" />
+                    <input type="checkbox" id="Chungcheongnam-do" name="region_15" value="Chungcheongnam-do" />
                     <label for="Chungcheongnam-do">충청남도</label>
-                    <input type="checkbox" id="Chungcheongbuk-do" name="region17" value="Chungcheongbuk-do" />
+                    <input type="checkbox" id="Chungcheongbuk-do" name="region_16" value="Chungcheongbuk-do" />
                     <label for="Chungcheongbuk-do">충청북도</label>
-                    <input type="checkbox" id="Jeju" name="region18" value="Jeju" />
+                    <input type="checkbox" id="Jeju" name="region_17" value="Jeju" />
                     <label for="Jeju">제주 특별자치도</label>
                     <input type="checkbox" id="none_region" name="region19" value="none_region" />
                     <label for="none_region">없음</label>
@@ -201,9 +202,76 @@
             </div>
         </div>
     </div>
-
-
-
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // "전체" 체크박스 선택 시
+        document.getElementById('total_concept').addEventListener('change', function() {
+            const isChecked = this.checked;
+            // "전체" 선택 시 다른 모든 체크박스 선택
+            document.querySelectorAll('input[name^="concept"]').forEach(checkbox => {
+                if(checkbox.id !== 'none_concept') {
+                    checkbox.checked = isChecked;
+                }
+            });
+            // "없음" 체크박스 해제
+            document.getElementById('none_concept').checked = false;
+        });
+    
+        document.getElementById('total_season').addEventListener('change', function() {
+            const isChecked = this.checked;
+            document.querySelectorAll('input[name^="season"]').forEach(checkbox => {
+                if(checkbox.id !== 'none_season') {
+                    checkbox.checked = isChecked;
+                }
+            });
+            document.getElementById('none_season').checked = false;
+        });
+    
+        document.getElementById('total_region').addEventListener('change', function() {
+            const isChecked = this.checked;
+            document.querySelectorAll('input[name^="region"]').forEach(checkbox => {
+                if(checkbox.id !== 'none_region') { // 'none_region' 체크박스가 있다고 가정
+                    checkbox.checked = isChecked;
+                }
+            });
+            document.getElementById('none_region').checked = false; // 'none_region' 체크박스가 있다고 가정
+        });
+    
+        // "없음" 체크박스 선택 시
+        document.getElementById('none_concept').addEventListener('change', function() {
+            if(this.checked) {
+                // 모든 체크박스 해제
+                document.querySelectorAll('input[name^="concept"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                // "없음"만 선택
+                this.checked = true;
+            }
+        });
+    
+        document.getElementById('none_season').addEventListener('change', function() {
+            if(this.checked) {
+                document.querySelectorAll('input[name^="season"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                this.checked = true;
+            }
+        });
+    
+        // 'none_region' 체크박스가 있다고 가정하는 경우
+        document.getElementById('none_region').addEventListener('change', function() {
+            if(this.checked) {
+                document.querySelectorAll('input[name^="region"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                this.checked = true;
+            }
+        });
+    });
+    </script>
+    
+
 
 {% endblock %}
