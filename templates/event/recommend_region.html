@@ -15,7 +15,7 @@
         /* 두 박스를 상단 정렬합니다. */
         gap: 20px;
         /* 두 박스 사이의 간격을 설정합니다. */
-        
+
     }
 
     /* 체크박스 간의 간격을 조절하는 스타일 */
@@ -37,38 +37,52 @@
     }
 
     .border {
-        background-color: #f8f9fa; /* 배경색 변경 */
-        border-radius: 8px; /* 테두리 둥글게 */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+        background-color: #f8f9fa;
+        /* 배경색 변경 */
+        border-radius: 8px;
+        /* 테두리 둥글게 */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* 그림자 효과 */
     }
 
     .community-content {
-        background-color: #ffffff; /* 내용 배경색 */
-        padding: 10px; /* 내부 여백 */
-        margin: 5px 0; /* 외부 여백 */
-        border-radius: 4px; /* 테두리 둥글게 */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 그림자 효과 */
+        background-color: #ffffff;
+        /* 내용 배경색 */
+        padding: 10px;
+        /* 내부 여백 */
+        margin: 5px 0;
+        /* 외부 여백 */
+        border-radius: 4px;
+        /* 테두리 둥글게 */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        /* 그림자 효과 */
     }
 
     .btn-primary {
-        background-color: #007bff; /* 버튼 배경색 */
-        border-color: #007bff; /* 버튼 테두리색 */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+        background-color: #007bff;
+        /* 버튼 배경색 */
+        border-color: #007bff;
+        /* 버튼 테두리색 */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        /* 그림자 효과 */
     }
 
     .btn-primary:hover {
-        background-color: #0056b3; /* 버튼 호버 배경색 */
-        border-color: #0056b3; /* 버튼 호버 테두리색 */
+        background-color: #0056b3;
+        /* 버튼 호버 배경색 */
+        border-color: #0056b3;
+        /* 버튼 호버 테두리색 */
     }
 
     h4 {
-        font-weight: 500; /* 글꼴 무게 */
+        font-weight: 500;
+        /* 글꼴 무게 */
     }
 
     img.img-fluid {
-        border-radius: 8px; /* 이미지 테두리 둥글게 */
+        border-radius: 8px;
+        /* 이미지 테두리 둥글게 */
     }
-
 </style>
 
 <body>
@@ -80,7 +94,7 @@
                         <legend class="mt-2">여행 컨셉</legend>
                         <input type="checkbox" id="total_concept" name="concept" value="total_concept" />
                         <label for="total_concept">전체</label>
-                        <input type="checkbox" id="nature" name="concept_01" value="nature" checked/>
+                        <input type="checkbox" id="nature" name="concept_01" value="nature" checked />
                         <label for="nature">자연 관광</label>
                         <input type="checkbox" id="cultural" name="concept_02" value="cultural" />
                         <label for="cultural">문화 관광</label>
@@ -99,9 +113,9 @@
                 <fieldset class="mt-4">
                     <div class="ml-3">
                         <legend class="mt-2">계절</legend>
-                        <input type="checkbox" id="total_season" name="season" value="total_season"/>
+                        <input type="checkbox" id="total_season" name="season" value="total_season" />
                         <label for="total_season">전체</label>
-                        <input type="checkbox" id="spring" name="season_01" value="spring" checked/>
+                        <input type="checkbox" id="spring" name="season_01" value="spring" checked />
                         <label for="spring">봄</label>
                         <input type="checkbox" id="summer" name="season_02" value="summer" />
                         <label for="summer">여름</label>
@@ -121,7 +135,7 @@
                     <legend class="mt-2">지역</legend>
                     <input type="checkbox" id="total_region" name="region" value="total_region">
                     <label for="total_region">전체</label>
-                    <input type="checkbox" id="seoul" name="region_01" value="seoul" checked >
+                    <input type="checkbox" id="seoul" name="region_01" value="seoul" checked>
                     <label for="seoul">서울 특별시</label>
                     <input type="checkbox" id="gyeonggi" name="region_02" value="gyeonggi" />
                     <label for="gyeonggi">경기</label>
@@ -169,6 +183,7 @@
             <!-- 이미지 -->
             <div class="col-md-3">
                 <img src={{attraction_element.attraction_img}} alt="여행지 이미지" class="img-fluid wide-image" style="height: 239px; width: 239px;">
+
             </div>
             <!-- 내용 -->
             <div class="col-md-9">
@@ -206,43 +221,85 @@
 </body>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // "전체" 체크박스 선택 시
-        document.getElementById('total_concept').addEventListener('change', function() {
+        document.getElementById('total_concept').addEventListener('change', function () {
             const isChecked = this.checked;
             // "전체" 선택 시 다른 모든 체크박스 선택
             document.querySelectorAll('input[name^="concept"]').forEach(checkbox => {
-                if(checkbox.id !== 'none_concept') {
+                if (checkbox.id !== 'none_concept') {
                     checkbox.checked = isChecked;
                 }
             });
             // "없음" 체크박스 해제
             document.getElementById('none_concept').checked = false;
         });
-    
-        document.getElementById('total_season').addEventListener('change', function() {
+
+        // 개별 체크박스 변경 시
+        document.querySelectorAll('input[name^="concept"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                // "없음" 체크박스가 아니고, 하나라도 해제되면 "전체" 체크박스도 해제
+                if (this.id !== 'none_concept' && !this.checked) {
+                    document.getElementById('total_concept').checked = false;
+                } else if (this.id !== 'none_concept') {
+                    // 모든 체크박스가 선택되었는지 확인
+                    const allChecked = Array.from(document.querySelectorAll('input[name="concept"]:not(#none_concept)')).every(checkbox => checkbox.checked);
+                    document.getElementById('total_concept').checked = allChecked;
+                }
+            });
+        });
+
+        document.getElementById('total_season').addEventListener('change', function () {
             const isChecked = this.checked;
             document.querySelectorAll('input[name^="season"]').forEach(checkbox => {
-                if(checkbox.id !== 'none_season') {
+                if (checkbox.id !== 'none_season') {
                     checkbox.checked = isChecked;
                 }
             });
             document.getElementById('none_season').checked = false;
         });
-    
-        document.getElementById('total_region').addEventListener('change', function() {
+
+        // 개별 체크박스 변경 시
+        document.querySelectorAll('input[name^="season"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                // "없음" 체크박스가 아니고, 하나라도 해제되면 "전체" 체크박스도 해제
+                if (this.id !== 'none_season' && !this.checked) {
+                    document.getElementById('total_season').checked = false;
+                } else if (this.id !== 'none_season') {
+                    // 모든 체크박스가 선택되었는지 확인
+                    const allChecked = Array.from(document.querySelectorAll('input[name="season"]:not(#none_season)')).every(checkbox => checkbox.checked);
+                    document.getElementById('total_season').checked = allChecked;
+                }
+            });
+        });
+
+        document.getElementById('total_region').addEventListener('change', function () {
             const isChecked = this.checked;
             document.querySelectorAll('input[name^="region"]').forEach(checkbox => {
-                if(checkbox.id !== 'none_region') { // 'none_region' 체크박스가 있다고 가정
+                if (checkbox.id !== 'none_region') { // 'none_region' 체크박스가 있다고 가정
                     checkbox.checked = isChecked;
                 }
             });
             document.getElementById('none_region').checked = false; // 'none_region' 체크박스가 있다고 가정
         });
-    
+
+         // 개별 체크박스 변경 시
+        document.querySelectorAll('input[name^="region"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                // "없음" 체크박스가 아니고, 하나라도 해제되면 "전체" 체크박스도 해제
+                if (this.id !== 'none_region' && !this.checked) {
+                    document.getElementById('total_region').checked = false;
+                } else if (this.id !== 'none_region') {
+                    // 모든 체크박스가 선택되었는지 확인
+                    const allChecked = Array.from(document.querySelectorAll('input[name="region"]:not(#none_region)')).every(checkbox => checkbox.checked);
+                    document.getElementById('total_region').checked = allChecked;
+                }
+            });
+        });
+
         // "없음" 체크박스 선택 시
-        document.getElementById('none_concept').addEventListener('change', function() {
-            if(this.checked) {
+        document.getElementById('none_concept').addEventListener('change', function () {
+            if (this.checked) {
                 // 모든 체크박스 해제
                 document.querySelectorAll('input[name^="concept"]').forEach(checkbox => {
                     checkbox.checked = false;
@@ -251,19 +308,19 @@
                 this.checked = true;
             }
         });
-    
-        document.getElementById('none_season').addEventListener('change', function() {
-            if(this.checked) {
+
+        document.getElementById('none_season').addEventListener('change', function () {
+            if (this.checked) {
                 document.querySelectorAll('input[name^="season"]').forEach(checkbox => {
                     checkbox.checked = false;
                 });
                 this.checked = true;
             }
         });
-    
+
         // 'none_region' 체크박스가 있다고 가정하는 경우
-        document.getElementById('none_region').addEventListener('change', function() {
-            if(this.checked) {
+        document.getElementById('none_region').addEventListener('change', function () {
+            if (this.checked) {
                 document.querySelectorAll('input[name^="region"]').forEach(checkbox => {
                     checkbox.checked = false;
                 });
@@ -271,8 +328,8 @@
             }
         });
     });
-    </script>
-    
+</script>
+
 
 
 {% endblock %}
