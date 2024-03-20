@@ -3,7 +3,9 @@ from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from fastapi.staticfiles import StaticFiles
-
+from databases.connections import Database
+from models.attraction_search_info import attraction_search_info
+collection_attraction = Database(attraction_search_info)
 
 router = APIRouter()
 
@@ -31,7 +33,9 @@ async def list_post(request:Request):
 
 @router.get("/recommend_region") # 펑션 호출 방식
 async def list_post(request:Request):
-    await request.form()
-    print(dict(await request.form()))
-    return templates.TemplateResponse(name="event/recommend_region.html", context={'request':request})
+    dict(request._query_params)
+    conditions={}
+    attraction_list = collection_attraction.getsbyconditions(conditions)
+    print(dict(request._query_params))
+    return templates.TemplateResponse(name="event/recommend_region.html", context={'request':request,'attraction_list':attraction_list})
 
