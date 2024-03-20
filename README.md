@@ -7,17 +7,17 @@
 |팀원|업무|
 |--|--|
 |김명준(PM)|Data Analyst|
-|김경하|Data Publisher|
+|김경하|Data Engineer|
 |노주현|Data Analyst|
 |문석천|Data Analyst|
-|서정민|Data Publisher|
+|서정민|Data Engineer|
 
 ### - 프로젝트 진행
 
 #### (1) 2차 프로젝트
 
 - 2차 프로젝트 기간 : 2024.02.21 ~ 2024.03.21
-- 2차 프로젝트 발표 : 2024.03.21
+- 2차 프로젝트 발표 : 2024.03.22
 
 #### (2) 진행목록
 
@@ -39,9 +39,11 @@
 ||bootstrap|웹페이지 디자인 제작|
 |Programming|python|프로그램 코드 작성|
 ||fastAPI|파이썬 API의 웹 프레임워크|
+||Jupyter|오픈소스 웹 애플리케이션|
 |Database|mongoDB|데이터베이스 저장 관리|
 |Collaboration tool|Jira software|팀원 간 프로젝트 진행도 파악|
 ||Slack|팀원간 소통 창구|
+||Docker|개발 환경 공유|
 
 ### - 건의사항
 |이름|내용|
