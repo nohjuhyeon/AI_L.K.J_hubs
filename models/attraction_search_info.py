@@ -16,4 +16,4 @@ class attraction_search_info(Document) :  # 상속을 위한 것                
     attraction_link : Optional[str] = None
     attraction_title : Optional[str] = None
     class Settings :  
-        name = "trip_package"  # collection의 이름
+        name = "attraction_search_info"  # collection의 이름

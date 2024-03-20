@@ -163,45 +163,46 @@
         </div>
     </form>
 
-
+    {%for attraction_element in attraction_list%}
     <div class="container p-3 my-3 border">
         <div class="row align-items-start">
             <!-- 이미지 -->
             <div class="col-md-3">
-                <img src="/images/pictures1.jpg" alt="여행지 이미지" class="img-fluid wide-image" style="height: 239px; width: 239px;">
+                <img src={{attraction_element.attraction_img}} alt="여행지 이미지" class="img-fluid wide-image" style="height: 239px; width: 239px;">
             </div>
             <!-- 내용 -->
             <div class="col-md-9">
                 <!-- 관광지 제목, 지역, 관광지 유형 -->
                 <div class="row">
                     <div class="col-md-4">
-                        <h4 class="border community-content">관광지 제목</h4>
+                        <h4 class="border community-content">{{attraction_element.attraction_name}}</h4>
                     </div>
                     <div class="col-md-4">
-                        <h4 class="border community-content">지역</h4>
+                        <h4 class="border community-content">{{attraction_element.region}}</h4>
                     </div>
                     <div class="col-md-4">
-                        <h4 class="border community-content">관광지 유형</h4>
+                        <h4 class="border community-content">{{attraction_element.destination_type}}</h4>
                     </div>
                 </div>
                 <!-- 주소 -->
                 <div class="row">
                     <div class="col-12">
-                        <h4 class="border community-content">주소 : </h4>
+                        <h4 class="border community-content">{{attraction_element.address}}</h4>
                     </div>
                 </div>
                 <!-- 관광지 한 줄 소개와 자세히 보러가기 버튼 -->
                 <div class="row align-items-center just">
                     <div class="col-md-9">
-                        <h4 class="border community-content">엉니ㅏㅓㄹㅇ나ㅣㄹ어ㅏㅣㅓㅏㅇ나ㅣㅏ아ㅣㅓㅏㅣ어ㅜㅇ나ㅣ어ㅓ러러ㅣㅏ어엉라ㅓㅏㅣ라ㅣ이ㅓ어ㅏㅣㅇ니ㅓㄹ어ㅣㄹ어ㅏㅣ어ㅏㅣㄹ어ㅣ이ㅓㅏ</h4>
+                        <h4 class="border community-content">{{attraction_element.attraction_content}}</h4>
                     </div>
                     <div class="col-md-3 p-0">
-                        <button type="button" class="btn btn-primary btn-lg" style="height: 100px;">자세히 보러가기</button>
+                        <a href="{{attraction_element.attraction_link}}" class="btn btn-primary btn-lg d-flex align-items-center" style="height: 100px; margin: auto;">자세히 보러가기</a>
                     </div>
-                </div>
+                                    </div>
             </div>
         </div>
     </div>
+    {%endfor%}
 </body>
 
 <script>

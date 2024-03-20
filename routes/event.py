@@ -5,7 +5,9 @@ from fastapi import Request
 from fastapi.staticfiles import StaticFiles
 from databases.connections import Database
 from models.attraction_search_info import attraction_search_info
+from models.season_concept_info import season_concept_info
 collection_attraction = Database(attraction_search_info)
+collection_season_concept = Database(season_concept_info)
 
 router = APIRouter()
 
@@ -34,8 +36,27 @@ async def list_post(request:Request):
 @router.get("/recommend_region") # 펑션 호출 방식
 async def list_post(request:Request):
     dict(request._query_params)
+    concept_list = []
+    region_list =[]
+    season_list=[]
+    for i in range(len(list( dict(request._query_params).keys()))):
+        if list( dict(request._query_params).keys())[i][0:7] == 'concept':
+            concept_list.append(list( dict(request._query_params).values())[i]) 
+        elif list( dict(request._query_params).keys())[i][0:6] == 'season':
+            season_list.append(list( dict(request._query_params).values())[i]) 
+        elif list( dict(request._query_params).keys())[i][0:6] == 'region':
+            region_list.append(list( dict(request._query_params).values())[i]) 
+    conditions = {"concept" : { '$in': concept_list},"region" : { '$in': region_list},"season" : { '$in': season_list}}
+    season_concept_list = await collection_season_concept.getsbyconditions(conditions)
+    season_concept_list = [module.dict() for module in season_concept_list]
+    season_concept_list = sorted(season_concept_list, key=lambda x: x['frequency'])
+    search_word=list(season_concept_list[0].values())
     conditions={}
-    attraction_list = collection_attraction.getsbyconditions(conditions)
-    print(dict(request._query_params))
+    conditions = {"region" : { '$in': search_word},"destination_type" : { '$in': search_word}}
+    attraction_list = await collection_attraction.getsbyconditions(conditions)
+    attraction_list = [module.dict() for module in attraction_list]
+    attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'])
+
+    print(search_word)
     return templates.TemplateResponse(name="event/recommend_region.html", context={'request':request,'attraction_list':attraction_list})
 
