@@ -437,17 +437,27 @@
 
     window.addEventListener("load", initSlider);
 
-    // var region_list = JSON.parse('{{ region_list | tojson | safe }}');
+    document.addEventListener('DOMContentLoaded', function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        var month = urlParams.get('month');
+        if (month) {
+            // 월 값을 사용하여 필요한 처리를 합니다.
+            // 예를 들어, select 요소에서 해당 월을 선택된 상태로 만들 수 있음
+            document.querySelector('select[name="month"]').value = month;
+        }
+    });
 
-    // $(document).ready(function () {
-    //     // 여기에 조건을 설정하여 해당하는 screen만 보이도록 처리
-    //     $(".image-list .screen").each(function () {
-    //         var regionName = $(this).find(".top").text();
-    //         if (!region_list.includes(regionName)) {
-    //             $(this).parent('a').remove();
-    //         }
-    //     });
-    // });
+    var region_list = JSON.parse('{{ region_list | tojson | safe }}');
+
+    $(document).ready(function () {
+        // 여기에 조건을 설정하여 해당하는 screen만 보이도록 처리
+        $(".image-list .screen").each(function () {
+            var regionName = $(this).find(".top").text();
+            if (!region_list.includes(regionName)) {
+                $(this).parent('a').remove();
+            }
+        });
+    });
 
 </script>
 
