@@ -163,13 +163,19 @@ async def list_post(request:Request):
 
 ## 새로운 게시물 추가
 @router.post("/notice_add")
-async def add_notice(request : Request):
+@router.post("/notice_delete/{page_number}")
+async def add_notice(request : Request, page_number: Optional[int]=1):
     notice_dict = dict(await request.form())
     print(dict(await request.form()))
+    conditions = {}
     add_notice = Admin_notice_list(**notice_dict)
     await collection_admin_notice_list.save(add_notice)
     notices = await collection_admin_notice_list.get_all()
-    return templates.TemplateResponse("admin/admin_notice.html", context={'request':request, 'notices': notices})
+    notices_list_pagination, pagination = await collection_admin_notice_list.getsbyconditionswithpagination(conditions
+                                                                     ,page_number)
+    return templates.TemplateResponse(name="admin/admin_notice.html" , context={"request": request, 
+                                                                                "notices": notices_list_pagination,
+                                                                                'pagination': pagination})
 
 
 ## 회원 관리
