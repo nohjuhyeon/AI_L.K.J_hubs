@@ -45,7 +45,7 @@ async def list_post(request:Request):
                   '11' : ['충북', '대전', '대구','광주','전북'],
                   '12월' : ['서울', '대구', '대전','광주','부산']}
     region_list = region_dict[std_month]
-    return templates.TemplateResponse(name="event/best_region.html", context={'request':request, 'region_list':region_list})
+    return templates.TemplateResponse(name="event/best_region.html", context={'request':request, 'region_list':region_list,'std_month':std_month})
 
 ## 관광지 추천
 @router.post("/recommend_region") # 펑션 호출 방식
