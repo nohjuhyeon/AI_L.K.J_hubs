@@ -92,18 +92,22 @@ async def list_post(request:Request, page_number: Optional[int]=1):
 
 ## 공지사항 삭제
 @router.post("/notice_delete") # 펑션 호출 방식
-async def list_post(request:Request):
+@router.post("/notice_delete/{page_number}") # 펑션 호출 방식
+async def list_post(request:Request, page_number: Optional[int]=1):
     # MongoDB에서 공지사항 데이터 가져오기
     await request.form()
     form_data = dict(await request.form())
     notices_id = form_data.get('id')
     print(form_data)
-
+    conditions = {}
     await collection_admin_notice_list.delete_one(notices_id)
-    notices = await collection_admin_notice_list.get_all() # 메서드를 사용하여 모든 공지사항을 가져옴
-    # 템플릿에 데이터 전달하여 HTML 페이지 렌더링
-    return templates.TemplateResponse(name="admin/admin_notice.html" , context={"request": request, "notices": notices})
+    notices_list_pagination, pagination = await collection_admin_notice_list.getsbyconditionswithpagination(conditions
+                                                                     ,page_number)
 
+    # 템플릿에 데이터 전달하여 HTML 페이지 렌더링
+    return templates.TemplateResponse(name="admin/admin_notice.html" , context={"request": request, 
+                                                                                "notices": notices_list_pagination,
+                                                                                'pagination': pagination})
 
 @router.get("/notice") # 펑션 호출 방식
 async def list_post(request:Request):
