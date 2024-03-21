@@ -4,6 +4,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from fastapi.staticfiles import StaticFiles
 from databases.connections import Database
+from typing import Optional
+from urllib.parse import urlencode
 from models.attraction_search_info import attraction_search_info
 from models.season_concept_info import season_concept_info
 from models.data_chart import data_concept_search
@@ -55,42 +57,45 @@ async def list_post(request:Request):
     return templates.TemplateResponse(name="event/recommend_region.html", context={'request':request})
 
 @router.get("/recommend_region") # 펑션 호출 방식
-async def list_post(request:Request):
-    dict(request._query_params)
-    concept_list = []
-    region_list =[]
-    season_list=[]
-    for i in range(len(list( dict(request._query_params).keys()))):
-        if list( dict(request._query_params).keys())[i][0:7] == 'concept':
-            concept_list.append(list( dict(request._query_params).values())[i]) 
-        elif list( dict(request._query_params).keys())[i][0:6] == 'season':
-            season_list.append(list( dict(request._query_params).values())[i]) 
-        elif list( dict(request._query_params).keys())[i][0:6] == 'region':
-            region_list.append(list( dict(request._query_params).values())[i]) 
-    if len(concept_list) == 0 and len(region_list) == 0:
-        if len(season_list) == 0:
-            attraction_list = []
-        else:
-            conditions = {}
-            attraction_list = await collection_attraction.getsbyconditions(conditions)
-            attraction_list = [module.dict() for module in attraction_list]
-            attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'], reverse=True)
+@router.get("/recommend_region/{page_number}") # 펑션 호출 방식
+async def list_post(request:Request, page_number: Optional[int]=1):
+    await request.form()
+    query_params = dict(request._query_params)
+    concept_list, region_list, season_list = [], [], []
 
-    elif len(concept_list) == 0 and len(region_list) != 0:
-        conditions = {"region" : { '$in': region_list}}
-        attraction_list = await collection_attraction.getsbyconditions(conditions)
-        attraction_list = [module.dict() for module in attraction_list]
-        attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'], reverse=True)
-    elif len(concept_list) != 0 and len(region_list) == 0:
-        conditions = {"destination_type" : { '$in': concept_list}}
-        attraction_list = await collection_attraction.getsbyconditions(conditions)
-        attraction_list = [module.dict() for module in attraction_list]
-        attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'], reverse=True)
+    # 기존 검색 조건 파싱
+    for key, value in query_params.items():
+        if key.startswith('concept'):
+            concept_list.append(value) 
+        elif key.startswith('season'):
+            season_list.append(value) 
+        elif key.startswith('region'):
+            region_list.append(value) 
+    
+    # 검색 조건을 기반으로 하는 conditions 설정
+    conditions = {}
+    if concept_list:
+        conditions["destination_type"] = { '$in': concept_list}
+    if region_list:
+        conditions["region"] = { '$in': region_list}
+    
+    # 검색 조건이 있는 경우와 없는 경우를 구분하여 처리
+    if conditions or season_list:
+        # 검색 조건에 따른 데이터베이스 쿼리 실행 및 페이지네이션 적용
+        attraction_list_pagination, pagination = await collection_attraction.getsbyconditionswithpagination(conditions, page_number)
     else:
-        conditions = {"region" : { '$in': region_list},"destination_type" : { '$in': concept_list}}
-        attraction_list = await collection_attraction.getsbyconditions(conditions)
-        attraction_list = [module.dict() for module in attraction_list]
-        attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'], reverse=True)
-    # print(search_word)
-    return templates.TemplateResponse(name="event/recommend_region.html", context={'request':request,'attraction_list':attraction_list})
+        # 검색 조건이 없는 경우, 모든 데이터를 대상으로 페이지네이션 적용
+        attraction_list_pagination, pagination = await collection_attraction.getsbyconditionswithpagination({}, page_number)
+
+    # 데이터베이스에서 받아온 객체를 딕셔너리로 변환 및 정렬
+    attraction_list = [module.dict() for module in attraction_list_pagination]
+    attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'], reverse=True)
+
+    # 검색 조건을 쿼리 스트링으로 변환
+    search_query = urlencode(query_params)
+
+    return templates.TemplateResponse(name="event/recommend_region.html", context={'request':request,
+                                                                                   'attraction_list':attraction_list,
+                                                                                   'pagination': pagination,
+                                                                                   'search_query': search_query})
 

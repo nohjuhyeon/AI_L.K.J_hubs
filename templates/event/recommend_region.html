@@ -94,7 +94,7 @@
                         <legend class="mt-2">여행 컨셉</legend>
                         <input type="checkbox" id="total_concept" name="concept" value="total_concept" />
                         <label for="total_concept">전체</label>
-                        <input type="checkbox" id="nature" name="concept_01" value="자연관광"  />
+                        <input type="checkbox" id="nature" name="concept_01" value="자연관광" />
                         <label for="nature">자연 관광</label>
                         <input type="checkbox" id="cultural" name="concept_02" value="문화관광" />
                         <label for="cultural">문화 관광</label>
@@ -111,7 +111,7 @@
                         <legend class="mt-2">계절</legend>
                         <input type="checkbox" id="total_season" name="season" value="total_season" />
                         <label for="total_season">전체</label>
-                        <input type="checkbox" id="spring" name="season_01" value="spring"  />
+                        <input type="checkbox" id="spring" name="season_01" value="spring" />
                         <label for="spring">봄</label>
                         <input type="checkbox" id="summer" name="season_02" value="summer" />
                         <label for="summer">여름</label>
@@ -129,7 +129,7 @@
                     <legend class="mt-2">지역</legend>
                     <input type="checkbox" id="total_region" name="region" value="total_region">
                     <label for="total_region">전체</label>
-                    <input type="checkbox" id="seoul" name="region_01" value="서울" >
+                    <input type="checkbox" id="seoul" name="region_01" value="서울">
                     <label for="seoul">서울 특별시</label>
                     <input type="checkbox" id="gyeonggi" name="region_02" value="경기" />
                     <label for="gyeonggi">경기</label>
@@ -213,6 +213,53 @@
         </div>
     </div>
     {%endfor%}
+    <form>
+        <!-- 검색 조건을 hidden input으로 추가 -->
+        <input type="hidden" name="region" value="{{ search_query.region }}">
+        <input type="hidden" name="concept" value="{{ search_query.concept }}">
+
+        <div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item {% if not pagination.has_previous_block %}disabled{% endif %}">
+                        <button type="submit" class="page-link"
+                            formaction="/event/recommend_region/{{pagination.first_page}}?region={{ search_query.region }}&concept={{ search_query.concept }}">
+                            맨 처음
+                        </button>
+                    </li>
+                    <li class="page-item {% if not pagination.has_previous_page %}disabled{% endif %}">
+                        <button type="submit" class="page-link"
+                            formaction="/event/recommend_region/{{pagination.previous_page}}?region={{ search_query.region }}&concept={{ search_query.concept }}">
+                            이전
+                        </button>
+                    </li>
+
+                    {% for page_num in pagination.current_page_range %}
+                    <li class="page-item {% if page_num == pagination.current_page %}active{% endif %}">
+                        <button type="submit" class="page-link"
+                            formaction="/event/recommend_region/{{page_num}}?region={{ search_query.region }}&concept={{ search_query.concept }}">
+                            {{page_num}}
+                        </button>
+                    </li>
+                    {% endfor %}
+
+                    <li class="page-item {% if not pagination.has_next_page %}disabled{% endif %}">
+                        <button type="submit" class="page-link"
+                            formaction="/event/recommend_region/{{pagination.next_page}}?region={{ search_query.region }}&concept={{ search_query.concept }}">
+                            다음
+                        </button>
+                    </li>
+                    <li class="page-item {% if not pagination.has_next_block %}disabled{% endif %}">
+                        <button type="submit" class="page-link"
+                            formaction="/event/recommend_region/{{pagination.last_page}}?region={{ search_query.region }}&concept={{ search_query.concept }}">
+                            맨 끝
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </form>
+
 </body>
 
 <script>
