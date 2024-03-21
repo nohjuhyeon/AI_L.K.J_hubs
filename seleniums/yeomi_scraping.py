@@ -55,7 +55,7 @@ def yeomi_scraping():
         email_input = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(1) > div > label > input')
         email_input.send_keys('njh02052720')
         pswd_input = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(2) > div > label > input')
-        pswd_input.send_keys('njh12345')
+        pswd_input.send_keys('njh12345!')
         login_check_btn = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(3) > button')
         login_check_btn.click()
         time.sleep(3)
@@ -114,7 +114,7 @@ def yeomi_scraping():
         time.sleep(3)
 
         pass
-        for i in range(12):
+        for i in range(36):
             card_content=''
             card_date=''
             card_like=''
