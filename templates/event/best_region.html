@@ -289,21 +289,21 @@
                     <div class="screen">
                         <div class="top">광주</div>
                         <div class="bottom">Coming Soon</div>
-                        <img src="/images/pictures6.jpg" alt="img-6" class="image-item">
+                        <img src="/images/광주.jpg" alt="img-6" class="image-item">
                     </div>
                 </a>
                 <a href="">
                     <div class="screen">
                         <div class="top">대구</div>
                         <div class="bottom">Coming Soon</div>
-                        <img src="/images/pictures6.jpg" alt="img-6" class="image-item">
+                        <img src="/images/대구.jpg" alt="img-6" class="image-item">
                     </div>
                 </a>
                 <a href="">
                     <div class="screen">
                         <div class="top">대전</div>
                         <div class="bottom">Coming Soon</div>
-                        <img src="/images/pictures6.jpg" alt="img-6" class="image-item">
+                        <img src="/images/대전.jpg" alt="img-6" class="image-item">
                     </div>
                 </a>
                 <a href="/detailed_region/info_Busan">
@@ -317,35 +317,28 @@
                     <div class="screen">
                         <div class="top">세종</div>
                         <div class="bottom">Coming Soon</div>
-                        <img src="/images/pictures7.jpg" alt="img-7" class="image-item">
+                        <img src="/images/세종.jpg" alt="img-7" class="image-item">
                     </div>
                 </a>
                 <a href="">
                     <div class="screen">
                         <div class="top">울산</div>
                         <div class="bottom">Coming Soon</div>
-                        <img src="/images/pictures8.jpg" alt="img-8" class="image-item">
+                        <img src="/images/울산.jpg" alt="img-8" class="image-item">
                     </div>
                 </a>
                 <a href="">
                     <div class="screen">
                         <div class="top">전남</div>
                         <div class="bottom">Coming Soon</div>
-                        <img src="/images/pictures8.jpg" alt="img-8" class="image-item">
+                        <img src="/images/전남.jpg" alt="img-8" class="image-item">
                     </div>
                 </a>
                 <a href="">
                     <div class="screen">
                         <div class="top">전북</div>
                         <div class="bottom">Coming Soon</div>
-                        <img src="/images/pictures8.jpg" alt="img-8" class="image-item">
-                    </div>
-                </a>
-                <a href="">
-                    <div class="screen">
-                        <div class="top">울산</div>
-                        <div class="bottom">Coming Soon</div>
-                        <img src="/images/pictures8.jpg" alt="img-8" class="image-item">
+                        <img src="/images/pictures7.jpg" alt="img-8" class="image-item">
                     </div>
                 </a>
                 <a href="">
@@ -359,7 +352,7 @@
                     <div class="screen">
                         <div class="top">충북</div>
                         <div class="bottom">Coming Soon</div>
-                        <img src="/images/pictures9.jpg" alt="img-9" class="image-item">
+                        <img src="/images/충주.jpg" alt="img-9" class="image-item">
                     </div>
                 </a>
                 <a href="/detailed_region/info_Jeju">
@@ -444,17 +437,17 @@
 
     window.addEventListener("load", initSlider);
 
-    var region_list = JSON.parse('{{ region_list | tojson | safe }}');
+    // var region_list = JSON.parse('{{ region_list | tojson | safe }}');
 
-    $(document).ready(function () {
-        // 여기에 조건을 설정하여 해당하는 screen만 보이도록 처리
-        $(".image-list .screen").each(function () {
-            var regionName = $(this).find(".top").text();
-            if (!region_list.includes(regionName)) {
-                $(this).parent('a').remove();
-            }
-        });
-    });
+    // $(document).ready(function () {
+    //     // 여기에 조건을 설정하여 해당하는 screen만 보이도록 처리
+    //     $(".image-list .screen").each(function () {
+    //         var regionName = $(this).find(".top").text();
+    //         if (!region_list.includes(regionName)) {
+    //             $(this).parent('a').remove();
+    //         }
+    //     });
+    // });
 
 </script>
 
