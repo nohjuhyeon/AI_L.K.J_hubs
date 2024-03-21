@@ -7,6 +7,7 @@ from databases.connections import Database
 from models.attraction_search_info import attraction_search_info
 from models.season_concept_info import season_concept_info
 from models.data_chart import data_concept_search
+from datetime import datetime
 collection_data_concept_search=Database(data_concept_search)
 collection_attraction = Database(attraction_search_info)
 collection_season_concept = Database(season_concept_info)
@@ -26,19 +27,24 @@ async def list_post(request:Request):
 async def list_post(request:Request):
     await request.form()
     print(dict(request._query_params))
-    dict_region={'서울':0, '경기':0, '인천':0, '강원':0, '경남':0, '경북':0, '광주':0, '대구':0, '대전':0,
-                   '부산':0, '세종':0, '울산':0, '전남':0, '전북':0, '충남':0, '충북':0, '제주':0}
+
     try:
-        std_month = int(dict(request._query_params)['month'])
+        std_month = dict(request._query_params)['month']
     except:
-        std_month = 3
-    visitor_conditions = {"std_month" : std_month,"destination_type" : { '$regex': '전체'}}
-    visitor_dict = await collection_data_concept_search.getsbyconditions(visitor_conditions)
-    visitor_dict = [module.dict() for module in visitor_dict]
-    for i in range(len(visitor_dict)):
-        dict_region[visitor_dict[i]['region']] = dict_region[visitor_dict[i]['region']] + visitor_dict[i]['destination_search']
-    dict_region = dict(sorted(dict_region.items(), key=lambda x: x[1], reverse=True))
-    region_list = list(dict_region.keys())[:5]
+        std_month = str(datetime.now().month)
+    region_dict ={'1' : ['서울', '부산', '인천','울산','대구'],
+                  '2' : ['서울', '제주', '부산','인천','강원'],
+                  '3' : ['서울', '세종', '경기','인천','광주'],
+                  '4' : ['충남', '경기', '세종','충북','전남'],
+                  '5' : ['전북', '충북', '충남','전남','경기'],
+                  '6' : ['충북', '강원', '제주','광주','충남'],
+                  '7' : ['강원', '충북', '제주','경북','부산'],
+                  '8' : ['강원', '전남', '경북','제주','경남'],
+                  '9' : ['충남', '인천', '충북','전북','경기'],
+                  '10' :['충북', '경북', '전북','충남','전남'],
+                  '11' : ['충북', '대전', '대구','광주','전북'],
+                  '12월' : ['서울', '대구', '대전','광주','부산']}
+    region_list = region_dict[std_month]
     return templates.TemplateResponse(name="event/best_region.html", context={'request':request, 'region_list':region_list})
 
 ## 관광지 추천
