@@ -23,7 +23,7 @@ async def list_post(request:Request):
 @router.get("/best_region") # 펑션 호출 방식
 async def list_post(request:Request):
     await request.form()
-    print(dict(await request.form()))
+    print(dict(request._query_params))
     return templates.TemplateResponse(name="event/best_region.html", context={'request':request})
 
 ## 관광지 추천
