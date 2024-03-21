@@ -47,16 +47,29 @@ async def list_post(request:Request):
         elif list( dict(request._query_params).keys())[i][0:6] == 'region':
             region_list.append(list( dict(request._query_params).values())[i]) 
     if len(concept_list) == 0 and len(region_list) == 0:
-        conditions = {}
+        if len(season_list) == 0:
+            attraction_list = []
+        else:
+            conditions = {}
+            attraction_list = await collection_attraction.getsbyconditions(conditions)
+            attraction_list = [module.dict() for module in attraction_list]
+            attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'], reverse=True)
+
     elif len(concept_list) == 0 and len(region_list) != 0:
         conditions = {"region" : { '$in': region_list}}
+        attraction_list = await collection_attraction.getsbyconditions(conditions)
+        attraction_list = [module.dict() for module in attraction_list]
+        attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'], reverse=True)
     elif len(concept_list) != 0 and len(region_list) == 0:
         conditions = {"destination_type" : { '$in': concept_list}}
+        attraction_list = await collection_attraction.getsbyconditions(conditions)
+        attraction_list = [module.dict() for module in attraction_list]
+        attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'], reverse=True)
     else:
         conditions = {"region" : { '$in': region_list},"destination_type" : { '$in': concept_list}}
-    attraction_list = await collection_attraction.getsbyconditions(conditions)
-    attraction_list = [module.dict() for module in attraction_list]
-    attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'], reverse=True)
+        attraction_list = await collection_attraction.getsbyconditions(conditions)
+        attraction_list = [module.dict() for module in attraction_list]
+        attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'], reverse=True)
     # print(search_word)
     return templates.TemplateResponse(name="event/recommend_region.html", context={'request':request,'attraction_list':attraction_list})
 
