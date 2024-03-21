@@ -31,11 +31,14 @@
         .container {
             min-width: 1200px;
             width: 95%;
+            position: relative;
         }
 
         .image-list>a .screen {
             position: relative;
             overflow: hidden;
+            flex-wrap: nowrap;
+            /* 수정 */
         }
 
         .image-list>a .screen .top {
@@ -215,7 +218,7 @@
     <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
             <form class="d-flex" role="search">
-                <select class="form-select me-2" aria-label="월별 선택">
+                <select class="form-select me-2" name="month" aria-label="월별 선택" style="width: 180px;">
                     <option selected>월별 선택</option>
                     <option value="1">1월</option>
                     <option value="2">2월</option>
@@ -230,8 +233,8 @@
                     <option value="11">11월</option>
                     <option value="12">12월</option>
                 </select>
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-success" formaction="/event/best_region" formmethod="get"
+                    type="submit">Search</button>
             </form>
         </div>
     </nav>
@@ -247,25 +250,11 @@
                         <img src='/images/pictures1.jpg' alt="img-1" class="image-item">
                     </div>
                 </a>
-                <a href="/detailed_region/info_Busan">
+                <a href="/detailed_region/info_Incheon">
                     <div class="screen">
-                        <div class="top">부산</div>
+                        <div class="top">경기</div>
                         <div class="bottom">자세히 보기</div>
-                        <img src="/images/pictures2.jpg" alt="img-2" class="image-item">
-                    </div>
-                </a>
-                <a href="/detailed_region/info_Gangwondo">
-                    <div class="screen">
-                        <div class="top">강원도</div>
-                        <div class="bottom">자세히 보기</div>
-                        <img src="/images/pictures3.jpg" alt="img-3" class="image-item">
-                    </div>
-                </a>
-                <a href="/detailed_region/info_Jeju">
-                    <div class="screen">
-                        <div class="top">제주도</div>
-                        <div class="bottom">자세히 보기</div>
-                        <img src="/images/pictures4.jpg" alt="img-4" class="image-item">
+                        <img src="/images/경기.jpg" alt="img-5" class="image-item">
                     </div>
                 </a>
                 <a href="/detailed_region/info_Incheon">
@@ -275,32 +264,109 @@
                         <img src="/images/pictures5.jpg" alt="img-5" class="image-item">
                     </div>
                 </a>
+                <a href="/detailed_region/info_Gangwondo">
+                    <div class="screen">
+                        <div class="top">강원</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src="/images/pictures3.jpg" alt="img-3" class="image-item">
+                    </div>
+                </a>
+                <a href="/detailed_region/info_Busan">
+                    <div class="screen">
+                        <div class="top">경남</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src="/images/pictures2.jpg" alt="img-2" class="image-item">
+                    </div>
+                </a>
                 <a href="">
                     <div class="screen">
-                        <div class="top">경주</div>
+                        <div class="top">경북</div>
+                        <div class="bottom">Coming Soon</div>
+                        <img src="/images/pictures8.jpg" alt="img-6" class="image-item">
+                    </div>
+                </a>
+                <a href="">
+                    <div class="screen">
+                        <div class="top">광주</div>
                         <div class="bottom">Coming Soon</div>
                         <img src="/images/pictures6.jpg" alt="img-6" class="image-item">
                     </div>
                 </a>
                 <a href="">
                     <div class="screen">
-                        <div class="top">전주</div>
+                        <div class="top">대구</div>
+                        <div class="bottom">Coming Soon</div>
+                        <img src="/images/pictures6.jpg" alt="img-6" class="image-item">
+                    </div>
+                </a>
+                <a href="">
+                    <div class="screen">
+                        <div class="top">대전</div>
+                        <div class="bottom">Coming Soon</div>
+                        <img src="/images/pictures6.jpg" alt="img-6" class="image-item">
+                    </div>
+                </a>
+                <a href="/detailed_region/info_Busan">
+                    <div class="screen">
+                        <div class="top">부산</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src="/images/pictures2.jpg" alt="img-2" class="image-item">
+                    </div>
+                </a>
+                <a href="">
+                    <div class="screen">
+                        <div class="top">세종</div>
                         <div class="bottom">Coming Soon</div>
                         <img src="/images/pictures7.jpg" alt="img-7" class="image-item">
                     </div>
                 </a>
                 <a href="">
                     <div class="screen">
-                        <div class="top">포항</div>
+                        <div class="top">울산</div>
                         <div class="bottom">Coming Soon</div>
                         <img src="/images/pictures8.jpg" alt="img-8" class="image-item">
                     </div>
                 </a>
                 <a href="">
                     <div class="screen">
-                        <div class="top">충청도</div>
+                        <div class="top">전남</div>
                         <div class="bottom">Coming Soon</div>
-                    <img src="/images/pictures9.jpg" alt="img-9" class="image-item">
+                        <img src="/images/pictures8.jpg" alt="img-8" class="image-item">
+                    </div>
+                </a>
+                <a href="">
+                    <div class="screen">
+                        <div class="top">전북</div>
+                        <div class="bottom">Coming Soon</div>
+                        <img src="/images/pictures8.jpg" alt="img-8" class="image-item">
+                    </div>
+                </a>
+                <a href="">
+                    <div class="screen">
+                        <div class="top">울산</div>
+                        <div class="bottom">Coming Soon</div>
+                        <img src="/images/pictures8.jpg" alt="img-8" class="image-item">
+                    </div>
+                </a>
+                <a href="">
+                    <div class="screen">
+                        <div class="top">충남</div>
+                        <div class="bottom">Coming Soon</div>
+                        <img src="/images/pictures9.jpg" alt="img-9" class="image-item">
+                    </div>
+                </a>
+                <a href="">
+                    <div class="screen">
+                        <div class="top">충북</div>
+                        <div class="bottom">Coming Soon</div>
+                        <img src="/images/pictures9.jpg" alt="img-9" class="image-item">
+                    </div>
+                </a>
+                <a href="/detailed_region/info_Jeju">
+                    <div class="screen">
+                        <div class="top">제주</div>
+                        <div class="bottom">자세히 보기</div>
+                        <img src="/images/pictures4.jpg" alt="img-4" class="image-item">
                     </div>
                 </a>
 
@@ -316,8 +382,8 @@
 </body>
 <script>
     const initSlider = () => {
-        const imageList = document.querySelector(".slider-wrapper .image-list");
-        const slideButtons = document.querySelectorAll(".slider-wrapper .slide-button");
+        const imageList = document.querySelector(".image-list");
+        const slideButtons = document.querySelectorAll(".slide-button");
         const slideScrollbar = document.querySelector(".container .slider-scrollbar");
         const scrollbarThumb = slideScrollbar.querySelector(".scrollbar-thumb");
         const maxScrollLeft = imageList.scrollWidth - imageList.clientWidth;
@@ -351,10 +417,9 @@
             document.addEventListener("mouseup", handleMouseUp);
         });
 
-        // Slide images according to the slide button clicks
         slideButtons.forEach(button => {
             button.addEventListener("click", () => {
-                const direction = button.id == "prev-slide" ? -1 : 1;
+                const direction = button.id === "prev-slide" ? -1 : 1;
                 const scrollAmount = imageList.clientWidth * direction;
                 imageList.scrollBy({ left: scrollAmount, behavior: "smooth" });
             });
@@ -363,7 +428,6 @@
         const handleSlideButtons = () => {
             slideButtons[0].style.display = imageList.scrollLeft <= 0 ? "none" : "block";
             slideButtons[1].style.display = imageList.scrollLeft >= maxScrollLeft ? "none" : "block";
-
         }
 
         // Update scrollbar thumb position based on image scroll
@@ -372,7 +436,6 @@
             const thumbPostion = (scrollPostion / maxScrollLeft) * (slideScrollbar.clientWidth - scrollbarThumb.offsetWidth);
             scrollbarThumb.style.left = `${thumbPostion}px`;
         }
-
         imageList.addEventListener("scroll", () => {
             handleSlideButtons();
             updateScrollThumbPosition();
@@ -380,6 +443,18 @@
     }
 
     window.addEventListener("load", initSlider);
+
+    var region_list = JSON.parse('{{ region_list | tojson | safe }}');
+
+    $(document).ready(function () {
+        // 여기에 조건을 설정하여 해당하는 screen만 보이도록 처리
+        $(".image-list .screen").each(function () {
+            var regionName = $(this).find(".top").text();
+            if (!region_list.includes(regionName)) {
+                $(this).parent('a').remove();
+            }
+        });
+    });
 
 </script>
 

@@ -1,5 +1,10 @@
 {% extends "template.html"%}
 {%block main_container%}
+<style>
+    .container .row{
+        background-color: #f8f9fa;
+    }
+</style>
 
 <form>
     <div class="row justify-content-center mt-5">
@@ -84,83 +89,89 @@
     </div>
 </div>
 {% elif dict_total.transfer_cate == "train" %}
-<div class="row">
-    <div class="col-md-3" style="border-style: ridge;">
-        <img src="\images\korail.png" alt="Tour Image" style="width: 100%;">
-
-    </div>
-    <div class="col-md-9" style="border-style: ridge;">
-        <div class="row justify-content-between">
-            <div class="korail_info col-md-6">
-                <h1>코레일</h1>
-            </div>
-            <div class="train_data_info col-md mb-4 mt-6">
-                <div style="border-style: ridge;">출발지 : {{dict_total.train_departure}}</div>
-                <div style="border-style: ridge;">출발시간 : {{dict_total.train_departure_time}}</div>
-            </div>
-            <div class="train_data_info col-md mb-4 mt-6">
-                <div style="border-style: ridge;">도착지 : {{dict_total.train_arrival}}</div>
-                <div style="border-style: ridge;">도착시간 : {{dict_total.train_arrival_time}}</div>
-            </div>
-            <div class="train_data_info col-md mb-4 mt-6">
-                <div style="border-style: ridge;">구분 : {{dict_total.train_category}}</div>
-                <div style="border-style: ridge;">열차번호 : {{dict_total.train_number}}</div>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3" style="border-style: ridge;">
+            <img src="\images\korail.png" alt="Tour Image" style="width: 100%;">
+    
         </div>
-        <div class="row justify-content-between">
-            <!-- 금액 확인 버튼 -->
-            <button type="button" class="btn btn-primary col-md-2 ms-3" onclick="openKorailPopup();">
-                금액 확인
-            </button>
-            <script>
-                function openKorailPopup() {
-                    var url = "https://www.letskorail.com/ebizprd/EbizPrdTicketPr11121_i1.do?&txtRtnDvCd=N&txtChtrDvCd1=1&txtTrnClsfCd1=00&txtTrnGpCd1=100&txtDptRsStnCd1=0001&txtArvRsStnCd1=0020&txtRunDt1=20240120&txtTrnNo1=00001&txtStndSeatCnt1=000112&txtFreeSeatCnt1=-00001";
-                    var windowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
-                    window.open(url, "_blank", windowFeatures);
-                }
-            </script>
-            <!-- 예약 내역에 추가 버튼 -->
-            <div class="col-md-4 justify-content-end d-flex">
-                <button id="addButton" class="btn btn-primary col" formaction="/plan_trip/reserve_transfer/"
-                    name="transfer_id" value={{dict_total.id}} formmethod="get"> 예약 내역에 추가</button>
+        <div class="col-md-9" style="border-style: ridge;">
+            <div class="row justify-content-between">
+                <div class="korail_info col-md-6">
+                    <h1>코레일</h1>
+                </div>
+                <div class="train_data_info col-md mb-4 mt-6">
+                    <div style="border-style: ridge;">출발지 : {{dict_total.train_departure}}</div>
+                    <div style="border-style: ridge;">출발시간 : {{dict_total.train_departure_time}}</div>
+                </div>
+                <div class="train_data_info col-md mb-4 mt-6">
+                    <div style="border-style: ridge;">도착지 : {{dict_total.train_arrival}}</div>
+                    <div style="border-style: ridge;">도착시간 : {{dict_total.train_arrival_time}}</div>
+                </div>
+                <div class="train_data_info col-md mb-4 mt-6">
+                    <div style="border-style: ridge;">구분 : {{dict_total.train_category}}</div>
+                    <div style="border-style: ridge;">열차번호 : {{dict_total.train_number}}</div>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <!-- 금액 확인 버튼 -->
+                <button type="button" class="btn btn-primary col-md-2 ms-3" onclick="openKorailPopup();">
+                    금액 확인
+                </button>
+                <script>
+                    function openKorailPopup() {
+                        var url = "https://www.letskorail.com/ebizprd/EbizPrdTicketPr11121_i1.do?&txtRtnDvCd=N&txtChtrDvCd1=1&txtTrnClsfCd1=00&txtTrnGpCd1=100&txtDptRsStnCd1=0001&txtArvRsStnCd1=0020&txtRunDt1=20240120&txtTrnNo1=00001&txtStndSeatCnt1=000112&txtFreeSeatCnt1=-00001";
+                        var windowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+                        window.open(url, "_blank", windowFeatures);
+                    }
+                </script>
+                <!-- 예약 내역에 추가 버튼 -->
+                <div class="col-md-4 justify-content-end d-flex">
+                    <button id="addButton" class="btn btn-primary col" formaction="/plan_trip/reserve_transfer/"
+                        name="transfer_id" value={{dict_total.id}} formmethod="get"> 예약 내역에 추가</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 {% elif dict_total.transfer_cate == "bus" %}
-<div class="row">
-    <div class="col-md-3" style="border-style: ridge;">
-        <img src="\images\bus.jpg" alt="Tour Image" style="width: 100%; height: 100%">
-
-    </div>
-    <div class="col-md-9" style="border-style: ridge;">
-        <div class="row justify-content-between">
-            <div class="korail_info col-md-6">
-                <h1>고속버스</h1>
-            </div>
-            <div class="train_data_info col-md mb-4 mt-6">
-                <div style="border-style: ridge;">출발지 : {{dict_total.bus_departure}}</div>
-                <div style="border-style: ridge;">도착지 : {{dict_total.bus_arrival}}</div>
-                <div style="border-style: ridge;">출발시간 : {{dict_total.bus_departure_time}}</div>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3" style="border-style: ridge;">
+            <img src="\images\bus.jpg" alt="Tour Image" style="width: 100%; height: 100%">
+    
         </div>
-        <div class="row justify-content-between">
-            <!-- 금액 확인 버튼 -->
-            <div class="col-md-4 ms-3">
-                <div>성인 요금 : {{dict_total.charge_adult}}</div>
-                <div>초등생 요금 : {{dict_total.charge_child}}</div>
-                <div>중고등 요금 : {{dict_total.charge_youth}}</div>
+        <div class="col-md-9" style="border-style: ridge;">
+            <div class="row justify-content-between">
+                <div class="korail_info col-md-6">
+                    <h1>고속버스</h1>
+                </div>
+                <div class="train_data_info col-md mb-4 mt-6">
+                    <div style="border-style: ridge;">출발지 : {{dict_total.bus_departure}}</div>
+                    <div style="border-style: ridge;">도착지 : {{dict_total.bus_arrival}}</div>
+                    <div style="border-style: ridge;">출발시간 : {{dict_total.bus_departure_time}}</div>
+                </div>
             </div>
-            <!-- 예약 내역에 추가 버튼 -->
-            <div class="col-md-4 justify-content-end d-flex">
-                <button id="addButton{{loop.index}}" class="btn btn-primary col"
-                    formaction="/plan_trip/reserve_transfer/" name="transfer_id"
-                    value="{{dict_total.transfer_cate}},{{dict_total.charge_adult}},{{dict_total.bus_departure_time}},{{dict_total.bus_departure}},{{dict_total.bus_arrival}}"
-                    formmethod="get"> 예약 내역에 추가</button>
+            <div class="row justify-content-between">
+                <!-- 금액 확인 버튼 -->
+                <div class="col-md-4 ms-3">
+                    <div>성인 요금 : {{dict_total.charge_adult}}</div>
+                    <div>초등생 요금 : {{dict_total.charge_child}}</div>
+                    <div>중고등 요금 : {{dict_total.charge_youth}}</div>
+                </div>
+                <!-- 예약 내역에 추가 버튼 -->
+                <div class="col-md-4 justify-content-end d-flex">
+                    <button id="addButton{{loop.index}}" class="btn btn-primary col"
+                        formaction="/plan_trip/reserve_transfer/" name="transfer_id"
+                        value="{{dict_total.transfer_cate}},{{dict_total.charge_adult}},{{dict_total.bus_departure_time}},{{dict_total.bus_departure}},{{dict_total.bus_arrival}}"
+                        formmethod="get"> 예약 내역에 추가</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 {%endif%}
