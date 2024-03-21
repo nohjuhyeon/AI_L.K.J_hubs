@@ -37,7 +37,8 @@
         .image-list>a .screen {
             position: relative;
             overflow: hidden;
-            flex-wrap: nowrap; /* 수정 */
+            flex-wrap: nowrap;
+            /* 수정 */
         }
 
         .image-list>a .screen .top {
@@ -232,7 +233,8 @@
                     <option value="11">11월</option>
                     <option value="12">12월</option>
                 </select>
-                <button class="btn btn-outline-success" formaction="/event/best_region" formmethod="get" type="submit">Search</button>
+                <button class="btn btn-outline-success" formaction="/event/best_region" formmethod="get"
+                    type="submit">Search</button>
             </form>
         </div>
     </nav>
@@ -350,14 +352,14 @@
                     <div class="screen">
                         <div class="top">충남</div>
                         <div class="bottom">Coming Soon</div>
-                    <img src="/images/pictures9.jpg" alt="img-9" class="image-item">
+                        <img src="/images/pictures9.jpg" alt="img-9" class="image-item">
                     </div>
                 </a>
                 <a href="">
                     <div class="screen">
                         <div class="top">충북</div>
                         <div class="bottom">Coming Soon</div>
-                    <img src="/images/pictures9.jpg" alt="img-9" class="image-item">
+                        <img src="/images/pictures9.jpg" alt="img-9" class="image-item">
                     </div>
                 </a>
                 <a href="/detailed_region/info_Jeju">
@@ -386,8 +388,8 @@
         const scrollbarThumb = slideScrollbar.querySelector(".scrollbar-thumb");
         const maxScrollLeft = imageList.scrollWidth - imageList.clientWidth;
 
-         //Handle scrollbar thumb drag
-         scrollbarThumb.addEventListener("mousedown", (e) => {
+        //Handle scrollbar thumb drag
+        scrollbarThumb.addEventListener("mousedown", (e) => {
             const startX = e.clientX;
             const thumbPostion = scrollbarThumb.offsetLeft;
 
@@ -404,8 +406,8 @@
                 imageList.scrollLeft = scrollPosition;
             }
 
-             // Remove event listeners on mouse up
-             const handleMouseUp = () => {
+            // Remove event listeners on mouse up
+            const handleMouseUp = () => {
                 document.removeEventListener("mousemove", handleMouseMove);
                 document.removeEventListener("mouseup", handleMouseUp);
             }
@@ -429,7 +431,7 @@
         }
 
         // Update scrollbar thumb position based on image scroll
-         const updateScrollThumbPosition = () => {
+        const updateScrollThumbPosition = () => {
             const scrollPostion = imageList.scrollLeft;
             const thumbPostion = (scrollPostion / maxScrollLeft) * (slideScrollbar.clientWidth - scrollbarThumb.offsetWidth);
             scrollbarThumb.style.left = `${thumbPostion}px`;
@@ -442,6 +444,17 @@
 
     window.addEventListener("load", initSlider);
 
+    var region_list = JSON.parse('{{ region_list | tojson | safe }}');
+
+    $(document).ready(function () {
+        // 여기에 조건을 설정하여 해당하는 screen만 보이도록 처리
+        $(".image-list .screen").each(function () {
+            var regionName = $(this).find(".top").text();
+            if (!region_list.includes(regionName)) {
+                $(this).parent('a').remove();
+            }
+        });
+    });
 
 </script>
 
