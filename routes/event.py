@@ -57,8 +57,7 @@ async def list_post(request:Request):
     return templates.TemplateResponse(name="event/recommend_region.html", context={'request':request})
 
 @router.get("/recommend_region") # 펑션 호출 방식
-@router.get("/recommend_region/{page_number}") # 펑션 호출 방식
-async def list_post(request:Request, page_number: Optional[int]=1):
+async def list_post(request:Request):
     await request.form()
     query_params = dict(request._query_params)
     concept_list, region_list, season_list = [], [], []
@@ -82,20 +81,16 @@ async def list_post(request:Request, page_number: Optional[int]=1):
     # 검색 조건이 있는 경우와 없는 경우를 구분하여 처리
     if conditions or season_list:
         # 검색 조건에 따른 데이터베이스 쿼리 실행 및 페이지네이션 적용
-        attraction_list_pagination, pagination = await collection_attraction.getsbyconditionswithpagination(conditions, page_number)
+        attraction_list = await collection_attraction.getsbyconditions(conditions)
+        attraction_list = [module.dict() for module in attraction_list]
+        attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'], reverse=True)
     else:
         # 검색 조건이 없는 경우, 모든 데이터를 대상으로 페이지네이션 적용
-        attraction_list_pagination, pagination = await collection_attraction.getsbyconditionswithpagination({}, page_number)
+        attraction_list =[]
 
     # 데이터베이스에서 받아온 객체를 딕셔너리로 변환 및 정렬
-    attraction_list = [module.dict() for module in attraction_list_pagination]
-    attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'], reverse=True)
 
-    # 검색 조건을 쿼리 스트링으로 변환
-    search_query = urlencode(query_params)
 
     return templates.TemplateResponse(name="event/recommend_region.html", context={'request':request,
-                                                                                   'attraction_list':attraction_list,
-                                                                                   'pagination': pagination,
-                                                                                   'search_query': search_query})
+                                                                                   'attraction_list':attraction_list[:10]})
 
