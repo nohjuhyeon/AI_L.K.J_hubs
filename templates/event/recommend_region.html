@@ -104,8 +104,6 @@
                         <label for="history">역사 관광</label>
                         <input type="checkbox" id="food" name="concept_05" value="food" />
                         <label for="food">음식</label>
-                        <input type="checkbox" id="none_concept" name="concept" value="none_concept" />
-                        <label for="none_concept">없음</label>
                     </div>
                 </fieldset>
             </div>
@@ -123,8 +121,6 @@
                         <label for="fall">가을</label>
                         <input type="checkbox" id="winter" name="season_04" value="winter" />
                         <label for="winter">겨울</label>
-                        <input type="checkbox" id="none_season" name="season" value="none_season" />
-                        <label for="none_season">없음</label>
                     </div>
                 </fieldset>
             </div>
@@ -169,8 +165,6 @@
                     <label for="Chungcheongbuk-do">충청북도</label>
                     <input type="checkbox" id="Jeju" name="region_17" value="Jeju" />
                     <label for="Jeju">제주 특별자치도</label>
-                    <input type="checkbox" id="none_region" name="region" value="none_region" />
-                    <label for="none_region">없음</label>
                 </div>
             </fieldset>
             <button type="submit" class="btn btn-primary search-button">검색</button>
@@ -182,7 +176,8 @@
         <div class="row align-items-start">
             <!-- 이미지 -->
             <div class="col-md-3">
-                <img src={{attraction_element.attraction_img}} alt="여행지 이미지" class="img-fluid wide-image" style="height: 239px; width: 239px;">
+                <img src={{attraction_element.attraction_img}} alt="여행지 이미지" class="img-fluid wide-image"
+                    style="height: 239px; width: 239px;">
 
             </div>
             <!-- 내용 -->
@@ -210,10 +205,12 @@
                     <div class="col-md-9">
                         <h4 class="border community-content">{{attraction_element.attraction_content}}</h4>
                     </div>
-                    <div class="col-md-3 p-0">
-                        <a href="{{attraction_element.attraction_link}}" class="btn btn-primary btn-lg d-flex align-items-center" style="height: 100px; margin: auto;">자세히 보러가기</a>
+                    <div class="col-md-3 p-0 mt-2">
+                        <a href="{{attraction_element.attraction_link}}"
+                            class="btn btn-primary btn-lg d-flex align-items-center"
+                            style="height: 100px; width: 180px; ">자세히 보러가기</a>
                     </div>
-                                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -227,105 +224,54 @@
             const isChecked = this.checked;
             // "전체" 선택 시 다른 모든 체크박스 선택
             document.querySelectorAll('input[name^="concept"]').forEach(checkbox => {
-                if (checkbox.id !== 'none_concept') {
-                    checkbox.checked = isChecked;
-                }
+                checkbox.checked = isChecked;
             });
-            // "없음" 체크박스 해제
-            document.getElementById('none_concept').checked = false;
         });
 
         // 개별 체크박스 변경 시
         document.querySelectorAll('input[name^="concept"]').forEach(checkbox => {
             checkbox.addEventListener('change', function () {
-                // "없음" 체크박스가 아니고, 하나라도 해제되면 "전체" 체크박스도 해제
-                if (this.id !== 'none_concept' && !this.checked) {
-                    document.getElementById('total_concept').checked = false;
-                } else if (this.id !== 'none_concept') {
-                    // 모든 체크박스가 선택되었는지 확인
-                    const allChecked = Array.from(document.querySelectorAll('input[name="concept"]:not(#none_concept)')).every(checkbox => checkbox.checked);
-                    document.getElementById('total_concept').checked = allChecked;
-                }
+                // 하나라도 해제되면 "전체" 체크박스도 해제
+                const allChecked = Array.from(document.querySelectorAll('input[name^="concept"]')).every(checkbox => checkbox.checked);
+                document.getElementById('total_concept').checked = allChecked;
             });
         });
 
         document.getElementById('total_season').addEventListener('change', function () {
+            // "전체" 체크박스 선택 시
             const isChecked = this.checked;
+            // "전체" 선택 시 다른 모든 체크박스 선택
             document.querySelectorAll('input[name^="season"]').forEach(checkbox => {
-                if (checkbox.id !== 'none_season') {
-                    checkbox.checked = isChecked;
-                }
+                checkbox.checked = isChecked;
             });
-            document.getElementById('none_season').checked = false;
         });
 
         // 개별 체크박스 변경 시
         document.querySelectorAll('input[name^="season"]').forEach(checkbox => {
             checkbox.addEventListener('change', function () {
-                // "없음" 체크박스가 아니고, 하나라도 해제되면 "전체" 체크박스도 해제
-                if (this.id !== 'none_season' && !this.checked) {
-                    document.getElementById('total_season').checked = false;
-                } else if (this.id !== 'none_season') {
-                    // 모든 체크박스가 선택되었는지 확인
-                    const allChecked = Array.from(document.querySelectorAll('input[name="season"]:not(#none_season)')).every(checkbox => checkbox.checked);
-                    document.getElementById('total_season').checked = allChecked;
-                }
+                // 하나라도 해제되면 "전체" 체크박스도 해제
+                const allChecked = Array.from(document.querySelectorAll('input[name^="season"]')).every(checkbox => checkbox.checked);
+                document.getElementById('total_season').checked = allChecked;
             });
         });
 
         document.getElementById('total_region').addEventListener('change', function () {
+            // "전체" 체크박스 선택 시
             const isChecked = this.checked;
+            // "전체" 선택 시 다른 모든 체크박스 선택
             document.querySelectorAll('input[name^="region"]').forEach(checkbox => {
-                if (checkbox.id !== 'none_region') { // 'none_region' 체크박스가 있다고 가정
-                    checkbox.checked = isChecked;
-                }
+                checkbox.checked = isChecked;
             });
             document.getElementById('none_region').checked = false; // 'none_region' 체크박스가 있다고 가정
         });
 
-         // 개별 체크박스 변경 시
+        // 개별 체크박스 변경 시
         document.querySelectorAll('input[name^="region"]').forEach(checkbox => {
             checkbox.addEventListener('change', function () {
-                // "없음" 체크박스가 아니고, 하나라도 해제되면 "전체" 체크박스도 해제
-                if (this.id !== 'none_region' && !this.checked) {
-                    document.getElementById('total_region').checked = false;
-                } else if (this.id !== 'none_region') {
-                    // 모든 체크박스가 선택되었는지 확인
-                    const allChecked = Array.from(document.querySelectorAll('input[name="region"]:not(#none_region)')).every(checkbox => checkbox.checked);
-                    document.getElementById('total_region').checked = allChecked;
-                }
+                // 하나라도 해제되면 "전체" 체크박스도 해제
+                const allChecked = Array.from(document.querySelectorAll('input[name^="region"]')).every(checkbox => checkbox.checked);
+                document.getElementById('total_region').checked = allChecked;
             });
-        });
-
-        // "없음" 체크박스 선택 시
-        document.getElementById('none_concept').addEventListener('change', function () {
-            if (this.checked) {
-                // 모든 체크박스 해제
-                document.querySelectorAll('input[name^="concept"]').forEach(checkbox => {
-                    checkbox.checked = false;
-                });
-                // "없음"만 선택
-                this.checked = true;
-            }
-        });
-
-        document.getElementById('none_season').addEventListener('change', function () {
-            if (this.checked) {
-                document.querySelectorAll('input[name^="season"]').forEach(checkbox => {
-                    checkbox.checked = false;
-                });
-                this.checked = true;
-            }
-        });
-
-        // 'none_region' 체크박스가 있다고 가정하는 경우
-        document.getElementById('none_region').addEventListener('change', function () {
-            if (this.checked) {
-                document.querySelectorAll('input[name^="region"]').forEach(checkbox => {
-                    checkbox.checked = false;
-                });
-                this.checked = true;
-            }
         });
     });
 </script>
