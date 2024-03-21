@@ -46,50 +46,15 @@ async def list_post(request:Request):
             season_list.append(list( dict(request._query_params).values())[i]) 
         elif list( dict(request._query_params).keys())[i][0:6] == 'region':
             region_list.append(list( dict(request._query_params).values())[i]) 
-    # if len(season_list) != 0:
-    #     if len(region_list) == 0 and len(concept_list) != 0:
-    #         conditions = {"concept" : { '$in': ['entire']},"season" : { '$in': season_list}}
-    #         season_concept_list = await collection_season_concept.getsbyconditions(conditions)
-    #         season_concept_list = [module.dict() for module in season_concept_list]
-    #         season_concept_list = sorted(season_concept_list, key=lambda x: x['frequency'])
-    #         search_word=list(season_concept_list[0].values())
-    #         pass
-    #     elif len(region_list) != 0 and len(concept_list) == 0:
-    #         conditions = {"region" : { '$in': ['entire']},"season" : { '$in': season_list}}
-    #         season_concept_list = await collection_season_concept.getsbyconditions(conditions)
-    #         season_concept_list = [module.dict() for module in season_concept_list]
-    #         season_concept_list = sorted(season_concept_list, key=lambda x: x['frequency'])
-    #         search_word=list(season_concept_list[0].values()) 
-    #         pass
-    #     elif len(region_list) == 0 and len(concept_list) == 0:
-    #         conditions = {"season" : { '$in': season_list}}            
-    #         season_concept_list = await collection_season_concept.getsbyconditions(conditions)
-    #         season_concept_list = [module.dict() for module in season_concept_list]
-    #         season_concept_list = sorted(season_concept_list, key=lambda x: x['frequency'])
-    #         search_word=list(season_concept_list[0].values())
-    #         pass
-    #     else:
-    #         conditions = {"concept" : { '$in': concept_list},"region" : { '$in': region_list},"season" : { '$in': season_list}}
-    #         season_concept_list = await collection_season_concept.getsbyconditions(conditions)
-    #         season_concept_list = [module.dict() for module in season_concept_list]
-    #         season_concept_list = sorted(season_concept_list, key=lambda x: x['frequency'])
-    #         search_word=list(season_concept_list[0].values())            
-    #         pass
-    # else:
-    #     if len(region_list) != 0 and len(concept_list) == 0:
-    #         conditions = {"region" : { '$in': region_list}}
-    #     elif len(region_list) == 0 and len(concept_list) != 0:
-    #         conditions = {"concept" : { '$in': concept_list}}
-    #     elif len(region_list) == 0 and len(concept_list) != 0:
-    #         conditions = {"region" : { '$in': search_word},"destination_type" : { '$in': search_word}}
-    # conditions={}
-    # conditions = {"region" : { '$in': region_list},"destination_type" : { '$in': concept_list}}
-    conditions={}
+    if len(concept_list) == 0 and len(region_list) == 0:
+        conditions = {}
+    elif len(concept_list) != 0 and len(region_list) == 0:
+        conditions = {"region" : { '$in': region_list}}
 
     attraction_list = await collection_attraction.getsbyconditions(conditions)
     attraction_list = [module.dict() for module in attraction_list]
-    attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'])
-
+    attraction_list = sorted(attraction_list, key=lambda x: x['attraction_search'], reverse=True)
+    attraction_list=[]
     # print(search_word)
     return templates.TemplateResponse(name="event/recommend_region.html", context={'request':request,'attraction_list':attraction_list})
 
