@@ -7,6 +7,7 @@ from databases.connections import Database
 from models.attraction_search_info import attraction_search_info
 from models.season_concept_info import season_concept_info
 from models.data_chart import data_concept_search
+from datetime import datetime
 collection_data_concept_search=Database(data_concept_search)
 collection_attraction = Database(attraction_search_info)
 collection_season_concept = Database(season_concept_info)
@@ -30,7 +31,7 @@ async def list_post(request:Request):
     try:
         std_month = dict(request._query_params)['month']
     except:
-        std_month = '3'
+        std_month = str(datetime.now().month)
     region_dict ={'1' : ['서울', '부산', '인천','울산','대구'],
                   '2' : ['서울', '제주', '부산','인천','강원'],
                   '3' : ['서울', '세종', '경기','인천','광주'],
