@@ -176,7 +176,8 @@
         <div class="row align-items-start">
             <!-- 이미지 -->
             <div class="col-md-3">
-                <img src={{attraction_element.attraction_img}} alt="여행지 이미지" class="img-fluid wide-image" style="height: 239px; width: 239px;">
+                <img src={{attraction_element.attraction_img}} alt="여행지 이미지" class="img-fluid wide-image"
+                    style="height: 239px; width: 239px;">
 
             </div>
             <!-- 내용 -->
@@ -204,10 +205,12 @@
                     <div class="col-md-9">
                         <h4 class="border community-content">{{attraction_element.attraction_content}}</h4>
                     </div>
-                    <div class="col-md-3 p-0">
-                        <a href="{{attraction_element.attraction_link}}" class="btn btn-primary btn-lg d-flex align-items-center" style="height: 100px; margin: auto;">자세히 보러가기</a>
+                    <div class="col-md-3 p-0 mt-2">
+                        <a href="{{attraction_element.attraction_link}}"
+                            class="btn btn-primary btn-lg d-flex align-items-center"
+                            style="height: 100px; width: 180px; ">자세히 보러가기</a>
                     </div>
-                                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -221,16 +224,16 @@
             const isChecked = this.checked;
             // "전체" 선택 시 다른 모든 체크박스 선택
             document.querySelectorAll('input[name^="concept"]').forEach(checkbox => {
-                    checkbox.checked = isChecked;
+                checkbox.checked = isChecked;
             });
         });
 
         // 개별 체크박스 변경 시
         document.querySelectorAll('input[name^="concept"]').forEach(checkbox => {
             checkbox.addEventListener('change', function () {
-                     // 하나라도 해제되면 "전체" 체크박스도 해제
-                    const allChecked = Array.from(document.querySelectorAll('input[name^="concept"]')).every(checkbox => checkbox.checked);
-                    document.getElementById('total_concept').checked = allChecked;
+                // 하나라도 해제되면 "전체" 체크박스도 해제
+                const allChecked = Array.from(document.querySelectorAll('input[name^="concept"]')).every(checkbox => checkbox.checked);
+                document.getElementById('total_concept').checked = allChecked;
             });
         });
 
@@ -239,7 +242,7 @@
             const isChecked = this.checked;
             // "전체" 선택 시 다른 모든 체크박스 선택
             document.querySelectorAll('input[name^="season"]').forEach(checkbox => {
-                    checkbox.checked = isChecked;
+                checkbox.checked = isChecked;
             });
         });
 
@@ -247,27 +250,27 @@
         document.querySelectorAll('input[name^="season"]').forEach(checkbox => {
             checkbox.addEventListener('change', function () {
                 // 하나라도 해제되면 "전체" 체크박스도 해제
-                    const allChecked = Array.from(document.querySelectorAll('input[name^="season"]')).every(checkbox => checkbox.checked);
-                    document.getElementById('total_season').checked = allChecked;
+                const allChecked = Array.from(document.querySelectorAll('input[name^="season"]')).every(checkbox => checkbox.checked);
+                document.getElementById('total_season').checked = allChecked;
             });
         });
 
         document.getElementById('total_region').addEventListener('change', function () {
             // "전체" 체크박스 선택 시
             const isChecked = this.checked;
-             // "전체" 선택 시 다른 모든 체크박스 선택
+            // "전체" 선택 시 다른 모든 체크박스 선택
             document.querySelectorAll('input[name^="region"]').forEach(checkbox => {
-                    checkbox.checked = isChecked;
+                checkbox.checked = isChecked;
             });
             document.getElementById('none_region').checked = false; // 'none_region' 체크박스가 있다고 가정
         });
 
-         // 개별 체크박스 변경 시
+        // 개별 체크박스 변경 시
         document.querySelectorAll('input[name^="region"]').forEach(checkbox => {
             checkbox.addEventListener('change', function () {
-                    // 하나라도 해제되면 "전체" 체크박스도 해제
-                    const allChecked = Array.from(document.querySelectorAll('input[name^="region"]')).every(checkbox => checkbox.checked);
-                    document.getElementById('total_region').checked = allChecked;
+                // 하나라도 해제되면 "전체" 체크박스도 해제
+                const allChecked = Array.from(document.querySelectorAll('input[name^="region"]')).every(checkbox => checkbox.checked);
+                document.getElementById('total_region').checked = allChecked;
             });
         });
     });
