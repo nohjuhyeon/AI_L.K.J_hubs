@@ -39,7 +39,7 @@ async def list_post(request:Request):
         dict_region[visitor_dict[i]['region']] = dict_region[visitor_dict[i]['region']] + visitor_dict[i]['destination_search']
     dict_region = dict(sorted(dict_region.items(), key=lambda x: x[1], reverse=True))
     region_list = list(dict_region.keys())[:5]
-    return templates.TemplateResponse(name="event/best_region.html", context={'request':request})
+    return templates.TemplateResponse(name="event/best_region.html", context={'request':request, 'region_list':region_list})
 
 ## 관광지 추천
 @router.post("/recommend_region") # 펑션 호출 방식

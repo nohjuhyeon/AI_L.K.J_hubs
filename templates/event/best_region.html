@@ -441,7 +441,20 @@
     }
 
     window.addEventListener("load", initSlider);
+    
+    var region_list = JSON.parse('{{ region_list | tojson | safe }}');
 
+    $(document).ready(function(){
+    // 여기에 조건을 설정하여 해당하는 screen만 보이도록 처리
+    $(".image-list .screen").each(function() {
+        var regionName = $(this).find(".top").text();
+        if (region_list.includes(regionName)) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+});
 
 </script>
 
