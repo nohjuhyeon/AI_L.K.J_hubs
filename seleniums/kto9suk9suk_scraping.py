@@ -58,7 +58,7 @@ def kto9suk9suk_scraping():
         pswd_input.send_keys('njh12345!')
         login_check_btn = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(3)')
         login_check_btn.click()
-        time.sleep(3)
+        time.sleep(5)
 
         pass_btn = browser.find_element(by=By.CSS_SELECTOR,value='div.x1gryazu.xh8yej3.x10o80wk.x14k21rp.x17snn68.x6osk4m.x1porb0y > section > main > div > div > div > div > div')
         pass_btn.click()
@@ -107,7 +107,7 @@ def kto9suk9suk_scraping():
                     break
             if first_content == '':
                 element_body.send_keys(Keys.PAGE_UP)
-                time.sleep(3)
+                time.sleep(1)
             else:
                 break
         first_content.click()
@@ -148,37 +148,37 @@ def kto9suk9suk_scraping():
                 card_reviews = browser.find_elements(by=By.CSS_SELECTOR,value='ul > div:nth-child(3) > div > div > div > ul > div > li > div > div > div._a9zr')
             except:
                 pass
-
-            print(card_content)
-            print(card_date.get_attribute("title"))
-            print(card_like)
-            print(card_watch)
-            print(check_point)
-            print("================================")
-            collection.insert_one({'card_content':card_content,
-                'card_date':card_date.get_attribute("title"),
-                'card_like': card_like,
-                'card_watch':card_watch,
-                'check_point':check_point})
-            for review_element in card_reviews:
+            if check_point not in check_list:
                 print(card_content)
                 print(card_date.get_attribute("title"))
                 print(card_like)
                 print(card_watch)
-                review_content = review_element.find_element(by=By.CSS_SELECTOR,value='div._a9zs > span._ap3a')
-                review_date = review_element.find_element(by=By.CSS_SELECTOR,value='div.x9f619 > span.x1lliihq > a > time')
-                review_date=review_date.get_attribute("title")
-
-                print(review_content.text)
-                print(review_date)
+                print(check_point)
+                print("================================")
                 collection.insert_one({'card_content':card_content,
-                        'card_date':card_date.get_attribute("title"),
-                        'card_like': card_like,
-                        'card_watch':card_watch,
-                        'check_point':check_point,
-                        'review_content':review_content.text,
-                        'review_date':review_date})
-                print("---------------------------------")
+                    'card_date':card_date.get_attribute("title"),
+                    'card_like': card_like,
+                    'card_watch':card_watch,
+                    'check_point':check_point})
+                for review_element in card_reviews:
+                    print(card_content)
+                    print(card_date.get_attribute("title"))
+                    print(card_like)
+                    print(card_watch)
+                    review_content = review_element.find_element(by=By.CSS_SELECTOR,value='div._a9zs > span._ap3a')
+                    review_date = review_element.find_element(by=By.CSS_SELECTOR,value='div.x9f619 > span.x1lliihq > a > time')
+                    review_date=review_date.get_attribute("title")
+
+                    print(review_content.text)
+                    print(review_date)
+                    collection.insert_one({'card_content':card_content,
+                            'card_date':card_date.get_attribute("title"),
+                            'card_like': card_like,
+                            'card_watch':card_watch,
+                            'check_point':check_point,
+                            'review_content':review_content.text,
+                            'review_date':review_date})
+                    print("---------------------------------")
 
             try:
                 # next_btn = browser.find_element(by=By.CSS_SELECTOR,value='div._aaqg > button')
