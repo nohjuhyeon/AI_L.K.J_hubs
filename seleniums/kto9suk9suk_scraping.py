@@ -76,7 +76,7 @@ def kto9suk9suk_scraping():
         # user_choice_btn = browser.find_element(by=By.CSS_SELECTOR,value='div.x1tu34mt ')
         # user_choice_btn.click()
         # time.sleep(10)
-        pass
+        # pass
         element_body = browser.find_element(by=By.CSS_SELECTOR,value="body")
         previous_scrollHeight = 0
         time.sleep(3)
@@ -161,16 +161,9 @@ def kto9suk9suk_scraping():
                     'card_watch':card_watch,
                     'check_point':check_point})
                 for review_element in card_reviews:
-                    print(card_content)
-                    print(card_date.get_attribute("title"))
-                    print(card_like)
-                    print(card_watch)
                     review_content = review_element.find_element(by=By.CSS_SELECTOR,value='div._a9zs > span._ap3a')
                     review_date = review_element.find_element(by=By.CSS_SELECTOR,value='div.x9f619 > span.x1lliihq > a > time')
                     review_date=review_date.get_attribute("title")
-
-                    print(review_content.text)
-                    print(review_date)
                     collection.insert_one({'card_content':card_content,
                             'card_date':card_date.get_attribute("title"),
                             'card_like': card_like,
@@ -178,8 +171,14 @@ def kto9suk9suk_scraping():
                             'check_point':check_point,
                             'review_content':review_content.text,
                             'review_date':review_date})
+                    print(card_content)
+                    print(card_date.get_attribute("title"))
+                    print(card_like)
+                    print(card_watch)
+                    print(review_content.text)
+                    print(review_date)
                     print("---------------------------------")
-
+                time.sleep(2)
             try:
                 # next_btn = browser.find_element(by=By.CSS_SELECTOR,value='div._aaqg > button')
                 # next_btn.click()
@@ -195,3 +194,5 @@ def kto9suk9suk_scraping():
     except Exception as e:
         # 에러 메시지 출력
         print(f"에러 발생: {str(e)}")
+
+kto9suk9suk_scraping()

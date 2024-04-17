@@ -52,29 +52,29 @@ def yeomi_scraping():
         login_btn.click()
         time.sleep(3)
 
-        email_input = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(1) > div > label > input')
-        email_input.send_keys('njh02052720')
-        pswd_input = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(2) > div > label > input')
-        pswd_input.send_keys('njh12345!')
-        login_check_btn = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(3) > button')
-        login_check_btn.click()
-        time.sleep(5)
-        pass_btn = browser.find_element(by=By.CSS_SELECTOR,value='div.x1gryazu.xh8yej3.x10o80wk.x14k21rp.x17snn68.x6osk4m.x1porb0y > section > main > div > div > div > div > div')
-        pass_btn.click()
-        time.sleep(3)
-
-        # facebook_btn = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(5) > button')
-        # facebook_btn.click()
-        # email_input = browser.find_element(by=By.CSS_SELECTOR,value='#email')
-        # email_input.send_keys('01038387360')
-        # pswd_input = browser.find_element(by=By.CSS_SELECTOR,value='#pass')
-        # pswd_input.send_keys('wngus2720!')
-        # login_check_btn = browser.find_element(by=By.CSS_SELECTOR,value='#loginbutton')
+        # email_input = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(1) > div > label > input')
+        # email_input.send_keys('njh02052720')
+        # pswd_input = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(2) > div > label > input')
+        # pswd_input.send_keys('njh12345!')
+        # login_check_btn = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(3) > button')
         # login_check_btn.click()
-        # time.sleep(10)
-        # user_choice_btn = browser.find_element(by=By.CSS_SELECTOR,value='div.x1tu34mt ')
-        # user_choice_btn.click()
-        # time.sleep(10)
+        # time.sleep(5)
+        # pass_btn = browser.find_element(by=By.CSS_SELECTOR,value='div.x1gryazu.xh8yej3.x10o80wk.x14k21rp.x17snn68.x6osk4m.x1porb0y > section > main > div > div > div > div > div')
+        # pass_btn.click()
+        # time.sleep(3)
+
+        facebook_btn = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(5) > button')
+        facebook_btn.click()
+        email_input = browser.find_element(by=By.CSS_SELECTOR,value='#email')
+        email_input.send_keys('01038387360')
+        pswd_input = browser.find_element(by=By.CSS_SELECTOR,value='#pass')
+        pswd_input.send_keys('wngus2720!')
+        login_check_btn = browser.find_element(by=By.CSS_SELECTOR,value='#loginbutton')
+        login_check_btn.click()
+        time.sleep(10)
+        user_choice_btn = browser.find_element(by=By.CSS_SELECTOR,value='div.x1tu34mt ')
+        user_choice_btn.click()
+        time.sleep(10)
         pass
         element_body = browser.find_element(by=By.CSS_SELECTOR,value="body")
         previous_scrollHeight = 0
@@ -160,16 +160,9 @@ def yeomi_scraping():
                     'card_watch':card_watch,
                     'check_point':check_point})
                 for review_element in card_reviews:
-                    print(card_content)
-                    print(card_date.get_attribute("title"))
-                    print(card_like)
-                    print(card_watch)
                     review_content = review_element.find_element(by=By.CSS_SELECTOR,value='div._a9zs > span._ap3a')
                     review_date = review_element.find_element(by=By.CSS_SELECTOR,value='div.x9f619 > span.x1lliihq > a > time')
                     review_date=review_date.get_attribute("title")
-
-                    print(review_content.text)
-                    print(review_date)
                     collection.insert_one({'card_content':card_content,
                             'card_date':card_date.get_attribute("title"),
                             'card_like': card_like,
@@ -177,8 +170,14 @@ def yeomi_scraping():
                             'check_point':check_point,
                             'review_content':review_content.text,
                             'review_date':review_date})
+                    print(card_content)
+                    print(card_date.get_attribute("title"))
+                    print(card_like)
+                    print(card_watch)
+                    print(review_content.text)
+                    print(review_date)
                     print("---------------------------------")
-
+            time.sleep(2)
             try:
                 # next_btn = browser.find_element(by=By.CSS_SELECTOR,value='div._aaqg > button')
                 # next_btn.click()
@@ -194,3 +193,5 @@ def yeomi_scraping():
     except Exception as e:
         # 에러 메시지 출력
         print(f"에러 발생: {str(e)}")
+
+yeomi_scraping()
