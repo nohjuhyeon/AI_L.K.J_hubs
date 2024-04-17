@@ -194,4 +194,4 @@ def yeomi_scraping():
         # 에러 메시지 출력
         print(f"에러 발생: {str(e)}")
 
-yeomi_scraping()
+# yeomi_scraping()

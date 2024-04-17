@@ -195,4 +195,4 @@ def kto9suk9suk_scraping():
         # 에러 메시지 출력
         print(f"에러 발생: {str(e)}")
 
-kto9suk9suk_scraping()
+# kto9suk9suk_scraping()
