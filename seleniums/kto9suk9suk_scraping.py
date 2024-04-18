@@ -80,7 +80,7 @@ def kto9suk9suk_scraping():
         element_body = browser.find_element(by=By.CSS_SELECTOR,value="body")
         previous_scrollHeight = 0
         time.sleep(3)
-        while True:
+        for end in range(150):
             # try:
             #     next_btn = browser.find_element(by=By.CSS_SELECTOR,value='body > div.x1n2onr6.xzkaem6 > div.x9f619.x1n2onr6.x1ja2u2z > div > div.x1uvtmcs.x4k7w5x.x1h91t0o.x1beo9mf.xaigb6o.x12ejxvf.x3igimt.xarpa2k.xedcshv.x1lytzrv.x1t2pt76.x7ja8zs.x1n2onr6.x1qrby5j.x1jfb8zj > div > div > div > div > div:nth-child(1) > div > div > div._aaqg._aaqh > button')
             #     next_btn.click()
