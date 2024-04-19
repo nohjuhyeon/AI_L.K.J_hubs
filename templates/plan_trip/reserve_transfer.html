@@ -1,6 +1,51 @@
 {% extends "template.html"%}
 {%block main_container%}
+<style>
+    .row.mb-2 {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        padding: 10px;
+    }
 
+    .flex-container {
+        display: flex;
+        margin-top: 3px;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .flex-container label {
+        margin-right: 21.5px;
+        font-size: 16px;
+        color: #555555;
+    }
+
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(221, 238, 240, 0.1);
+        transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #ffffff;
+    }
+
+    h4 {
+        font-weight: 500;
+        color: #333333;
+    }
+
+    img.img-fluid {
+        border-radius: 8px;
+    }
+</style>
 
 <form>
     <div class="row justify-content-center mt-5">
@@ -26,7 +71,7 @@
         </div>
 
         <div class="selector_box">
-            <div class="border d-flex justify-content-end"><select id="">
+            <div class="mt-2 d-flex justify-content-end"><select id="">
                     <option>selector</option>
                     <option value="0">낮은가격순</option>
                     <option value="1">높은가격순</option>
@@ -38,21 +83,21 @@
 </form>
 {%for dict_total in total_list%}
 {% if dict_total.transfer_cate == "plane" %}
-<div class="row mb-2" style="background-color: #ffffff;">
-    <div class="col-md-3" style="border-style: ridge;">
-        <img src={{dict_total.airport_image}} alt="Tour Image" style="width: 70%;">
+<div class="row mb-2" >
+    <div class="col-md-3" >
+        <img src={{dict_total.airport_image}} alt="Tour Image">
     </div>
-    <div class="col-md-9" style="border-style: ridge;">
+    <div class="col-md-9">
         <div class="row justify-content-between">
             <div class="airport_date_info col-md-6">
                 <h2>{{dict_total.airport_time}}</h1>
             </div>
             <div class="airport_price_info col-md-3">
-                <em style="font-size:x-large;">{{dict_total.airport_price}}</em>
+                <em>{{dict_total.airport_price}}</em>
             </div>
         </div>
         <div class="row justify-content-between">
-            <h6 class="col-md-6" style="border-style: none;">{{dict_total.airport_name}}</h3>
+            <h6 class="col-md-6">{{dict_total.airport_name}}</h3>
                 <div class="col-md-4 justify-content-end row">
                     <button id="addButton" class="btn btn-primary col" formaction="/plan_trip/reserve_transfer/"
                         name="transfer_id" value={{dict_total.id}} formmethod="get"> 예약 내역에 추가</button>
@@ -63,9 +108,9 @@
 
 {% elif dict_total.transfer_cate == "car" %}
 
-<div class="row mb-2" style="background-color: #ffffff;">
-    <div class="col-md-3" style="border-style: ridge;">
-        <img src={{dict_total.car_image}} alt="Tour Image" style="width: 100%;">
+<div class="row mb-2">
+    <div class="col-md-3">
+        <img src={{dict_total.car_image}} alt="Tour Image">
 
     </div>
     <div class="col-md-9" style="border-style: ridge;">
@@ -74,11 +119,11 @@
                 <h1>{{dict_total.store_name}}</h1>
             </div>
             <div class="rentcar_price_info col-md-3">
-                <em style="font-size:x-large;">{{dict_total.car_price}}</em>
+                <em>{{dict_total.car_price}}</em>
             </div>
         </div>
         <div class="row justify-content-between">
-            <h3 class="col-md-4" style="border-style: ridge;">{{dict_total.car_name}}</h3>
+            <h3 class="col-md-4">{{dict_total.car_name}}</h3>
             <div class="col-md-4 justify-content-end row">
                 <button id="addButton" class="btn btn-primary col" formaction="/plan_trip/reserve_transfer/"
                     name="transfer_id" value={{dict_total.id}} formmethod="get"> 예약 내역에 추가</button>
@@ -89,26 +134,26 @@
 
 {% elif dict_total.transfer_cate == "train" %}
 
-<div class="row" style="background-color: #ffffff;">
-    <div class="col-md-3" style="border-style: ridge;">
+<div class="row">
+    <div class="col-md-3" >
         <img src="\images\korail.png" alt="Tour Image" style="width: 100%;">
     </div>
-    <div class="col-md-9" style="border-style: ridge;">
+    <div class="col-md-9" >
         <div class="row justify-content-between">
             <div class="korail_info col-md-6">
                 <h1>코레일</h1>
             </div>
             <div class="train_data_info col-md mb-4 mt-6">
-                <div style="border-style: ridge;">출발지 : {{dict_total.train_departure}}</div>
-                <div style="border-style: ridge;">출발시간 : {{dict_total.train_departure_time}}</div>
+                <div>출발지 : {{dict_total.train_departure}}</div>
+                <div>출발시간 : {{dict_total.train_departure_time}}</div>
             </div>
             <div class="train_data_info col-md mb-4 mt-6">
-                <div style="border-style: ridge;">도착지 : {{dict_total.train_arrival}}</div>
-                <div style="border-style: ridge;">도착시간 : {{dict_total.train_arrival_time}}</div>
+                <div>도착지 : {{dict_total.train_arrival}}</div>
+                <div>도착시간 : {{dict_total.train_arrival_time}}</div>
             </div>
             <div class="train_data_info col-md mb-4 mt-6">
-                <div style="border-style: ridge;">구분 : {{dict_total.train_category}}</div>
-                <div style="border-style: ridge;">열차번호 : {{dict_total.train_number}}</div>
+                <div>구분 : {{dict_total.train_category}}</div>
+                <div>열차번호 : {{dict_total.train_number}}</div>
             </div>
         </div>
         <div class="row justify-content-between">

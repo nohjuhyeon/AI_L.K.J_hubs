@@ -3,8 +3,11 @@
 {% block main_container %}
 <style>
     fieldset {
-        border-style: solid;
-        border-width: 1px;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        padding: 10px;
     }
 
     .flex-container {
@@ -37,25 +40,17 @@
     }
 
     .border {
-        background-color: #f8f9fa;
-        /* 배경색 변경 */
-        border-radius: 8px;
-        /* 테두리 둥글게 */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        /* 그림자 효과 */
+        background-color: #c9cfd4;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .community-content {
         background-color: #ffffff;
-        /* 내용 배경색 */
-        padding: 10px;
-        /* 내부 여백 */
-        margin: 5px 0;
-        /* 외부 여백 */
-        border-radius: 4px;
-        /* 테두리 둥글게 */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        /* 그림자 효과 */
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin: 10px 0;
     }
 
     .btn-primary {
@@ -63,25 +58,41 @@
         /* 버튼 배경색 */
         border-color: #007bff;
         /* 버튼 테두리색 */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(221, 238, 240, 0.1);
         /* 그림자 효과 */
+        transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    .search-button {
+        width: 150px; /* 너비를 150px로 설정 */
+        height: 170px; /* 높이도 조절 가능 */
+        margin-top: 20px;
+        font-size: 18px;
     }
 
     .btn-primary:hover {
-        background-color: #0056b3;
-        /* 버튼 호버 배경색 */
-        border-color: #0056b3;
-        /* 버튼 호버 테두리색 */
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #ffffff;
     }
 
     h4 {
         font-weight: 500;
         /* 글꼴 무게 */
+        color: #333333;
     }
 
     img.img-fluid {
         border-radius: 8px;
         /* 이미지 테두리 둥글게 */
+    }
+
+    /* 체크박스와 라벨 간의 간격 조절 */
+    .flex-container label {
+        margin-right: 21.5px;
+        font-size: 16px;
+        color: #555555;
     }
 </style>
 
