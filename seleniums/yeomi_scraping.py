@@ -192,6 +192,10 @@ def yeomi_scraping():
         browser.quit()                                      # - 브라우저 종료
     except Exception as e:
         # 에러 메시지 출력
+
+
+
+
         print(f"에러 발생: {str(e)}")
 
 # yeomi_scraping()
