@@ -72,6 +72,8 @@ https://myungjun-kim.atlassian.net/jira/software/projects/ALH/boards/4/timeline
 - 서정민
 <p>이번 프로젝트에선 자바 스크립트와 외부api를 이용한 다양한 기능을 구현해보았고, 정말 신기하고 유용한 기술이 많다는걸 알았습니다. 
 
+## 동작 화면
+
 ## - Youtube 동작 링크
 https://youtu.be/E-6YEdVVr7Q?si=SyuaKxDbyGl6wKNc
 
