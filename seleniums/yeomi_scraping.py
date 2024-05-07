@@ -53,9 +53,9 @@ def yeomi_scraping():
         time.sleep(3)
 
         email_input = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(1) > div > label > input')
-        email_input.send_keys('njh02052720')
+        email_input.send_keys('')
         pswd_input = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(2) > div > label > input')
-        pswd_input.send_keys('njh12345!')
+        pswd_input.send_keys('')
         login_check_btn = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(3) > button')
         login_check_btn.click()
         time.sleep(5)
