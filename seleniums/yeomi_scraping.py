@@ -63,18 +63,6 @@ def yeomi_scraping():
         pass_btn.click()
         time.sleep(3)
 
-        # facebook_btn = browser.find_element(by=By.CSS_SELECTOR,value='#loginForm > div > div:nth-child(5) > button')
-        # facebook_btn.click()
-        # email_input = browser.find_element(by=By.CSS_SELECTOR,value='#email')
-        # email_input.send_keys('01038387360')
-        # pswd_input = browser.find_element(by=By.CSS_SELECTOR,value='#pass')
-        # pswd_input.send_keys('wngus2720!')
-        # login_check_btn = browser.find_element(by=By.CSS_SELECTOR,value='#loginbutton')
-        # login_check_btn.click()
-        # time.sleep(10)
-        # user_choice_btn = browser.find_element(by=By.CSS_SELECTOR,value='div.x1tu34mt ')
-        # user_choice_btn.click()
-        # time.sleep(10)
         pass
         element_body = browser.find_element(by=By.CSS_SELECTOR,value="body")
         previous_scrollHeight = 0
